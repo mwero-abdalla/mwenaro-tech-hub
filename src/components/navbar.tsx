@@ -27,9 +27,17 @@ export async function Navbar() {
                             </Link>
                         )}
                         {user?.user_metadata?.role === 'instructor' && (
-                            <Link href="/instructor/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
-                                Instructor
-                            </Link>
+                            <>
+                                <Link href="/instructor/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
+                                    Dashboard
+                                </Link>
+                                <Link href="/instructor/sessions" className="text-sm font-medium transition-colors hover:text-primary">
+                                    Sessions
+                                </Link>
+                                <Link href="/instructor/payments" className="text-sm font-medium transition-colors hover:text-primary">
+                                    Payments
+                                </Link>
+                            </>
                         )}
                     </div>
                 </div>

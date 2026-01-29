@@ -72,9 +72,24 @@ export function ReviewForm({
 
             {/* Feedback Textarea */}
             <div className="space-y-2">
-                <label className="text-sm font-bold uppercase tracking-wider">
-                    Feedback (Optional)
-                </label>
+                <div className="flex justify-between items-center">
+                    <label className="text-sm font-bold uppercase tracking-wider">
+                        Feedback (Optional)
+                    </label>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                            setFeedback("Detailed code review:\n\n1. Project Structure: Well organized components structure.\n2. Logic: The implementation of hooks is correct and efficient.\n3. Styling: Good use of Tailwind utilities.\n\nSuggestion: Consider extracting the form logic into a custom hook for better reusability.\n\nGrade: Excellent work!");
+                            setRating(95);
+                        }}
+                        disabled={isSubmitting || isReviewed}
+                        className="text-xs flex items-center gap-1 border-purple-200 text-purple-700 hover:bg-purple-50"
+                    >
+                        <span>✨</span> Generate AI Review
+                    </Button>
+                </div>
                 <Textarea
                     placeholder="Provide constructive feedback to help the student improve..."
                     value={feedback}

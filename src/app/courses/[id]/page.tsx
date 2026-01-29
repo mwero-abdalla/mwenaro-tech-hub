@@ -1,10 +1,13 @@
 import { getCourseLessons } from '@/lib/lessons'
 import { getCourse } from '@/lib/courses'
 import { hasEnrolled, enrollUser } from '@/lib/enrollment'
+import { getCourseProgress } from '@/lib/progress'
 import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { CheckCircle2, Lock, PlayCircle } from 'lucide-react'
 
 interface CoursePageProps {
     params: Promise<{
@@ -22,77 +25,151 @@ export default async function CoursePage({ params }: CoursePageProps) {
         notFound()
     }
 
+    const progressRecords = isEnrolled ? await getCourseProgress(id) : []
+    const completedCount = progressRecords.filter(p => p.is_completed).length
+    const progressPercentage = lessons.length > 0 ? Math.round((completedCount / lessons.length) * 100) : 0
+
     return (
-        <div className="container py-12 px-4">
-            <Link href="/courses" className="text-muted-foreground hover:text-primary mb-6 inline-block">
-                &larr; Back to Courses
+        <div className="container py-12 px-4 max-w-6xl mx-auto">
+            <Link href="/courses" className="text-muted-foreground hover:text-primary mb-6 flex items-center gap-2 transition-colors">
+                <span className="text-xl">&larr;</span> Back to Courses
             </Link>
-            <div className="grid gap-8 lg:grid-cols-2">
-                <div>
-                    <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted">
+
+            <div className="grid gap-12 lg:grid-cols-3">
+                <div className="lg:col-span-2 space-y-8">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl bg-muted group">
                         <Image
-                            src={course.image_url || 'https://placehold.co/600x400/png'}
+                            src={course.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop'}
                             alt={course.title}
                             fill
-                            className="object-cover"
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                             priority
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div className="absolute bottom-6 left-6 text-white">
+                            <h1 className="text-4xl font-extrabold tracking-tight">{course.title}</h1>
+                        </div>
                     </div>
+
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-3xl font-bold tracking-tight">About this Course</h2>
+                            {!isEnrolled && (
+                                <div className="text-3xl font-black text-primary drop-shadow-sm">
+                                    ${course.price.toFixed(2)}
+                                </div>
+                            )}
+                        </div>
+                        <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+                            {course.description}
+                        </div>
+                    </div>
+
+                    {isEnrolled && (
+                        <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 shadow-inner">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-lg font-bold flex items-center gap-2 text-primary">
+                                    Your Progress
+                                    <span className="text-sm font-normal text-muted-foreground">({completedCount}/{lessons.length} lessons)</span>
+                                </h3>
+                                <span className="text-2xl font-black text-primary">{progressPercentage}%</span>
+                            </div>
+                            <Progress value={progressPercentage} className="h-3 shadow-sm" />
+                        </div>
+                    )}
                 </div>
 
-                <div className="space-y-6">
-                    <div>
-                        <h1 className="text-4xl font-bold">{course.title}</h1>
-                        <p className="mt-4 text-2xl font-bold text-primary">
-                            ${course.price.toFixed(2)}
-                        </p>
-                    </div>
+                <div className="space-y-8">
+                    <div className="p-8 rounded-2xl border-2 border-primary/10 bg-card shadow-xl sticky top-8">
+                        <h2 className="text-2xl font-black mb-6 tracking-tight flex items-center gap-2">
+                            Course Content
+                        </h2>
 
-                    <div className="prose max-w-none text-muted-foreground">
-                        <p>{course.description}</p>
-                    </div>
-
-                    <div className="flex flex-col gap-4 sm:flex-row">
-                        {isEnrolled ? (
-                            <Link href="/dashboard">
-                                <Button size="lg" className="w-full sm:w-auto">
-                                    Go to Dashboard
-                                </Button>
-                            </Link>
-                        ) : (
-                            <form action={enrollUser.bind(null, course.id)}>
-                                <Button size="lg" className="w-full sm:w-auto" type="submit">
-                                    Enroll Now
-                                </Button>
-                            </form>
-                        )}
-                    </div>
-
-                    <div className="mt-8 border-t pt-8">
-                        <h2 className="text-2xl font-bold mb-4">Course Syllabus</h2>
-                        {lessons.length === 0 ? (
-                            <p className="text-muted-foreground">No lessons available yet.</p>
-                        ) : (
-                            <div className="space-y-4">
-                                {lessons.map((lesson, index) => (
-                                    <div key={lesson.id} className="flex items-center justify-between p-4 border rounded-lg bg-card text-card-foreground">
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm">
-                                                {index + 1}
-                                            </div>
-                                            <span className="font-medium">{lesson.title}</span>
+                        {!isEnrolled ? (
+                            <div className="space-y-6">
+                                <p className="text-muted-foreground">Enroll now to access all lessons and track your progress.</p>
+                                <form action={enrollUser.bind(null, course.id)} className="w-full">
+                                    <Button size="lg" className="w-full h-14 text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-1">
+                                        Enroll in Course
+                                    </Button>
+                                </form>
+                                <div className="space-y-4 pt-4 border-t">
+                                    {lessons.map((lesson, index) => (
+                                        <div key={lesson.id} className="flex items-center gap-4 text-muted-foreground/60">
+                                            <Lock size={16} />
+                                            <span className="text-sm font-medium">{lesson.title}</span>
                                         </div>
-                                        {isEnrolled ? (
-                                            <Link href={`/courses/${course.id}/lessons/${lesson.id}`}>
-                                                <Button size="sm" variant="secondary">Start</Button>
-                                            </Link>
-                                        ) : (
-                                            <Button size="sm" variant="ghost" disabled>
-                                                <span className="mr-2">🔒</span> Locked
-                                            </Button>
-                                        )}
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {lessons.map((lesson, index) => {
+                                    const progress = progressRecords.find(p => p.lesson_id === lesson.id)
+                                    const isCompleted = progress?.is_completed || false
+
+                                    // Logic for locking:
+                                    // Lesson 1 is always unlocked.
+                                    // Other lessons are unlocked if the previous lesson is completed.
+                                    const isFirst = index === 0
+                                    const prevLessonId = !isFirst ? lessons[index - 1].id : null
+                                    const prevProgress = prevLessonId ? progressRecords.find(p => p.lesson_id === prevLessonId) : null
+                                    const isUnlocked = isFirst || (prevProgress?.is_completed ?? false)
+
+                                    let statusContent;
+                                    if (isCompleted) {
+                                        statusContent = (
+                                            <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 p-1.5 rounded-full">
+                                                <CheckCircle2 size={18} />
+                                            </div>
+                                        )
+                                    } else if (isUnlocked) {
+                                        statusContent = (
+                                            <div className="bg-primary/10 text-primary p-1.5 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                                <PlayCircle size={18} />
+                                            </div>
+                                        )
+                                    } else {
+                                        statusContent = (
+                                            <div className="text-muted-foreground/40 p-1.5">
+                                                <Lock size={18} />
+                                            </div>
+                                        )
+                                    }
+
+                                    return (
+                                        <div key={lesson.id} className="group">
+                                            {isUnlocked ? (
+                                                <Link
+                                                    href={`/courses/${course.id}/lessons/${lesson.id}`}
+                                                    className={`flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:shadow-md ${isCompleted ? 'border-green-100 bg-green-50/30' : 'border-primary/5 bg-muted/30'}`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-xs font-black text-muted-foreground/40 group-hover:text-primary/40 transition-colors">
+                                                            {(index + 1).toString().padStart(2, '0')}
+                                                        </span>
+                                                        <span className={`font-bold text-sm tracking-tight ${isCompleted ? 'text-green-800 dark:text-green-300' : 'text-foreground/80'}`}>
+                                                            {lesson.title}
+                                                        </span>
+                                                    </div>
+                                                    {statusContent}
+                                                </Link>
+                                            ) : (
+                                                <div className="flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-muted/50 bg-muted/10 opacity-60">
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-xs font-black text-muted-foreground/20">
+                                                            {(index + 1).toString().padStart(2, '0')}
+                                                        </span>
+                                                        <span className="font-bold text-sm tracking-tight text-muted-foreground/40">
+                                                            {lesson.title}
+                                                        </span>
+                                                    </div>
+                                                    {statusContent}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         )}
                     </div>

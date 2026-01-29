@@ -14,6 +14,25 @@ export interface LessonProgress {
     completed_at: string | null
 }
 
+export async function getUserProgress(): Promise<LessonProgress[]> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const { data, error } = await supabase
+        .from('lesson_progress')
+        .select('*')
+        .eq('user_id', user.id)
+
+    if (error) {
+        console.error('Error fetching user progress:', error)
+        return []
+    }
+
+    return data as LessonProgress[]
+}
+
 export async function getLessonProgress(lessonId: string): Promise<LessonProgress | null> {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -28,6 +47,29 @@ export async function getLessonProgress(lessonId: string): Promise<LessonProgres
         .single()
 
     return data as LessonProgress
+}
+
+export async function getCourseProgress(courseId: string): Promise<LessonProgress[]> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const lessons = await getCourseLessons(courseId)
+    const lessonIds = lessons.map(l => l.id)
+
+    const { data, error } = await supabase
+        .from('lesson_progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .in('lesson_id', lessonIds)
+
+    if (error) {
+        console.error('Error fetching course progress:', error)
+        return []
+    }
+
+    return data as LessonProgress[]
 }
 
 export async function isLessonLocked(courseId: string, lessonId: string): Promise<boolean> {

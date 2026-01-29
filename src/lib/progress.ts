@@ -218,8 +218,11 @@ export async function reviewProject(
 
     if (!user) throw new Error('Unauthorized')
 
-    // TODO: Add role check for instructor permissions
-    // For now, any authenticated user can review (will add role-based auth later)
+    // Check if user is an instructor
+    const role = user.user_metadata?.role || 'student'
+    if (role !== 'instructor') {
+        throw new Error('Unauthorized: Only instructors can review projects')
+    }
 
     if (rating < 0 || rating > 100) {
         throw new Error('Rating must be between 0 and 100')
@@ -243,4 +246,5 @@ export async function reviewProject(
     }
 
     revalidatePath(`/courses`)
+    revalidatePath(`/instructor`)
 }

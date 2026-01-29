@@ -26,6 +26,11 @@ export async function Navbar() {
                                 Dashboard
                             </Link>
                         )}
+                        {user?.user_metadata?.role === 'instructor' && (
+                            <Link href="/instructor/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
+                                Instructor
+                            </Link>
+                        )}
                     </div>
                 </div>
                 <div className="flex items-center gap-4">

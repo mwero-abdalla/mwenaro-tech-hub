@@ -35,11 +35,50 @@ export async function isInstructor(): Promise<boolean> {
  */
 export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
 
     // Check if user is instructor
-    if (!await isInstructor()) {
+    const role = user.user_metadata?.role || 'student'
+    if (role !== 'instructor') {
         throw new Error('Unauthorized: Instructor access required')
     }
+
+    // 1. Get Cohorts assigned to this instructor
+    const { data: myCohorts, error: cohortError } = await supabase
+        .from('cohorts')
+        .select('id')
+        .eq('instructor_id', user.id)
+
+    if (cohortError) {
+        console.error('Error fetching cohorts:', cohortError)
+        throw new Error('Failed to fetch instructor cohorts')
+    }
+
+    const cohortIds = myCohorts.map(c => c.id)
+
+    // If no cohorts assigned, return empty (or decided if they should see unassigned students? Strict mode: NO)
+    if (cohortIds.length === 0) {
+        return []
+    }
+
+    // 2. data fetch - Join with enrollments to filter by cohort
+    // Supabase JS doesn't support complex joins in one go easily for this specific filtering without views or RPC.
+    // However, we can fetch submissions and filter, OR fetch enrollments first.
+    // Best approach given the foreign keys: 
+    // Fetch users in my cohorts first.
+
+    const { data: enrolledStudents, error: enrollError } = await supabase
+        .from('enrollments')
+        .select('user_id')
+        .in('cohort_id', cohortIds)
+
+    if (enrollError) throw new Error('Failed to fetch enrolled students')
+
+    const studentIds = enrolledStudents.map(e => e.user_id)
+
+    if (studentIds.length === 0) return []
 
     const { data, error } = await supabase
         .from('lesson_progress')
@@ -62,6 +101,7 @@ export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
             )
         `)
         .not('project_repo_link', 'is', null)
+        .in('user_id', studentIds) // Filter by my students
         .order('completed_at', { ascending: false })
 
     if (error) {

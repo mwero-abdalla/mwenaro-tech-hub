@@ -102,7 +102,13 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
 
     if (!user) throw new Error('Unauthorized')
 
-    // Fetch existing progress to check attempts
+    // Fetch lesson and existing progress
+    const { data: lesson } = await supabase
+        .from('lessons')
+        .select('has_project')
+        .eq('id', lessonId)
+        .single()
+
     const progress = await getLessonProgress(lessonId)
     const attempts = progress?.quiz_attempts || 0
 
@@ -124,6 +130,12 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
     const score = Math.round((correctCount / questions.length) * 100)
     const passed = score >= 70 // 70% passing grade
 
+    // Determine completion: 
+    // Completed ONLY IF (passed AND (no project required OR project already submitted))
+    const hasProjectRequirement = lesson?.has_project || false
+    const projectDone = !!progress?.project_repo_link
+    const isCompletedNow = passed && (!hasProjectRequirement || projectDone)
+
     // Update progress
     const { error } = await supabase
         .from('lesson_progress')
@@ -132,8 +144,8 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
             lesson_id: lessonId,
             quiz_attempts: attempts + 1,
             highest_quiz_score: Math.max(score, progress?.highest_quiz_score || 0),
-            is_completed: passed, // If passed, mark complete (unless there's a project? logic below)
-            completed_at: passed ? new Date().toISOString() : null
+            is_completed: isCompletedNow,
+            completed_at: isCompletedNow ? new Date().toISOString() : (progress?.completed_at || null)
         })
 
     if (error) {
@@ -141,7 +153,7 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
         throw new Error('Failed to save progress')
     }
 
-    revalidatePath(`/courses`) // Revalidate broadly to update locks
+    revalidatePath(`/courses`)
     return { success: true, score, passed, message: passed ? 'Quiz passed!' : 'Quiz failed. Try again.' }
 }
 
@@ -151,14 +163,24 @@ export async function submitProject(lessonId: string, repoLink: string) {
 
     if (!user) throw new Error('Unauthorized')
 
+    // Fetch existing progress and questions
+    const progress = await getLessonProgress(lessonId)
+    const questions = await getLessonQuestions(lessonId)
+
+    // Determine completion:
+    // Completed ONLY IF (submitting project AND (no questions OR quiz already passed))
+    const hasQuizRequirement = questions.length > 0
+    const quizPassed = (progress?.highest_quiz_score || 0) >= 70
+    const isCompletedNow = !hasQuizRequirement || quizPassed
+
     const { error } = await supabase
         .from('lesson_progress')
         .upsert({
             user_id: user.id,
             lesson_id: lessonId,
             project_repo_link: repoLink,
-            is_completed: true,
-            completed_at: new Date().toISOString()
+            is_completed: isCompletedNow,
+            completed_at: isCompletedNow ? new Date().toISOString() : (progress?.completed_at || null)
         })
 
     if (error) {

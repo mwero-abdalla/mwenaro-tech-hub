@@ -6,7 +6,16 @@ export interface Lesson {
     title: string
     content: string
     order_index: number
+    has_project: boolean
     created_at: string
+}
+
+export interface Question {
+    id: string
+    lesson_id: string
+    question_text: string
+    options: string[]
+    correct_answer: number
 }
 
 export async function getCourseLessons(courseId: string): Promise<Lesson[]> {
@@ -41,4 +50,20 @@ export async function getLesson(lessonId: string): Promise<Lesson | null> {
     }
 
     return data as Lesson
+}
+
+export async function getLessonQuestions(lessonId: string): Promise<Question[]> {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+        .from('questions')
+        .select('*')
+        .eq('lesson_id', lessonId)
+
+    if (error) {
+        console.error('Error fetching questions:', error)
+        return []
+    }
+
+    return data as Question[]
 }

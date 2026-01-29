@@ -1,4 +1,5 @@
 import { getCourse } from '@/lib/courses'
+import { hasEnrolled, enrollUser } from '@/lib/enrollment'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,6 +14,7 @@ interface CoursePageProps {
 export default async function CoursePage({ params }: CoursePageProps) {
     const { id } = await params
     const course = await getCourse(id)
+    const isEnrolled = await hasEnrolled(id)
 
     if (!course) {
         notFound()
@@ -49,9 +51,19 @@ export default async function CoursePage({ params }: CoursePageProps) {
                     </div>
 
                     <div className="flex flex-col gap-4 sm:flex-row">
-                        <Button size="lg" className="w-full sm:w-auto">
-                            Enroll Now
-                        </Button>
+                        {isEnrolled ? (
+                            <Link href="/dashboard">
+                                <Button size="lg" className="w-full sm:w-auto">
+                                    Go to Dashboard
+                                </Button>
+                            </Link>
+                        ) : (
+                            <form action={enrollUser.bind(null, course.id)}>
+                                <Button size="lg" className="w-full sm:w-auto" type="submit">
+                                    Enroll Now
+                                </Button>
+                            </form>
+                        )}
                         <Button variant="outline" size="lg" className="w-full sm:w-auto">
                             View Syllabus
                         </Button>

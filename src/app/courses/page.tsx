@@ -22,22 +22,22 @@ export default async function CoursesPage() {
                     </div>
 
                     {/* Centered Elevated Search Bar */}
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-3xl px-4 z-20">
-                        <div className="p-2 bg-white dark:bg-zinc-900 rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/5 flex items-center">
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-2xl px-4 z-20">
+                        <div className="p-1.5 bg-white dark:bg-zinc-900 rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/5 flex items-center">
                             <div className="pl-6 text-muted-foreground">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
                             <input
                                 type="text"
                                 placeholder="Search courses, instructors..."
-                                className="flex-1 h-16 pl-4 pr-6 rounded-2xl bg-transparent border-none focus:ring-0 font-bold text-lg text-secondary dark:text-white"
+                                className="flex-1 h-14 pl-4 pr-6 rounded-2xl bg-transparent border-none focus:ring-0 font-bold text-base text-secondary dark:text-white"
                             />
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div className="container mx-auto px-4 mt-32 relative z-10 flex flex-col lg:flex-row gap-12">
+            <div className="container mx-auto px-4 mt-40 relative z-10 flex flex-col lg:flex-row gap-12">
                 {/* Sidebar Filters */}
                 <aside className="w-full lg:w-64 space-y-8">
                     <div>

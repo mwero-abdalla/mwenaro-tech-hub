@@ -20,10 +20,11 @@ export function CourseCard({ course, progress }: CourseCardProps) {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
-
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4">
+                {/* Status Badge */}
+                <div className="absolute top-4 left-4 flex gap-2 z-10">
+                    <div className="px-3 py-1 backdrop-blur-md bg-primary/90 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
+                        {course.price > 100 ? 'Bestseller' : 'New'}
+                    </div>
                     <div className="px-3 py-1 backdrop-blur-md bg-white/10 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
                         {course.level || 'Advanced'}
                     </div>

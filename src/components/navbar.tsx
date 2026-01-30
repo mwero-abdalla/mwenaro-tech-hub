@@ -7,61 +7,60 @@ import { NotificationBell } from './notification-bell'
 export async function Navbar() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
+    const isAdmin = user?.user_metadata?.role === 'admin'
+    const isInstructor = user?.user_metadata?.role === 'instructor'
 
     return (
-        <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center justify-between px-4">
-                <div className="flex items-center gap-6">
-                    <Link href="/" className="font-bold text-xl">
-                        Mwenaro Tech
-                    </Link>
-                    <div className="hidden md:flex gap-8">
-                        <Link href="/" className="text-sm font-bold transition-all hover:text-primary relative group">
-                            Home
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-                        </Link>
-                        <Link href="/courses" className="text-sm font-bold transition-all hover:text-primary relative group">
-                            Courses
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-                        </Link>
-                        {user && (
-                            <Link href="/dashboard" className="text-sm font-bold transition-all hover:text-primary relative group">
-                                My Learning
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-                            </Link>
-                        )}
-                        {user?.user_metadata?.role === 'instructor' && (
-                            <Link href="/instructor/dashboard" className="text-sm font-bold transition-all hover:text-primary text-secondary dark:text-secondary-foreground px-3 py-1 bg-secondary/5 dark:bg-white/5 rounded-full border border-secondary/10 hover:border-primary/30">
-                                Instructor Portal
-                            </Link>
-                        )}
-                        {user?.user_metadata?.role === 'admin' && (
-                            <Link href="/admin/dashboard" className="text-sm font-bold transition-all hover:text-primary text-primary px-3 py-1 bg-primary/5 rounded-full border border-primary/10 hover:border-primary/30">
-                                Admin Dashboard
-                            </Link>
-                        )}
+        <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl">
+            <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+                <Link href="/" className="flex items-center gap-2 group">
+                    <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+                        M
                     </div>
+                    <span className="text-xl font-black tracking-tighter text-secondary dark:text-white">
+                        Mwenaro<span className="text-primary">.</span>Tech
+                    </span>
+                </Link>
+
+                <div className="hidden md:flex items-center gap-10">
+                    <Link href="/courses" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Courses</Link>
+                    {user && (
+                        <Link href="/dashboard" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">My Learning</Link>
+                    )}
+                    <Link href="#" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">About</Link>
                 </div>
+
                 <div className="flex items-center gap-4">
                     {user ? (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-6">
+                            {isAdmin && (
+                                <Link href="/admin/dashboard" className="hidden md:block">
+                                    <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest">Admin</span>
+                                </Link>
+                            )}
+                            {isInstructor && (
+                                <Link href="/instructor/dashboard" className="hidden md:block">
+                                    <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest">Instructor</span>
+                                </Link>
+                            )}
                             <NotificationBell />
+                            <Link href="/dashboard">
+                                <Button size="sm" className="font-black h-11 px-6 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 rounded-xl">
+                                    Dashboard
+                                </Button>
+                            </Link>
                             <form action={signOut}>
-                                <Button variant="ghost" size="sm" type="submit">
-                                    Sign Out
+                                <Button variant="ghost" size="sm" type="submit" className="text-xs font-bold text-muted-foreground uppercase">
+                                    Exit
                                 </Button>
                             </form>
                         </div>
                     ) : (
                         <>
-                            <Link href="/login">
-                                <Button variant="ghost" size="sm">
-                                    Login
-                                </Button>
-                            </Link>
+                            <Link href="/login" className="text-sm font-bold text-muted-foreground hover:text-primary uppercase tracking-widest px-4">Sign In</Link>
                             <Link href="/signup">
-                                <Button size="sm">
-                                    Sign Up
+                                <Button size="sm" className="font-black h-11 px-6 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 rounded-xl">
+                                    Get Started
                                 </Button>
                             </Link>
                         </>

@@ -17,65 +17,94 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative w-full py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-secondary to-background text-white">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_120%,rgba(232,93,59,0.3),transparent)]"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
-        </div>
-
+      <section className="relative w-full py-20 lg:py-32 overflow-hidden bg-[#F9FAFB] dark:bg-zinc-950">
         <div className="container relative z-10 mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8 text-center lg:text-left">
-              <div className="inline-block px-4 py-1.5 mb-2 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-sm uppercase tracking-widest animate-pulse">
-                ✨ The Future of Tech Education
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-400 font-bold text-sm uppercase tracking-widest">
+                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                AI-Powered Learning Platform
               </div>
-              <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tight">
-                Master the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Future</span> of Technology
+              <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-secondary dark:text-white">
+                Master Tech Skills with <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Expert Guidance</span>
               </h1>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                Join Mwenaro Tech Academy and launch your career with AI-powered personalized learning, expert mentorship, and industry-leading courses.
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                Join thousands of learners transforming their careers with self-paced courses, instructor-led sessions, and AI-powered project feedback.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                 <Link href="/signup">
-                  <Button size="lg" className="h-14 px-8 text-lg font-black bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/20 transition-all hover:-translate-y-1 rounded-xl">
-                    Enroll Now Free
+                  <Button size="lg" className="h-14 px-10 text-lg font-black bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/20 transition-all hover:-translate-y-1 rounded-2xl">
+                    Start Learning Free ➔
                   </Button>
                 </Link>
-                <Link href="/courses">
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-white/20 hover:bg-white/10 backdrop-blur-sm rounded-xl">
-                    Explore Courses
+                <Link href="#">
+                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-zinc-200 hover:bg-zinc-50 dark:border-white/10 dark:hover:bg-white/5 rounded-2xl">
+                    ▷ Watch Demo
                   </Button>
                 </Link>
               </div>
+              <div className="flex items-center justify-center lg:justify-start gap-12 pt-10">
+                <div>
+                  <p className="text-2xl font-black text-secondary dark:text-white">10K+</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active Learners</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-secondary dark:text-white">150+</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Tech Courses</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-secondary dark:text-white">95%</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Success Rate</p>
+                </div>
+              </div>
             </div>
 
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-blue-500/20 rounded-[2rem] blur-3xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl">
-                <Image
-                  src="/assets/hero_tech_ai.png"
-                  alt="Mwenaro Tech Academy Hero"
-                  width={1200}
-                  height={800}
-                  className="object-cover transition duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent"></div>
-
-                {/* Floating Badge */}
-                <div className="absolute bottom-8 left-8 right-8 p-6 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl">
+            <div className="relative">
+              {/* Journey Map Mockup */}
+              <div className="relative p-8 rounded-[3rem] bg-white dark:bg-zinc-900 shadow-3xl border border-zinc-100 dark:border-white/5">
+                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 p-6 backdrop-blur-xl bg-white/80 dark:bg-zinc-800/80 border border-zinc-100 dark:border-white/10 rounded-[2rem] shadow-2xl z-20 hidden md:block">
                   <div className="flex items-center gap-4">
-                    <div className="flex -space-x-3">
-                      {[1, 2, 3].map(i => (
-                        <div key={i} className="w-10 h-10 rounded-full border-2 border-secondary bg-gray-800 flex items-center justify-center text-[10px] font-black uppercase tracking-tighter">
-                          Dev
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-bold text-white uppercase tracking-tighter">Join 10k+ Tech Leaders</p>
-                      <p className="text-xs text-gray-400">95% hiring rate across our graduates.</p>
+                    <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-xl">🏆</div>
+                    <div>
+                      <p className="text-sm font-black text-secondary dark:text-white">Certificate Ready</p>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase">AI Generated</p>
                     </div>
                   </div>
+                </div>
+
+                <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#0F172A] to-[#1E293B] flex items-center justify-center border border-white/10">
+                  <div className="text-center space-y-6">
+                    <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto ring-1 ring-white/20">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h4 className="text-xl font-black text-white">Your Learning Journey Starts Here</h4>
+                  </div>
+
+                  {/* Abstract particles / lines */}
+                  <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                </div>
+
+                <div className="mt-8 space-y-4">
+                  {[
+                    { step: "01", title: "Choose Your Path", desc: "Self-paced or Instructor-led" },
+                    { step: "02", title: "Learn & Build Projects", desc: "Get AI-powered feedback" }
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-6 p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 group hover:bg-white dark:hover:bg-zinc-800 transition-colors cursor-default">
+                      <span className="text-xl font-black text-zinc-300 group-hover:text-primary transition-colors">{item.step}</span>
+                      <div>
+                        <p className="text-sm font-black text-secondary dark:text-white">{item.title}</p>
+                        <p className="text-xs text-muted-foreground">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 backdrop-blur-xl bg-white/80 dark:bg-zinc-800/80 border border-zinc-100 dark:border-white/10 rounded-full shadow-2xl flex items-center gap-3 whitespace-nowrap z-20">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map(i => <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-zinc-200"></div>)}
+                  </div>
+                  <span className="text-[10px] font-black text-secondary dark:text-white uppercase tracking-wider">+500 joined today</span>
                 </div>
               </div>
             </div>

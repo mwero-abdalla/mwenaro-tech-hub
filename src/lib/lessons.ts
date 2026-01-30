@@ -16,6 +16,7 @@ export interface Question {
     question_text: string
     options: string[]
     correct_answer: number
+    explanation?: string
 }
 
 export async function getCourseLessons(courseId: string): Promise<Lesson[]> {

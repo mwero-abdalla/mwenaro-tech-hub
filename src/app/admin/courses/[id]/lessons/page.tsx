@@ -1,9 +1,10 @@
-import { getCourseLessons } from '@/lib/lessons'
+import { getCourseLessons, getLessonQuestions } from '@/lib/lessons'
 import { getCourse } from '@/lib/courses'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { LessonForm } from '@/components/lesson-form'
 import { EditLessonModal } from '@/components/edit-lesson-modal'
+import { ManageQuizModal } from '@/components/manage-quiz-modal'
 import { deleteLesson } from '@/lib/admin'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -21,6 +22,11 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
     if (!course) {
         notFound()
     }
+
+    const lessonsWithQuestions = await Promise.all(lessons.map(async (lesson) => {
+        const questions = await getLessonQuestions(lesson.id)
+        return { ...lesson, questions }
+    }))
 
     const nextOrderIndex = lessons.length > 0
         ? Math.max(...lessons.map(l => l.order_index)) + 1
@@ -47,7 +53,7 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
                                 No lessons added to this course yet.
                             </Card>
                         ) : (
-                            lessons.map(lesson => (
+                            lessonsWithQuestions.map(lesson => (
                                 <Card key={lesson.id} className="p-4 flex justify-between items-center group hover:border-purple-300 transition-all shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 font-bold text-xs ring-1 ring-purple-200 dark:ring-purple-700">
@@ -68,6 +74,7 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ManageQuizModal lesson={lesson} questions={lesson.questions} />
                                         <EditLessonModal lesson={lesson} />
                                         <form action={async () => {
                                             'use server'

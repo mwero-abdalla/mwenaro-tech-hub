@@ -9,9 +9,9 @@ export default async function CoursesPage() {
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-20">
             {/* Header section with deep-to-coral gradient */}
-            <header className="relative pt-32 pb-48 overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-primary text-white text-center">
+            <header className="relative pt-32 pb-32 overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-primary text-white text-center">
                 <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                <div className="container relative z-10 mx-auto px-4">
+                <div className="container relative z-10 mx-auto px-4 mb-20">
                     <div className="max-w-3xl mx-auto space-y-6">
                         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight">
                             Explore Our Courses
@@ -20,19 +20,22 @@ export default async function CoursesPage() {
                             Master in-demand tech skills with expert-led courses. Learn at your own pace with hands-on projects.
                         </p>
                     </div>
+                </div>
 
-                    {/* Centered Elevated Search Bar */}
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-2xl px-4 z-20">
-                        <div className="p-1.5 bg-white dark:bg-zinc-900 rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/5 flex items-center">
-                            <div className="pl-6 text-muted-foreground">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Search courses, instructors..."
-                                className="flex-1 h-14 pl-4 pr-6 rounded-2xl bg-transparent border-none focus:ring-0 font-bold text-base text-secondary dark:text-white"
-                            />
+                {/* Centered Elevated Search Bar - Now relative to the header bottom edge */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-xl px-4 z-20">
+                    <div className="p-1 px-1 bg-white dark:bg-zinc-900 rounded-full shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/5 flex items-center">
+                        <div className="pl-6 text-muted-foreground">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
+                        <input
+                            type="text"
+                            placeholder="Search courses, instructors..."
+                            className="flex-1 h-12 pl-4 pr-6 rounded-full bg-transparent border-none focus:ring-0 font-bold text-sm text-secondary dark:text-white"
+                        />
+                        <button className="bg-primary hover:bg-primary/90 text-white px-6 h-10 rounded-full text-xs font-black uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20 mr-1">
+                            Find
+                        </button>
                     </div>
                 </div>
             </header>

@@ -5,7 +5,8 @@ import { MessageCircle, X, Send, User, ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { getChatContacts, getOrCreateConversation, getMessages, sendMessage, subscribeToMessages, Message } from '@/lib/chat'
+import { getChatContacts, getOrCreateConversation, getMessages, sendMessage, Message } from '@/lib/chat'
+import { subscribeToMessages } from '@/lib/chat-client'
 
 export function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false)
@@ -136,8 +137,8 @@ export function ChatWidget() {
                             >
                                 <div
                                     className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.sender_id === selectedContact?.id
-                                            ? 'bg-white dark:bg-gray-800 border'
-                                            : 'bg-orange-600 text-white shadow-md'
+                                        ? 'bg-white dark:bg-gray-800 border'
+                                        : 'bg-orange-600 text-white shadow-md'
                                         }`}
                                 >
                                     {msg.content}

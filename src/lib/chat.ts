@@ -1,4 +1,5 @@
-import { createClient } from './supabase/client'
+'use server'
+
 import { createClient as createServerClient } from './supabase/server'
 
 export interface Message {
@@ -27,7 +28,7 @@ export async function getOrCreateConversation(otherUserId: string, title?: strin
     if (!user) throw new Error('Not authenticated')
 
     // Check if a direct conversation already exists
-    const { data: existing, error: searchError } = await supabase
+    const { data: existing } = await supabase
         .from('conversation_participants')
         .select('conversation_id')
         .eq('user_id', user.id)
@@ -35,7 +36,7 @@ export async function getOrCreateConversation(otherUserId: string, title?: strin
     if (existing && existing.length > 0) {
         const conversationIds = existing.map(e => e.conversation_id)
 
-        const { data: common, error: commonError } = await supabase
+        const { data: common } = await supabase
             .from('conversation_participants')
             .select('conversation_id')
             .in('conversation_id', conversationIds)
@@ -107,26 +108,6 @@ export async function getMessages(conversationId: string) {
 }
 
 /**
- * Subscribe to new messages in a conversation (Client Side)
- */
-export function subscribeToMessages(conversationId: string, callback: (message: Message) => void) {
-    const supabase = createClient()
-    return supabase
-        .channel(`chat:${conversationId}`)
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'messages',
-                filter: `conversation_id=eq.${conversationId}`
-            },
-            (payload) => callback(payload.new as Message)
-        )
-        .subscribe()
-}
-
-/**
  * Get contacts for the current user (Instructors for students, Students for instructors)
  */
 export async function getChatContacts() {
@@ -137,7 +118,6 @@ export async function getChatContacts() {
     const role = user.user_metadata?.role || 'student'
 
     if (role === 'student') {
-        // Find instructors of cohorts the student is enrolled in
         const { data: enrollments } = await supabase
             .from('enrollments')
             .select('cohort_id, cohorts(instructor_id)')
@@ -157,7 +137,6 @@ export async function getChatContacts() {
             role: 'instructor'
         })) || []
     } else if (role === 'instructor') {
-        // Find students in cohorts assigned to this instructor
         const { data: cohorts } = await supabase
             .from('cohorts')
             .select('id')

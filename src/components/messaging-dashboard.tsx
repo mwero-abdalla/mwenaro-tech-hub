@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Message, getChatContacts, getMessages, sendMessage, subscribeToMessages, getOrCreateConversation } from '@/lib/chat'
+import { Message, getChatContacts, getMessages, sendMessage, getOrCreateConversation } from '@/lib/chat'
+import { subscribeToMessages } from '@/lib/chat-client'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

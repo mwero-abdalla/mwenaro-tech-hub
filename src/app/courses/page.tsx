@@ -9,10 +9,10 @@ export default async function CoursesPage() {
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-20">
             {/* Header section with deep-to-coral gradient */}
-            <header className="relative pt-32 pb-32 overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-primary text-white text-center">
+            <header className="relative pt-32 pb-40 overflow-visible bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-primary text-white text-center">
                 <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                <div className="container relative z-10 mx-auto px-4 mb-20">
-                    <div className="max-w-3xl mx-auto space-y-6">
+                <div className="container relative z-10 mx-auto px-4 mb-2">
+                    <div className="max-w-3xl mx-auto space-y-4">
                         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight">
                             Explore Our Courses
                         </h1>
@@ -22,9 +22,9 @@ export default async function CoursesPage() {
                     </div>
                 </div>
 
-                {/* Centered Elevated Search Bar - Now relative to the header bottom edge */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-xl px-4 z-20">
-                    <div className="p-1 px-1 bg-white dark:bg-zinc-900 rounded-full shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white/5 flex items-center">
+                {/* Centered Elevated Search Bar - Now z-50 and overflow-visible fix */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 w-full max-w-xl px-4 z-50">
+                    <div className="p-1 px-1 bg-white dark:bg-zinc-900 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10 flex items-center">
                         <div className="pl-6 text-muted-foreground">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>

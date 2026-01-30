@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { createClient } from '@/lib/supabase/server'
 import { signOut } from '@/app/auth/actions'
+import { NotificationBell } from './notification-bell'
 
 export async function Navbar() {
     const supabase = await createClient()
@@ -56,11 +57,14 @@ export async function Navbar() {
                 </div>
                 <div className="flex items-center gap-4">
                     {user ? (
-                        <form action={signOut}>
-                            <Button variant="ghost" size="sm" type="submit">
-                                Sign Out
-                            </Button>
-                        </form>
+                        <div className="flex items-center gap-2">
+                            <NotificationBell />
+                            <form action={signOut}>
+                                <Button variant="ghost" size="sm" type="submit">
+                                    Sign Out
+                                </Button>
+                            </form>
+                        </div>
                     ) : (
                         <>
                             <Link href="/login">

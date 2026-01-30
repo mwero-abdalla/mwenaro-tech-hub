@@ -1,5 +1,6 @@
 import { getEnrolledCourses } from '@/lib/enrollment'
 import { CourseCard } from '@/components/course-card'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getUserProgress } from '@/lib/progress'
@@ -65,11 +66,11 @@ export default async function DashboardPage() {
                             <p className="text-muted-foreground mb-8 text-lg">
                                 You haven't started any courses yet. Explore our curriculum to begin your learning journey.
                             </p>
-                            <a href="/courses">
+                            <Link href="/courses">
                                 <Button size="lg" className="h-14 px-8 text-lg font-bold shadow-xl shadow-primary/20 transition-all hover:scale-105 active:scale-95">
                                     Browse Available Courses
                                 </Button>
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">

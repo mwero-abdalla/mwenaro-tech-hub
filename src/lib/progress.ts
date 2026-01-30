@@ -3,6 +3,8 @@
 import { createClient } from './supabase/server'
 import { revalidatePath } from 'next/cache'
 import { getCourseLessons, getLessonQuestions } from './lessons'
+import { createNotification } from './notifications'
+import { sendNotificationEmail } from './email'
 
 export interface LessonProgress {
     user_id: string
@@ -244,6 +246,24 @@ export async function reviewProject(
     if (error) {
         console.error('Error reviewing project:', error)
         throw new Error('Failed to review project')
+    }
+
+    // Notify student
+    try {
+        await createNotification({
+            user_id: studentUserId,
+            type: 'review',
+            title: 'Project Reviewed',
+            content: `Your project submission for "${lessonId}" has been reviewed by the instructor. Grade: ${rating}%`,
+            link: `/courses` // Or specific lesson link
+        })
+
+        const { data: sUser } = await supabase.auth.admin.getUserById(studentUserId)
+        if (sUser.user?.email) {
+            await sendNotificationEmail(sUser.user.email, 'Project Reviewed', `Your project submission has been reviewed. Grade: ${rating}%.`, '/courses')
+        }
+    } catch (e) {
+        console.error('Failed to send review notification:', e)
     }
 
     revalidatePath(`/courses`)

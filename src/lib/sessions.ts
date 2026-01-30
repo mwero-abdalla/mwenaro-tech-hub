@@ -2,6 +2,8 @@
 
 import { createClient } from './supabase/server'
 import { revalidatePath } from 'next/cache'
+import { createNotification } from './notifications'
+import { sendNotificationEmail } from './email'
 
 export interface Session {
     id: string
@@ -73,6 +75,36 @@ export async function createSession(data: {
 
     if (error) {
         throw new Error(error.message)
+    }
+
+    // Notify students in the cohort
+    try {
+        const { data: enrollments } = await supabase
+            .from('enrollments')
+            .select('user_id')
+            .eq('cohort_id', data.cohort_id)
+
+        if (enrollments && enrollments.length > 0) {
+            const studentIds = enrollments.map(e => e.user_id)
+
+            for (const studentId of studentIds) {
+                await createNotification({
+                    user_id: studentId,
+                    type: 'session',
+                    title: 'New Session Scheduled',
+                    content: `A new session "${data.title}" has been scheduled for ${new Date(data.start_time).toLocaleString()}.`,
+                    link: '/dashboard'
+                })
+
+                // Fetch email and send
+                const { data: sUser } = await supabase.auth.admin.getUserById(studentId)
+                if (sUser.user?.email) {
+                    await sendNotificationEmail(sUser.user.email, 'New Session Scheduled', `A new session "${data.title}" has been scheduled.`, '/dashboard')
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Failed to send session notifications:', e)
     }
 
     revalidatePath('/instructor/sessions')

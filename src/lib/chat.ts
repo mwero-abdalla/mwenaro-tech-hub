@@ -1,6 +1,8 @@
 'use server'
 
 import { createClient as createServerClient } from './supabase/server'
+import { createNotification } from './notifications'
+import { sendNotificationEmail } from './email'
 
 export interface Message {
     id: string
@@ -89,6 +91,34 @@ export async function sendMessage(conversationId: string, content: string) {
         .single()
 
     if (error) throw error
+
+    // Trigger notification for the recipient
+    try {
+        const { data: participants } = await supabase
+            .from('conversation_participants')
+            .select('user_id')
+            .eq('conversation_id', conversationId)
+            .neq('user_id', user.id)
+            .maybeSingle()
+
+        if (participants) {
+            await createNotification({
+                user_id: participants.user_id,
+                type: 'message',
+                title: 'New Message',
+                content: `You received a new message: "${content.substring(0, 30)}${content.length > 30 ? '...' : ''}"`,
+                link: '/instructor/messages'
+            })
+
+            const { data: recipient } = await supabase.auth.admin.getUserById(participants.user_id)
+            if (recipient.user?.email) {
+                await sendNotificationEmail(recipient.user.email, 'New Message on Mwenaro Tech', `You have a new message from ${user.user_metadata?.name || 'a user'}.`, '/instructor/messages')
+            }
+        }
+    } catch (e) {
+        console.error('Failed to send message notification:', e)
+    }
+
     return data
 }
 

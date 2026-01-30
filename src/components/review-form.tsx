@@ -85,9 +85,9 @@ export function ReviewForm({
                             setRating(95);
                         }}
                         disabled={isSubmitting || isReviewed}
-                        className="text-xs flex items-center gap-1 border-purple-200 text-purple-700 hover:bg-purple-50"
+                        className="text-xs flex items-center gap-1 border-primary/20 text-primary hover:bg-primary/5 font-bold uppercase tracking-tighter shadow-sm"
                     >
-                        <span>✨</span> Generate AI Review
+                        <span className="animate-pulse">✨</span> Generate AI Review
                     </Button>
                 </div>
                 <Textarea

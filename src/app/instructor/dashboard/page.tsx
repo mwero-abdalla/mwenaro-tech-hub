@@ -25,50 +25,48 @@ export default async function InstructorDashboard() {
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
             <div className="max-w-7xl mx-auto p-8">
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-4xl font-black tracking-tight mb-2">Instructor Dashboard</h1>
-                    <p className="text-muted-foreground text-lg">Review and rate student project submissions</p>
+                <div className="mb-8 p-8 rounded-3xl bg-white/50 dark:bg-card/50 backdrop-blur-sm border border-white/20 shadow-xl">
+                    <h1 className="text-4xl font-black tracking-tight mb-2 text-primary">Instructor Hub</h1>
+                    <p className="text-muted-foreground text-lg italic">Guidance • Mentorship • Future Leaders</p>
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20 border-blue-200 dark:border-blue-900/50">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <Card className="p-6 bg-gradient-to-br from-primary/10 to-transparent border-primary/20">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Pending Reviews</p>
-                                <p className="text-3xl font-black text-blue-900 dark:text-blue-100">{pendingSubmissions.length}</p>
+                                <p className="text-sm font-bold uppercase tracking-widest text-primary mb-1 text-primary">Pending Reviews</p>
+                                <p className="text-5xl font-black">{pendingSubmissions.length}</p>
                             </div>
-                            <div className="p-3 bg-blue-500 rounded-full">
-                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            <div className="p-4 bg-primary rounded-2xl shadow-lg shadow-primary/20">
+                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                             </div>
                         </div>
                     </Card>
 
-                    <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-950/30 dark:to-green-900/20 border-green-200 dark:border-green-900/50">
+                    <Card className="p-6 bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20 shadow-sm border-white/10">
                         <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">View All</p>
-                                <p className="text-lg font-bold text-green-900 dark:text-green-100">Submissions</p>
+                            <div className="flex-1">
+                                <p className="text-sm font-bold uppercase tracking-widest text-secondary dark:text-secondary-foreground mb-3">Submission History</p>
+                                <Link href="/instructor/submissions">
+                                    <Button variant="default" className="w-full bg-secondary hover:bg-secondary/90 font-bold h-12 rounded-xl text-white">
+                                        View Archives
+                                    </Button>
+                                </Link>
                             </div>
-                            <Link href="/instructor/submissions">
-                                <Button variant="default" className="bg-green-600 hover:bg-green-700">
-                                    View All
-                                </Button>
-                            </Link>
                         </div>
                     </Card>
 
-                    <Card className="p-6 bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 border-purple-200 dark:border-purple-900/50">
+                    <Card className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/10 shadow-sm border-white/10">
                         <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-1">Quick Access</p>
-                                <p className="text-lg font-bold text-purple-900 dark:text-purple-100">Courses</p>
+                            <div className="flex-1">
+                                <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-3">Expand Courseware</p>
+                                <Link href="/courses">
+                                    <Button variant="outline" className="w-full border-primary/20 text-primary hover:bg-primary/5 font-bold h-12 rounded-xl">
+                                        Browse Curriculum
+                                    </Button>
+                                </Link>
                             </div>
-                            <Link href="/courses">
-                                <Button variant="outline" className="border-purple-300 dark:border-purple-700">
-                                    Browse
-                                </Button>
-                            </Link>
                         </div>
                     </Card>
                 </div>

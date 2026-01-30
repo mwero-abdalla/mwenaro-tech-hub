@@ -15,43 +15,30 @@ export async function Navbar() {
                     <Link href="/" className="font-bold text-xl">
                         Mwenaro Tech
                     </Link>
-                    <div className="hidden md:flex gap-6">
-                        <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
+                    <div className="hidden md:flex gap-8">
+                        <Link href="/" className="text-sm font-bold transition-all hover:text-primary relative group">
                             Home
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                         </Link>
-                        <Link href="/courses" className="text-sm font-medium transition-colors hover:text-primary">
+                        <Link href="/courses" className="text-sm font-bold transition-all hover:text-primary relative group">
                             Courses
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                         </Link>
                         {user && (
-                            <Link href="/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
-                                Dashboard
+                            <Link href="/dashboard" className="text-sm font-bold transition-all hover:text-primary relative group">
+                                My Learning
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                             </Link>
                         )}
                         {user?.user_metadata?.role === 'instructor' && (
-                            <>
-                                <Link href="/instructor/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
-                                    Dashboard
-                                </Link>
-                                <Link href="/instructor/sessions" className="text-sm font-medium transition-colors hover:text-primary">
-                                    Sessions
-                                </Link>
-                                <Link href="/instructor/payments" className="text-sm font-medium transition-colors hover:text-primary">
-                                    Payments
-                                </Link>
-                                <Link href="/instructor/messages" className="text-sm font-medium transition-colors hover:text-primary">
-                                    Messages
-                                </Link>
-                            </>
+                            <Link href="/instructor/dashboard" className="text-sm font-bold transition-all hover:text-primary text-secondary dark:text-secondary-foreground px-3 py-1 bg-secondary/5 dark:bg-white/5 rounded-full border border-secondary/10 hover:border-primary/30">
+                                Instructor Portal
+                            </Link>
                         )}
                         {user?.user_metadata?.role === 'admin' && (
-                            <>
-                                <Link href="/admin/dashboard" className="text-sm font-medium transition-colors hover:text-primary text-red-600 dark:text-red-400">
-                                    Admin
-                                </Link>
-                                <Link href="/admin/messages" className="text-sm font-medium transition-colors hover:text-primary">
-                                    Messages
-                                </Link>
-                            </>
+                            <Link href="/admin/dashboard" className="text-sm font-bold transition-all hover:text-primary text-primary px-3 py-1 bg-primary/5 rounded-full border border-primary/10 hover:border-primary/30">
+                                Admin Dashboard
+                            </Link>
                         )}
                     </div>
                 </div>

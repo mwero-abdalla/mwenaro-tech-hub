@@ -6,6 +6,7 @@ export interface Course {
     description: string
     price: number
     image_url: string
+    level?: string
     created_at: string
 }
 

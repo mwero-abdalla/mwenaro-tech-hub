@@ -69,7 +69,7 @@ export function EnrolledCourseCard({ course, progress, lastAccessed }: EnrolledC
 
                             <div className="flex gap-2">
                                 <Button size="sm" className="w-full sm:w-auto text-xs" asChild>
-                                    <Link href={`/courses/${course.id}`}>
+                                    <Link href={progress === 100 ? `/courses/${course.id}` : `/learn/${course.id}`}>
                                         {progress === 100 ? (
                                             <>
                                                 <Award className="mr-2 h-4 w-4" />

@@ -51,30 +51,34 @@ export default async function InstructorCoursesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {workload.map(item => (
                             <Card key={item.id} className="group overflow-hidden border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 rounded-3xl">
-                                <div className="aspect-video w-full bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
-                                    {item.image_url ? (
-                                        <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-zinc-400">
-                                            <Layout className="w-12 h-12" />
-                                        </div>
-                                    )}
-                                    <div className="absolute top-4 right-4 flex gap-2">
-                                        {item.cohort_name && (
-                                            <Badge className="bg-primary/10 text-primary border-primary/20 flex items-center gap-1">
-                                                <Users className="w-3 h-3" />
-                                                Cohort
-                                            </Badge>
+                                <Link href={`/learn/${item.course_id}`}>
+                                    <div className="aspect-video w-full bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden cursor-pointer">
+                                        {item.image_url ? (
+                                            <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-zinc-400">
+                                                <Layout className="w-12 h-12" />
+                                            </div>
                                         )}
-                                        <Badge className={item.is_published ? "bg-green-500/10 text-green-500 border-green-500/20" : "bg-orange-500/10 text-orange-500 border-orange-500/20"}>
-                                            {item.is_published ? 'Published' : 'Draft'}
-                                        </Badge>
+                                        <div className="absolute top-4 right-4 flex gap-2">
+                                            {item.cohort_name && (
+                                                <Badge className="bg-primary/10 text-primary border-primary/20 flex items-center gap-1 shadow-sm">
+                                                    <Users className="w-3 h-3" />
+                                                    Cohort
+                                                </Badge>
+                                            )}
+                                            <Badge className={item.is_published ? "bg-green-500/10 text-green-500 border-green-500/20 shadow-sm" : "bg-orange-500/10 text-orange-500 border-orange-500/20 shadow-sm"}>
+                                                {item.is_published ? 'Published' : 'Draft'}
+                                            </Badge>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                                 <div className="p-6">
-                                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors italic">
-                                        {item.title} {item.cohort_name ? `(${item.cohort_name})` : ''}
-                                    </h3>
+                                    <Link href={`/learn/${item.course_id}`}>
+                                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors italic cursor-pointer">
+                                            {item.title} {item.cohort_name ? `(${item.cohort_name})` : ''}
+                                        </h3>
+                                    </Link>
                                     <p className="text-zinc-500 text-sm line-clamp-2 mb-6 leading-relaxed">
                                         {item.description}
                                     </p>
@@ -85,10 +89,10 @@ export default async function InstructorCoursesPage() {
                                                 Curriculum
                                             </Button>
                                         </Link>
-                                        <Link href={`/courses/${item.course_id}`} target="_blank" className="w-full">
-                                            <Button variant="outline" className="w-full font-bold h-11 rounded-xl border-zinc-200 dark:border-zinc-800">
+                                        <Link href={`/learn/${item.course_id}`} className="w-full">
+                                            <Button className="w-full font-black h-11 rounded-xl shadow-lg shadow-primary/10 transition-all active:scale-95">
                                                 <Eye className="w-4 h-4 mr-2" />
-                                                Preview
+                                                Go to Preview
                                             </Button>
                                         </Link>
                                     </div>

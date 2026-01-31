@@ -25,10 +25,12 @@ export default async function LessonPage({ params }: LessonPageProps) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     const isAdmin = user?.user_metadata?.role === 'admin'
+    const isInstructor = user?.user_metadata?.role === 'instructor'
+    const canBypass = isAdmin || isInstructor
 
     // Check locking logic
     const locked = await isLessonLocked(courseId, lessonId)
-    if (locked && !isAdmin) {
+    if (locked && !canBypass) {
         return (
             <div className="flex flex-col items-center justify-center py-20 text-center">
                 <div className="mb-4 rounded-full bg-muted p-4">
@@ -108,7 +110,11 @@ export default async function LessonPage({ params }: LessonPageProps) {
                                 </span>
                             )}
                         </div>
-                        {progress?.is_completed ? (
+                        {isInstructor ? (
+                            <p className="text-primary font-bold italic bg-primary/5 p-4 rounded-xl border border-primary/10">
+                                Instructor Preview: Quizzes are disabled.
+                            </p>
+                        ) : progress?.is_completed ? (
                             <div className="space-y-2">
                                 <p className="text-muted-foreground">
                                     You've already passed this quiz with a score of <span className="font-bold text-foreground">{progress.highest_quiz_score}%</span>.
@@ -127,16 +133,22 @@ export default async function LessonPage({ params }: LessonPageProps) {
                 {lesson.has_project && (
                     <div className="rounded-2xl border bg-muted/30 p-8">
                         <h2 className="text-2xl font-bold tracking-tight mb-6">Hands-on Project</h2>
-                        <ProjectSubmission
-                            lessonId={lesson.id}
-                            isCompleted={progress?.is_completed || false}
-                            existingLink={progress?.project_repo_link}
-                            quizRequired={questions.length > 0}
-                            quizPassed={(progress?.highest_quiz_score || 0) >= 70}
-                            isReviewed={progress?.project_reviewed || false}
-                            rating={progress?.project_rating}
-                            feedback={progress?.project_feedback}
-                        />
+                        {isInstructor ? (
+                            <p className="text-primary font-bold italic bg-primary/5 p-4 rounded-xl border border-primary/10">
+                                Instructor Preview: Submissions are disabled.
+                            </p>
+                        ) : (
+                            <ProjectSubmission
+                                lessonId={lesson.id}
+                                isCompleted={progress?.is_completed || false}
+                                existingLink={progress?.project_repo_link}
+                                quizRequired={questions.length > 0}
+                                quizPassed={(progress?.highest_quiz_score || 0) >= 70}
+                                isReviewed={progress?.project_reviewed || false}
+                                rating={progress?.project_rating}
+                                feedback={progress?.project_feedback}
+                            />
+                        )}
                     </div>
                 )}
             </div>

@@ -38,7 +38,7 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
     ])
 
     const isAdmin = user?.user_metadata?.role === 'admin'
-    const isInstructor = user?.user_metadata?.role === 'instructor' && course?.instructor_id === user?.id
+    const isInstructor = user?.user_metadata?.role === 'instructor'
     const canBypass = isAdmin || isInstructor
 
     // Determine Navigation

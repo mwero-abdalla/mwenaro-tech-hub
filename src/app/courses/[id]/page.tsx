@@ -25,7 +25,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
     const { data: { user } } = await supabase.auth.getUser()
     const isAdmin = user?.user_metadata?.role === 'admin'
     const isEnrolled = await hasEnrolled(id)
-    const isInstructor = user?.user_metadata?.role === 'instructor' && course?.instructor_id === user?.id
+    const isInstructor = user?.user_metadata?.role === 'instructor'
     const canPreview = isEnrolled || isAdmin || isInstructor
 
     if (!course) {
@@ -41,6 +41,20 @@ export default async function CoursePage({ params }: CoursePageProps) {
             <Link href="/courses" className="text-muted-foreground hover:text-primary mb-6 flex items-center gap-2 transition-colors">
                 <span className="text-xl">&larr;</span> Back to Courses
             </Link>
+
+            {isInstructor && (
+                <div className="mb-10 p-4 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-primary rounded-lg text-white">
+                            <Maximize2 size={20} />
+                        </div>
+                        <div>
+                            <p className="font-black text-sm uppercase tracking-wider text-primary">Instructor Preview Active</p>
+                            <p className="text-xs text-muted-foreground font-medium">You have full access to this course's content and can bypass all locking rules.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="grid gap-12 lg:grid-cols-3">
                 <div className="lg:col-span-2 space-y-8">
@@ -111,22 +125,21 @@ export default async function CoursePage({ params }: CoursePageProps) {
                             </div>
                         ) : (
                             <div className="space-y-3">
-                                {isEnrolled && lessons.length > 0 && (
+                                {isInstructor && lessons.length > 0 ? (
+                                    <Link href={`/learn/${course.id}/${lessons[0].id}`}>
+                                        <Button className="w-full mb-6 font-black h-16 rounded-xl shadow-xl shadow-primary/30 gap-3 border-none bg-gradient-to-r from-primary via-primary to-indigo-600 hover:scale-[1.02] transition-transform text-white flex flex-col items-center justify-center py-2 h-auto">
+                                            <div className="flex items-center gap-2 text-lg">
+                                                <Maximize2 className="w-5 h-5" />
+                                                {isEnrolled ? "Enter Instructor Mode" : "Browse as Instructor"}
+                                            </div>
+                                            <span className="text-[10px] uppercase tracking-[0.2em] font-black opacity-80">Full Access • No Locking</span>
+                                        </Button>
+                                    </Link>
+                                ) : isEnrolled && lessons.length > 0 && (
                                     <Link href={`/learn/${course.id}/${lessons[0].id}`}>
                                         <Button className="w-full mb-6 font-black h-14 rounded-xl shadow-xl shadow-primary/20 gap-2 border-primary/20 bg-gradient-to-r from-primary to-primary/90 hover:scale-[1.02] transition-transform">
                                             <Maximize2 className="w-5 h-5" />
                                             Launch Immersive Player
-                                        </Button>
-                                    </Link>
-                                )}
-                                {isInstructor && !isEnrolled && lessons.length > 0 && (
-                                    <Link href={`/learn/${course.id}/${lessons[0].id}`}>
-                                        <Button variant="outline" className="w-full mb-6 font-black h-14 rounded-xl shadow-lg border-primary/20 hover:bg-primary/5 transition-all text-primary flex flex-col gap-0 h-auto py-3">
-                                            <div className="flex items-center gap-2">
-                                                <Maximize2 className="w-4 h-4" />
-                                                Browse as Instructor
-                                            </div>
-                                            <span className="text-[10px] uppercase tracking-widest opacity-60">Preview Mode Active</span>
                                         </Button>
                                     </Link>
                                 )}

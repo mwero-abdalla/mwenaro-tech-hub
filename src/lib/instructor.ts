@@ -117,13 +117,23 @@ export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
         throw new Error('Failed to fetch submissions')
     }
 
-    // Fetch user details for each submission
-    const userIds = [...new Set(data.map(s => s.user_id))]
-    const { data: users } = await supabase.auth.admin.listUsers()
+    // Fetch user details for each submission from the profiles table
+    const submissionUserIds = [...new Set(data.map(s => s.user_id))]
 
-    const userMap = new Map(
-        users?.users.map(u => [u.id, { email: u.email, name: u.user_metadata?.name }]) || []
-    )
+    // We'll use the profiles table for names and fallback to auth for emails if needed
+    // Using admin client for broader visibility if RLS is strict
+    const adminSupabase = createAdminClient()
+    const { data: profiles } = await adminSupabase
+        .from('profiles')
+        .select('id, full_name')
+        .in('id', submissionUserIds)
+
+    const profileMap = new Map(profiles?.map(p => [p.id, p.full_name]) || [])
+
+    // For emails, we still need to hit auth.admin.listUsers() or have emails in profiles.
+    // Since emails are sensitive, instructors fetching all emails might be limited unless using admin client.
+    const { data: authData } = await adminSupabase.auth.admin.listUsers()
+    const emailMap = new Map(authData?.users.map(u => [u.id, u.email]) || [])
 
     return data.map(submission => ({
         user_id: submission.user_id,
@@ -134,8 +144,8 @@ export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
         project_feedback: submission.project_feedback,
         reviewed_at: submission.reviewed_at,
         submitted_at: submission.completed_at,
-        student_email: userMap.get(submission.user_id)?.email || 'Unknown',
-        student_name: userMap.get(submission.user_id)?.name || null,
+        student_email: emailMap.get(submission.user_id) || 'Unknown',
+        student_name: profileMap.get(submission.user_id) || null,
         lesson_title: (submission.lessons as any).title,
         course_title: (submission.lessons as any).courses.title,
         course_id: (submission.lessons as any).courses.id,
@@ -215,8 +225,12 @@ export async function getStudentSubmission(
         return null
     }
 
-    // Fetch user details
-    const { data: { user } } = await supabase.auth.admin.getUserById(userId)
+    // Fetch student details from profiles and auth
+    const adminSupabase = createAdminClient()
+    const [{ data: profile }, { data: { user: authUser } }] = await Promise.all([
+        adminSupabase.from('profiles').select('full_name').eq('id', userId).single(),
+        adminSupabase.auth.admin.getUserById(userId)
+    ])
 
     return {
         user_id: data.user_id,
@@ -227,8 +241,8 @@ export async function getStudentSubmission(
         project_feedback: data.project_feedback,
         reviewed_at: data.reviewed_at,
         submitted_at: data.completed_at,
-        student_email: user?.email || 'Unknown',
-        student_name: user?.user_metadata?.name || null,
+        student_email: authUser?.email || 'Unknown',
+        student_name: profile?.full_name || null,
         lesson_title: (data.lessons as any).title,
         course_title: (data.lessons as any).courses.title,
         course_id: (data.lessons as any).courses.id,
@@ -330,17 +344,16 @@ export async function getInstructorStudents(instructorId: string): Promise<Enrol
         return []
     }
 
-    // 3. Get user details from auth (using admin client to see all users)
+    // 3. Get user details (using profiles table for names, auth for emails)
     const adminSupabase = createAdminClient()
-    const { data: { users: authUsers } } = await adminSupabase.auth.admin.listUsers()
+    const [{ data: authUsers }, { data: profiles }] = await Promise.all([
+        adminSupabase.auth.admin.listUsers(),
+        adminSupabase.from('profiles').select('id, full_name')
+    ])
 
-    // Create a map for fast lookup
-    const userMap = new Map<string, { email: string, full_name: string }>(
-        authUsers.map((u: User) => [u.id, {
-            email: u.email || '',
-            full_name: (u.user_metadata?.full_name as string) || u.email?.split('@')[0] || 'Student'
-        }])
-    )
+    // Create maps for fast lookup
+    const profileMap = new Map(profiles?.map(p => [p.id, p.full_name]) || [])
+    const emailMap = new Map(authUsers?.users.map(u => [u.id, u.email]) || [])
 
     const cohortMap = new Map(cohorts.map(c => [c.id, {
         name: c.name,
@@ -349,18 +362,19 @@ export async function getInstructorStudents(instructorId: string): Promise<Enrol
 
     // 4. Transform to EnrolledStudent format
     const students: EnrolledStudent[] = enrollments.map(e => {
-        const user = userMap.get(e.user_id)
+        const email = emailMap.get(e.user_id) || 'unknown'
+        const fullName = profileMap.get(e.user_id) || email.split('@')[0] || 'Student'
         const cohort = cohortMap.get(e.cohort_id)
 
         return {
             id: `${e.user_id}-${e.cohort_id}`,
             user_id: e.user_id,
-            email: user?.email || 'unknown',
-            full_name: user?.full_name || null,
+            email: email,
+            full_name: fullName,
             course_title: cohort?.course_title || 'Unknown',
             cohort_name: cohort?.name || 'Unknown',
             enrolled_at: e.enrolled_at,
-            is_completed: false // Logic for completion can be added later (e.g. check lesson_progress)
+            is_completed: false
         }
     })
 

@@ -75,9 +75,9 @@ export default function AboutPage() {
                             Mwero Tech Academy is on a mission to make high-quality tech education accessible to everyone,
                             everywhere. We believe that with the right guidance and resources, anyone can build a successful career in technology.
                         </p>
-                        <Button className="gradient-bg text-primary-foreground h-14 px-8 rounded-2xl text-lg hover:scale-105 transition-transform">
+                        <Button variant="accent" size="xl" className="hover:scale-105 transition-transform">
                             Join Our Community
-                            <ArrowRight className="ml-2 w-5 h-5" />
+                            <ArrowRight className="w-5 h-5 ml-2" />
                         </Button>
                     </div>
                 </section>
@@ -127,7 +127,7 @@ export default function AboutPage() {
                                 <img
                                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
                                     alt="Students learning together"
-                                    className="rounded-3xl card-shadow"
+                                    className="rounded-2xl card-shadow"
                                 />
                                 <div className="absolute -bottom-6 -left-6 bg-card rounded-xl p-4 card-shadow">
                                     <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ export default function AboutPage() {
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                             {team.map((member, index) => (
                                 <div key={index} className="text-center group">
-                                    <div className="relative mb-4 mx-auto w-48 h-48 rounded-2xl overflow-hidden shadow-xl border-4 border-white dark:border-zinc-800">
+                                    <div className="relative mb-4 mx-auto w-48 h-48 rounded-2xl overflow-hidden">
                                         <img
                                             src={member.image}
                                             alt={member.name}
@@ -199,7 +199,7 @@ export default function AboutPage() {
                                         />
                                     </div>
                                     <h3 className="font-display font-bold text-lg text-foreground">{member.name}</h3>
-                                    <p className="text-primary font-medium text-sm mb-2 uppercase tracking-widest">{member.role}</p>
+                                    <p className="text-primary font-medium text-sm mb-2">{member.role}</p>
                                     <p className="text-sm text-muted-foreground px-4">{member.bio}</p>
                                 </div>
                             ))}
@@ -210,20 +210,21 @@ export default function AboutPage() {
                 {/* CTA */}
                 <section className="py-16">
                     <div className="container mx-auto px-4">
-                        <div className="gradient-hero rounded-[3rem] p-12 lg:p-24 text-center">
-                            <h2 className="font-display text-3xl md:text-6xl font-black text-primary-foreground mb-4">
+                        <div className="gradient-hero rounded-3xl p-12 text-center">
+                            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
                                 Ready to Start Your Journey?
                             </h2>
-                            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto mb-8 font-bold">
+                            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto mb-8">
                                 Join thousands of learners who have transformed their careers with Mwero Tech Academy.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                                <Button className="h-16 px-10 bg-white text-primary hover:bg-zinc-100 font-black rounded-2xl shadow-xl transition-all hover:-translate-y-1">
-                                    Get Started For Free
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Button variant="accent" size="xl" className="hover:scale-105 transition-transform">
+                                    Get Started Free
                                 </Button>
                                 <Button
                                     variant="outline"
-                                    className="h-16 px-10 border-white/30 hover:bg-white/10 text-white font-black rounded-2xl"
+                                    size="xl"
+                                    className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                                 >
                                     Contact Us
                                 </Button>

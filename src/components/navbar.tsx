@@ -22,32 +22,22 @@ export async function Navbar() {
                     </span>
                 </Link>
 
-                <div className="hidden md:flex items-center gap-10">
-                    <Link href="/courses" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Courses</Link>
-                    {user && (
-                        <Link href="/dashboard" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">My Learning</Link>
-                    )}
-                    <Link href="/about" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">About</Link>
-                    <Link href="/contact" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Contact</Link>
-                </div>
+                {/* Center Links - Only show for public/logged-out users */}
+                {!user && (
+                    <div className="hidden md:flex items-center gap-10">
+                        <Link href="/courses" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Courses</Link>
+                        <Link href="/about" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">About</Link>
+                        <Link href="/contact" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Contact</Link>
+                    </div>
+                )}
 
                 <div className="flex items-center gap-4">
                     {user ? (
                         <div className="flex items-center gap-6">
-                            {isAdmin && (
-                                <Link href="/admin/dashboard" className="hidden md:block">
-                                    <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest">Admin</span>
-                                </Link>
-                            )}
-                            {isInstructor && (
-                                <Link href="/instructor/dashboard" className="hidden md:block">
-                                    <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest">Instructor</span>
-                                </Link>
-                            )}
                             <NotificationBell />
                             <Link href="/dashboard">
                                 <Button size="sm" className="font-black h-11 px-6 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 rounded-xl">
-                                    Dashboard
+                                    {isAdmin ? 'Admin Portal' : isInstructor ? 'Instructor Hub' : 'Dashboard'}
                                 </Button>
                             </Link>
                             <form action={signOut}>

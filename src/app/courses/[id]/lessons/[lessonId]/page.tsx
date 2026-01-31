@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { QuizModal } from '@/components/quiz-modal'
 import { ProjectSubmission } from '@/components/project-submission'
+import { VideoPlayer } from '@/components/video-player'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -73,11 +74,16 @@ export default async function LessonPage({ params }: LessonPageProps) {
             </div>
 
             {/* Content Area */}
-            <div className="prose prose-slate lg:prose-lg dark:prose-invert max-w-none">
-                <div className="rounded-2xl border bg-card p-8 shadow-sm">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {lesson.content}
-                    </ReactMarkdown>
+            <div className="space-y-8">
+                {lesson.video_url && (
+                    <VideoPlayer url={lesson.video_url} />
+                )}
+                <div className="prose prose-slate lg:prose-lg dark:prose-invert max-w-none">
+                    <div className="rounded-2xl border bg-card p-8 shadow-sm">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {lesson.content}
+                        </ReactMarkdown>
+                    </div>
                 </div>
             </div>
 

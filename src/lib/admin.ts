@@ -178,7 +178,7 @@ export async function assignStudentToCohort(studentId: string, courseId: string,
 
 // --- Lesson Management ---
 
-export async function createLesson(data: { course_id: string, title: string, content: string, order_index: number, has_project: boolean }) {
+export async function createLesson(data: { course_id: string, title: string, content: string, video_url?: string, order_index: number, has_project: boolean }) {
     if (!await isAdmin()) throw new Error('Unauthorized')
     const supabase = await createClient()
     const { error } = await supabase.from('lessons').insert(data)

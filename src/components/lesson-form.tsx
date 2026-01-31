@@ -35,6 +35,7 @@ export function LessonForm({ courseId, initialData, nextOrderIndex, onSuccess }:
             course_id: courseId,
             title: formData.get('title') as string,
             content: content,
+            video_url: formData.get('video_url') as string,
             order_index: parseInt(formData.get('order_index') as string),
             has_project: formData.get('has_project') === 'on'
         }
@@ -72,6 +73,11 @@ export function LessonForm({ courseId, initialData, nextOrderIndex, onSuccess }:
                     <label className="text-sm font-medium mb-1 block">Order Index</label>
                     <Input type="number" name="order_index" defaultValue={initialData?.order_index ?? nextOrderIndex} required />
                 </div>
+            </div>
+
+            <div>
+                <label className="text-sm font-medium mb-1 block">Video URL (YouTube, Vimeo, etc.)</label>
+                <Input name="video_url" defaultValue={initialData?.video_url} placeholder="e.g. https://www.youtube.com/watch?v=..." />
             </div>
 
             <div>

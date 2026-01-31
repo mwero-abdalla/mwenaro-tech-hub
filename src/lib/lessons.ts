@@ -5,6 +5,7 @@ export interface Lesson {
     course_id: string
     title: string
     content: string
+    video_url?: string
     order_index: number
     has_project: boolean
     created_at: string

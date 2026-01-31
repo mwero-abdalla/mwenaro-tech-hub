@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { getPendingSubmissions } from '@/lib/instructor'
+import { getPendingSubmissions, getInstructorStats } from '@/lib/instructor'
 import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -20,6 +20,7 @@ export default async function InstructorDashboard() {
     }
 
     const pendingSubmissions = await getPendingSubmissions()
+    const stats = await getInstructorStats(user.id)
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -46,26 +47,24 @@ export default async function InstructorDashboard() {
 
                     <Card className="p-6 bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20 shadow-sm border-white/10">
                         <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold uppercase tracking-widest text-secondary dark:text-secondary-foreground mb-3">Submission History</p>
-                                <Link href="/instructor/submissions">
-                                    <Button variant="default" className="w-full bg-secondary hover:bg-secondary/90 font-bold h-12 rounded-xl text-white">
-                                        View Archives
-                                    </Button>
-                                </Link>
+                            <div>
+                                <p className="text-sm font-bold uppercase tracking-widest text-secondary dark:text-secondary-foreground mb-1">Total Students</p>
+                                <p className="text-5xl font-black">{stats.totalStudents}</p>
+                            </div>
+                            <div className="p-4 bg-secondary rounded-2xl shadow-lg shadow-secondary/20">
+                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             </div>
                         </div>
                     </Card>
 
                     <Card className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/10 shadow-sm border-white/10">
                         <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                                <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-3">Curriculum Control</p>
-                                <Link href="/instructor/courses">
-                                    <Button variant="outline" className="w-full border-primary/20 text-primary hover:bg-primary/5 font-bold h-12 rounded-xl">
-                                        Manage My Courses
-                                    </Button>
-                                </Link>
+                            <div>
+                                <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">Courses Led</p>
+                                <p className="text-5xl font-black">{stats.totalCourses}</p>
+                            </div>
+                            <div className="p-4 bg-muted rounded-2xl shadow-lg shadow-zinc-200 dark:shadow-none">
+                                <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             </div>
                         </div>
                     </Card>

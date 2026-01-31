@@ -235,3 +235,38 @@ export async function getStudentSubmission(
         ai_status: (data as any).ai_status,
     }
 }
+
+/**
+ * Get instructor-specific stats
+ */
+export async function getInstructorStats(instructorId: string) {
+    const supabase = await createClient()
+
+    // 1. Total Courses assigned to this instructor
+    const { count: coursesCount } = await supabase
+        .from('courses')
+        .select('*', { count: 'exact', head: true })
+        .eq('instructor_id', instructorId)
+
+    // 2. Total Students in cohorts assigned to this instructor
+    const { data: cohorts } = await supabase
+        .from('cohorts')
+        .select('id')
+        .eq('instructor_id', instructorId)
+
+    const cohortIds = cohorts?.map(c => c.id) || []
+
+    let studentsCount = 0
+    if (cohortIds.length > 0) {
+        const { count } = await supabase
+            .from('enrollments')
+            .select('*', { count: 'exact', head: true })
+            .in('cohort_id', cohortIds)
+        studentsCount = count || 0
+    }
+
+    return {
+        totalCourses: coursesCount || 0,
+        totalStudents: studentsCount
+    }
+}

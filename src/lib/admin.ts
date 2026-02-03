@@ -74,19 +74,55 @@ export async function getDashboardStats() {
 
     const supabase = await createClient()
 
-    // This is approximate, real apps might use count aggregation queries
-    const { count: usersCount } = await supabase.from('lesson_progress').select('*', { count: 'exact', head: true }) // Using lesson_progress as proxy for activity? No, let's use listUsers for users
-    // Actually listUsers is admin only and pagination limits apply. For stats, better to query a public profiles table if it existed.
-    // We will stick to what we can access.
+    // Get all users to count students and instructors
+    const allUsers = await getAllUsers()
+    const students = allUsers.filter(u => u.role === 'student')
+    const instructors = allUsers.filter(u => u.role === 'instructor')
 
     // Courses
-    const { count: coursesCount } = await supabase.from('courses').select('*', { count: 'exact', head: true })
+    const { count: coursesCount } = await supabase
+        .from('courses')
+        .select('*', { count: 'exact', head: true })
+
+    // Active Cohorts
+    const { count: cohortsCount } = await supabase
+        .from('cohorts')
+        .select('*', { count: 'exact', head: true })
+
+    // Total Enrollments
+    const { count: enrollmentsCount } = await supabase
+        .from('enrollments')
+        .select('*', { count: 'exact', head: true })
+
+    // Completed Lessons
+    const { count: completedLessonsCount } = await supabase
+        .from('lesson_progress')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_completed', true)
+
+    // Active Learning Streaks (streak active in last 2 days)
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    const { count: activeStreaksCount } = await supabase
+        .from('learning_streaks')
+        .select('*', { count: 'exact', head: true })
+        .gte('last_activity_date', twoDaysAgo.toISOString().split('T')[0])
+        .gt('current_streak', 0)
 
     // Submissions
-    const { count: submissionsCount } = await supabase.from('lesson_progress').select('*', { count: 'exact', head: true }).not('project_repo_link', 'is', null)
+    const { count: submissionsCount } = await supabase
+        .from('lesson_progress')
+        .select('*', { count: 'exact', head: true })
+        .not('project_repo_link', 'is', null)
 
     return {
+        totalStudents: students.length,
+        totalInstructors: instructors.length,
         totalCourses: coursesCount || 0,
+        activeCohorts: cohortsCount || 0,
+        totalEnrollments: enrollmentsCount || 0,
+        completedLessons: completedLessonsCount || 0,
+        activeStreaks: activeStreaksCount || 0,
         totalSubmissions: submissionsCount || 0
     }
 }

@@ -14,18 +14,46 @@ export default async function AdminDashboard() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <Card className="p-6 bg-gradient-to-br from-blue-500/10 to-transparent border-blue-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-2">Total Students</p>
+                        <p className="text-5xl font-black">{stats.totalStudents}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Active learners</p>
+                    </Card>
+                    <Card className="p-6 bg-gradient-to-br from-purple-500/10 to-transparent border-purple-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-purple-600 mb-2">Instructors</p>
+                        <p className="text-5xl font-black">{stats.totalInstructors}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Teaching staff</p>
+                    </Card>
                     <Card className="p-6 bg-gradient-to-br from-primary/10 to-transparent border-primary/20">
                         <p className="text-sm font-bold uppercase tracking-widest text-primary mb-2">Total Courses</p>
                         <p className="text-5xl font-black">{stats.totalCourses}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Available courses</p>
+                    </Card>
+                    <Card className="p-6 bg-gradient-to-br from-green-500/10 to-transparent border-green-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-green-600 mb-2">Active Cohorts</p>
+                        <p className="text-5xl font-black">{stats.activeCohorts}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Learning groups</p>
+                    </Card>
+                    <Card className="p-6 bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-amber-600 mb-2">Enrollments</p>
+                        <p className="text-5xl font-black">{stats.totalEnrollments}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Course enrollments</p>
+                    </Card>
+                    <Card className="p-6 bg-gradient-to-br from-cyan-500/10 to-transparent border-cyan-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-cyan-600 mb-2">Completed</p>
+                        <p className="text-5xl font-black">{stats.completedLessons}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Lessons finished</p>
+                    </Card>
+                    <Card className="p-6 bg-gradient-to-br from-orange-500/10 to-transparent border-orange-500/20">
+                        <p className="text-sm font-bold uppercase tracking-widest text-orange-600 mb-2">Active Streaks</p>
+                        <p className="text-5xl font-black">{stats.activeStreaks}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Learning streaks</p>
                     </Card>
                     <Card className="p-6 bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
-                        <p className="text-sm font-bold uppercase tracking-widest text-secondary dark:text-secondary-foreground mb-2">Total Submissions</p>
+                        <p className="text-sm font-bold uppercase tracking-widest text-secondary dark:text-secondary-foreground mb-2">Submissions</p>
                         <p className="text-5xl font-black">{stats.totalSubmissions}</p>
-                    </Card>
-                    <Card className="p-6 bg-gradient-to-br from-green-600/10 to-transparent border-green-600/20">
-                        <p className="text-sm font-bold uppercase tracking-widest text-green-600 mb-2">Platform Revenue (Est)</p>
-                        <p className="text-5xl font-black text-green-600">$12,450</p>
+                        <p className="text-xs text-muted-foreground mt-1">Project submissions</p>
                     </Card>
                 </div>
 

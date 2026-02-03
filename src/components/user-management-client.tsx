@@ -14,9 +14,14 @@ import {
 import { UserActions } from '@/components/user-actions'
 import { Search, Filter, Shield, User as UserIcon, GraduationCap } from 'lucide-react'
 
-export function UserManagementClient({ initialUsers }: { initialUsers: User[] }) {
+interface UserManagementClientProps {
+    initialUsers: User[]
+    initialRoleFilter?: string
+}
+
+export function UserManagementClient({ initialUsers, initialRoleFilter = 'all' }: UserManagementClientProps) {
     const [searchQuery, setSearchQuery] = useState('')
-    const [roleFilter, setRoleFilter] = useState('all')
+    const [roleFilter, setRoleFilter] = useState(initialRoleFilter)
 
     const filteredUsers = initialUsers.filter(user => {
         const matchesSearch = user.email.toLowerCase().includes(searchQuery.toLowerCase())

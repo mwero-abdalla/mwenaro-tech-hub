@@ -23,6 +23,23 @@ export interface LessonProgress {
     project_feedback: string | null
 }
 
+export interface QuizSubmission {
+    id: string
+    user_id: string
+    lesson_id: string
+    answers: number[]
+    score: number
+    passed: boolean
+    created_at: string
+    // Joined data
+    profiles?: { full_name: string | null; email: string | null }
+    lessons?: {
+        title: string;
+        course_id: string;
+        courses?: { title: string }
+    }
+}
+
 export async function getUserProgress(): Promise<LessonProgress[]> {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -106,7 +123,14 @@ export async function isLessonLocked(courseId: string, lessonId: string): Promis
     return !data?.is_completed
 }
 
-export async function submitQuiz(lessonId: string, answers: number[]): Promise<{ success: boolean; score: number; passed: boolean; message: string; streakData?: { current_streak: number; is_milestone: boolean; milestone_value: number } }> {
+export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
+    success: boolean;
+    score: number;
+    passed: boolean;
+    message: string;
+    correctAnswers?: number[];
+    streakData?: { current_streak: number; is_milestone: boolean; milestone_value: number }
+}> {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -130,6 +154,7 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
     const questions = await getLessonQuestions(lessonId)
     if (questions.length === 0) return { success: true, score: 0, passed: true, message: 'No questions' }
 
+    const correctAnswers = questions.map(q => q.correct_answer)
     let correctCount = 0
     questions.forEach((q, index) => {
         if (answers[index] === q.correct_answer) {
@@ -147,7 +172,7 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
     const isCompletedNow = passed && (!hasProjectRequirement || projectDone)
 
     // Update progress
-    const { error } = await supabase
+    const { error: progressError } = await supabase
         .from('lesson_progress')
         .upsert({
             user_id: user.id,
@@ -158,9 +183,26 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
             completed_at: isCompletedNow ? new Date().toISOString() : (progress?.completed_at || null)
         })
 
-    if (error) {
-        console.error('Error submitting quiz:', error)
+    if (progressError) {
+        console.error('Error submitting quiz progress:', progressError)
         throw new Error('Failed to save progress')
+    }
+
+    // Persist the individual submission attempt
+    const { error: submissionError } = await supabase
+        .from('quiz_submissions')
+        .insert({
+            user_id: user.id,
+            lesson_id: lessonId,
+            answers: answers,
+            score: score,
+            passed: passed
+        })
+
+    if (submissionError) {
+        console.error('Error persisting quiz submission:', submissionError)
+        // We don't throw here to avoid failing the whole process if just the history fails, 
+        // but in a production app we might want stricter consistency.
     }
 
     // Update learning streak if lesson is completed
@@ -173,7 +215,7 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
     }
 
     revalidatePath(`/courses`)
-    return { success: true, score, passed, message: passed ? 'Quiz passed!' : 'Quiz failed. Try again.', streakData }
+    return { success: true, score, passed, message: passed ? 'Quiz passed!' : 'Quiz failed. Try again.', correctAnswers, streakData }
 }
 
 export async function submitProject(lessonId: string, repoLink: string): Promise<{ streakData?: { current_streak: number; is_milestone: boolean; milestone_value: number } }> {
@@ -294,4 +336,85 @@ export async function reviewProject(
 
     revalidatePath(`/courses`)
     revalidatePath(`/instructor`)
+}
+
+export async function getUserQuizzes(): Promise<QuizSubmission[]> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const { data, error } = await supabase
+        .from('quiz_submissions')
+        .select(`
+            *,
+            lessons (
+                title, 
+                course_id,
+                courses (title)
+            )
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching user quizzes:', error)
+        return []
+    }
+
+    return data as QuizSubmission[]
+}
+
+export async function getAllQuizzes(): Promise<QuizSubmission[]> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+    const role = user.user_metadata?.role || 'student'
+    if (role !== 'admin' && role !== 'instructor') return []
+
+    const { data, error } = await supabase
+        .from('quiz_submissions')
+        .select(`
+            *,
+            profiles (full_name, email),
+            lessons (
+                title, 
+                course_id,
+                courses (title)
+            )
+        `)
+        .order('created_at', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching all quizzes:', error)
+        return []
+    }
+
+    return data as QuizSubmission[]
+}
+
+export async function getQuizSubmission(id: string): Promise<QuizSubmission | null> {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+        .from('quiz_submissions')
+        .select(`
+            *,
+            profiles (full_name, email),
+            lessons (
+                title, 
+                course_id,
+                courses (title)
+            )
+        `)
+        .eq('id', id)
+        .single()
+
+    if (error) {
+        console.error('Error fetching quiz submission:', error)
+        return null
+    }
+
+    return data as QuizSubmission
 }

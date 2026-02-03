@@ -9,7 +9,8 @@ import {
     Calendar,
     ClipboardCheck,
     BookOpen,
-    Settings
+    Settings,
+    FileQuestion
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -51,6 +52,11 @@ export function InstructorSidebar({ user, ...props }: InstructorSidebarProps) {
             title: "Courses",
             url: "/instructor/courses",
             icon: BookOpen,
+        },
+        {
+            title: "Quizzes",
+            url: "/instructor/quizzes", // Shared with admin/reviewed as teacher
+            icon: FileQuestion,
         },
         {
             title: "Sessions",

@@ -9,7 +9,8 @@ import {
     BarChart,
     MessageSquare,
     UsersRound,
-    Settings
+    Settings,
+    FileQuestion
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -56,6 +57,11 @@ export function AdminSidebar({ user, ...props }: AdminSidebarProps) {
             title: "Courses",
             url: "/admin/courses",
             icon: BookOpen,
+        },
+        {
+            title: "Quizzes",
+            url: "/admin/quizzes",
+            icon: FileQuestion,
         },
         {
             title: "Cohorts",

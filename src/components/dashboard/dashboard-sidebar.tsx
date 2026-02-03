@@ -7,7 +7,8 @@ import {
     LogOut,
     Settings,
     User,
-    GraduationCap
+    GraduationCap,
+    FileQuestion
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -48,8 +49,13 @@ export function DashboardSidebar({ user, ...props }: DashboardSidebarProps) {
         },
         {
             title: "My Courses",
-            url: "/dashboard/courses", // Future proofing, though currently dashboard lists courses. Maybe just scrollTo or /courses
+            url: "/dashboard/courses",
             icon: BookOpen,
+        },
+        {
+            title: "Quizzes",
+            url: "/dashboard/quizzes",
+            icon: FileQuestion,
         },
         {
             title: "Certificates",

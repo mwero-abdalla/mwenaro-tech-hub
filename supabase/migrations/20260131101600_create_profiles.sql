@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   website_url TEXT,
   linkedin_url TEXT,
   avatar_url TEXT,
+  role TEXT DEFAULT 'student',
+  email TEXT,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -54,8 +56,13 @@ END $$;
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name)
-  VALUES (new.id, new.raw_user_meta_data->>'full_name');
+  INSERT INTO public.profiles (id, full_name, role, email)
+  VALUES (
+    new.id, 
+    new.raw_user_meta_data->>'full_name',
+    COALESCE(new.raw_user_meta_data->>'role', 'student'),
+    new.email
+  );
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

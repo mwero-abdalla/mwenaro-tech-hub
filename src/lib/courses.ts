@@ -9,6 +9,7 @@ export interface Course {
     instructor_id?: string
     is_published?: boolean
     level?: string
+    category?: string
     created_at: string
 }
 

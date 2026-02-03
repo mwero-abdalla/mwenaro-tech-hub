@@ -1,9 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Course } from '@/lib/courses'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { toast } from 'sonner'
+import { Lock } from 'lucide-react'
 
 interface CourseCardProps {
     course: Course
@@ -11,8 +15,19 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course, progress }: CourseCardProps) {
+    const isPublished = course.is_published ?? true // Default to true if undefined, though usually should be false if strictly checking
+
+    const handleExploreClick = (e: React.MouseEvent) => {
+        if (!isPublished) {
+            e.preventDefault()
+            toast.info('Coming Soon!', {
+                description: 'This course is currently being prepared. Stay tuned!',
+            })
+        }
+    }
+
     return (
-        <Card className="flex flex-col overflow-hidden h-full group transition-all duration-500 hover:shadow-[0_20px_50px_rgba(232,93,59,0.15)] border-white/5 bg-white dark:bg-zinc-900 rounded-[2rem] hover:-translate-y-2">
+        <Card className={`flex flex-col overflow-hidden h-full group transition-all duration-500 hover:shadow-[0_20px_50px_rgba(232,93,59,0.15)] border-white/5 bg-white dark:bg-zinc-900 rounded-[2rem] hover:-translate-y-2 ${!isPublished ? 'opacity-75 grayscale-[0.5] hover:opacity-100 hover:grayscale-0' : ''}`}>
             <div className="relative aspect-[16/10] w-full overflow-hidden">
                 <Image
                     src={course.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop'}
@@ -20,14 +35,24 @@ export function CourseCard({ course, progress }: CourseCardProps) {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                {/* Status Badge */}
+
+                {/* Status Badges */}
                 <div className="absolute top-4 left-4 flex gap-2 z-10">
-                    <div className="px-3 py-1 backdrop-blur-md bg-primary/90 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
-                        {course.price > 100 ? 'Bestseller' : 'New'}
-                    </div>
-                    <div className="px-3 py-1 backdrop-blur-md bg-white/10 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
-                        {course.level || 'Advanced'}
-                    </div>
+                    {!isPublished ? (
+                        <div className="px-3 py-1 backdrop-blur-md bg-zinc-900/90 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl flex items-center gap-1">
+                            <Lock className="w-3 h-3" />
+                            Coming Soon
+                        </div>
+                    ) : (
+                        <>
+                            <div className="px-3 py-1 backdrop-blur-md bg-primary/90 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
+                                {course.price > 10000 ? 'Bestseller' : 'New'}
+                            </div>
+                            <div className="px-3 py-1 backdrop-blur-md bg-white/10 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
+                                {course.level || 'Advanced'}
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {progress !== undefined && (
@@ -63,14 +88,24 @@ export function CourseCard({ course, progress }: CourseCardProps) {
                     <div className="flex flex-col">
                         <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Enrolled Price</span>
                         <span className="text-2xl font-black text-secondary dark:text-white">
-                            ${course.price.toFixed(0)}
+                            KSh {course.price.toLocaleString()}
                         </span>
                     </div>
-                    <Link href={`/courses/${course.id}`}>
-                        <Button className="font-black bg-primary hover:bg-primary/90 px-6 h-12 rounded-xl shadow-lg shadow-primary/10 transition-all hover:-translate-y-1">
-                            Explore
+                    {isPublished ? (
+                        <Link href={`/courses/${course.id}`}>
+                            <Button className="font-black bg-primary hover:bg-primary/90 px-6 h-12 rounded-xl shadow-lg shadow-primary/10 transition-all hover:-translate-y-1">
+                                Explore
+                            </Button>
+                        </Link>
+                    ) : (
+                        <Button
+                            onClick={handleExploreClick}
+                            variant="secondary"
+                            className="font-black px-6 h-12 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-muted-foreground cursor-not-allowed hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-foreground transition-all"
+                        >
+                            Coming Soon
                         </Button>
-                    </Link>
+                    )}
                 </div>
             </CardContent>
         </Card>

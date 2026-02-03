@@ -3,7 +3,16 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { deleteCourse } from '@/lib/admin'
-import { CreateCourseForm } from '@/components/create-course-form'
+import { CoursePublishToggle } from '@/components/admin/course-publish-toggle'
+import { CourseForm } from '@/components/admin/course-form'
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Pencil } from 'lucide-react'
 
 export default async function CoursesPage() {
     const courses = await getCourses()
@@ -28,18 +37,35 @@ export default async function CoursesPage() {
                                     <div>
                                         <h3 className="text-xl font-bold">{course.title}</h3>
                                         <p className="text-muted-foreground text-sm line-clamp-1">{course.description}</p>
-                                        <p className="text-sm font-bold mt-2 text-purple-600">${course.price}</p>
+                                        <p className="text-sm font-bold mt-2 text-purple-600">KSh {course.price.toLocaleString()}</p>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <Link href={`/admin/courses/${course.id}/lessons`}>
-                                            <Button variant="outline" size="sm">Manage Lessons</Button>
-                                        </Link>
-                                        <form action={async () => {
-                                            'use server'
-                                            await deleteCourse(course.id)
-                                        }}>
-                                            <Button variant="destructive" size="sm">Delete</Button>
-                                        </form>
+                                    <div className="flex items-center gap-4">
+                                        <CoursePublishToggle courseId={course.id} initialIsPublished={course.is_published || false} />
+                                        <div className="flex gap-2">
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button variant="outline" size="sm" className="h-9 w-9 p-0">
+                                                        <Pencil className="h-4 w-4" />
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                                                    <DialogHeader>
+                                                        <DialogTitle>Edit Course</DialogTitle>
+                                                    </DialogHeader>
+                                                    <CourseForm courseId={course.id} initialData={course} />
+                                                </DialogContent>
+                                            </Dialog>
+
+                                            <Link href={`/admin/courses/${course.id}/lessons`}>
+                                                <Button variant="outline" size="sm">Manage Lessons</Button>
+                                            </Link>
+                                            <form action={async () => {
+                                                'use server'
+                                                await deleteCourse(course.id)
+                                            }}>
+                                                <Button variant="destructive" size="sm">Delete</Button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </Card>
                             ))
@@ -50,7 +76,7 @@ export default async function CoursesPage() {
                     <div className="lg:col-span-1">
                         <Card className="p-6 sticky top-8">
                             <h2 className="text-xl font-bold mb-4">Add New Course</h2>
-                            <CreateCourseForm />
+                            <CourseForm />
                         </Card>
                     </div>
                 </div>

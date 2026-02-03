@@ -135,7 +135,9 @@ export async function createCourse(data: {
     price: number,
     image_url: string,
     instructor_id?: string,
-    is_published?: boolean
+    is_published?: boolean,
+    category?: string,
+    level?: string
 }) {
     if (!await isAdmin()) throw new Error('Unauthorized')
     const supabase = await createClient()

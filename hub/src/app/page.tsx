@@ -6,7 +6,7 @@ import {
     ArrowRight,
     Target,
     Users,
-    TrendingAtArrow,
+    TrendingUp,
     CheckCircle2,
     Sparkles,
     Globe,

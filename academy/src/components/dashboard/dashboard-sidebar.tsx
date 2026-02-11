@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
     BookOpen,
+    Calendar,
     LayoutDashboard,
     LogOut,
     Settings,
@@ -51,6 +52,11 @@ export function DashboardSidebar({ user, ...props }: DashboardSidebarProps) {
             title: "My Courses",
             url: "/dashboard/courses",
             icon: BookOpen,
+        },
+        {
+            title: "Sessions",
+            url: "/dashboard/sessions",
+            icon: Calendar,
         },
         {
             title: "Quizzes",

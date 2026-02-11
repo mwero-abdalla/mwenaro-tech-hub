@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,10 +36,18 @@ export default function SignupPage() {
         const formData = new FormData(e.currentTarget);
 
         try {
-            await signup(formData);
-            router.push("/");
+            const result = await signup(formData);
+            if (result && result.error) {
+                setError(result.error);
+                toast.error(result.error);
+                setIsLoading(false);
+            } else {
+                // Redirect happens in server action on success
+            }
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Sign up failed");
+            const message = err instanceof Error ? err.message : "Sign up failed";
+            setError(message);
+            toast.error(message);
             setIsLoading(false);
         }
     };

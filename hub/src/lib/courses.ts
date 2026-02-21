@@ -11,6 +11,7 @@ export interface Course {
     image_url: string
     level?: string
     category?: string
+    badge?: string
     created_at: string
 }
 

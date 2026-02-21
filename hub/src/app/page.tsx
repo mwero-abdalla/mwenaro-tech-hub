@@ -45,9 +45,9 @@ export default function Home() {
     ];
 
     const featuredCourses = [
-        { title: "Foundations of Web Development", level: "Beginner", highlight: "HTML, CSS, JS, Git & GitHub", color: "from-blue-500 to-cyan-500", price: 12000 },
-        { title: "Intro to React", level: "Intermediate", highlight: "Components, Hooks, State", color: "from-purple-500 to-pink-500", badge: "Coming Soon", price: 14500 },
-        { title: "Fullstack (MERN)", level: "Advanced", highlight: "Full production pipeline", color: "from-orange-500 to-red-500", badge: "Coming Soon", price: 25000 }
+        { title: "Intro to Web Development", level: "Beginner", highlight: "HTML, CSS, JS, Git & GitHub", color: "from-blue-500 to-cyan-500", price: 16000 },
+        { title: "Intro to React", level: "Intermediate", highlight: "Components, Hooks, State", color: "from-purple-500 to-pink-500", badge: "Coming Soon", price: 24000 },
+        { title: "Fullstack Development", level: "Advanced", highlight: "Full production pipeline", color: "from-orange-500 to-red-500", badge: "Coming Soon", price: 75000 }
     ];
 
     return (

@@ -63,7 +63,11 @@ export async function forgotPassword(formData: FormData) {
 
     const email = formData.get('email') as string
 
-    const siteUrl = process.env.NEXT_PUBLIC_ACADEMY_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    const isDev = process.env.NODE_ENV === 'development'
+    const siteUrl = isDev
+        ? 'http://localhost:3000'
+        : (process.env.NEXT_PUBLIC_ACADEMY_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://mwenaro-tech-academy.vercel.app')
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${siteUrl}/auth/callback?next=/auth/update-password`,
     })

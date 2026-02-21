@@ -5,6 +5,7 @@ export interface Course {
     title: string
     description: string
     price: number
+    original_price?: number
     image_url: string
     instructor_id?: string
     is_published?: boolean

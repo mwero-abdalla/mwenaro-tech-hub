@@ -45,9 +45,9 @@ export default function Home() {
     ];
 
     const featuredCourses = [
-        { title: "Foundations of Web Development", level: "Beginner", highlight: "HTML, CSS, JS, Git & GitHub", color: "from-blue-500 to-cyan-500" },
-        { title: "Intro to React", level: "Intermediate", highlight: "Components, Hooks, State", color: "from-purple-500 to-pink-500", badge: "Coming Soon" },
-        { title: "Fullstack (MERN)", level: "Advanced", highlight: "Full production pipeline", color: "from-orange-500 to-red-500", badge: "Coming Soon" }
+        { title: "Intro to Web Development", level: "Beginner", highlight: "HTML, CSS, JS, Git & GitHub", color: "from-blue-500 to-cyan-500", price: 16000, originalPrice: 20000 },
+        { title: "Intro to React", level: "Intermediate", highlight: "Components, Hooks, State", color: "from-purple-500 to-pink-500", badge: "Coming Soon", price: 24000, originalPrice: 30000 },
+        { title: "Fullstack Development", level: "Advanced", highlight: "Full production pipeline", color: "from-orange-500 to-red-500", badge: "Coming Soon", price: 75000, originalPrice: 89000 }
     ];
 
     return (
@@ -180,8 +180,20 @@ export default function Home() {
                                     )}
 
                                     <h4 className="text-2xl font-black mb-4 group-hover:text-primary transition-colors">{course.title}</h4>
-                                    <div className="flex items-center gap-2 mb-6 text-primary font-black text-[10px] uppercase tracking-widest">
-                                        <CheckCircle2 size={14} /> {course.level}
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest">
+                                            <CheckCircle2 size={14} /> {course.level}
+                                        </div>
+                                        <div className="text-right flex flex-col items-end">
+                                            <div className="text-sm font-black text-foreground">
+                                                KSh {course.price.toLocaleString()}
+                                            </div>
+                                            {course.originalPrice && (
+                                                <div className="text-[10px] font-bold text-muted-foreground line-through opacity-60">
+                                                    KSh {course.originalPrice.toLocaleString()}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
 
                                     <p className="text-muted-foreground font-medium mb-12 line-clamp-2 leading-relaxed">{course.highlight}</p>

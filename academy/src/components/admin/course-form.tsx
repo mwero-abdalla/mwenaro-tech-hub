@@ -40,6 +40,7 @@ export function CourseForm({ courseId, initialData, onSuccess }: CourseFormProps
             title: formData.get('title') as string,
             description: formData.get('description') as string,
             price: parseFloat(formData.get('price') as string),
+            original_price: formData.get('original_price') ? parseFloat(formData.get('original_price') as string) : undefined,
             image_url: formData.get('image_url') as string || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60',
             category: formData.get('category') as string,
             level: formData.get('level') as string,
@@ -100,6 +101,18 @@ export function CourseForm({ courseId, initialData, onSuccess }: CourseFormProps
                         required
                     />
                 </div>
+                <div>
+                    <label className="text-sm font-medium mb-1 block">Original Price (KSh) - Optional</label>
+                    <Input
+                        type="number"
+                        name="original_price"
+                        defaultValue={initialData?.original_price}
+                        step="any"
+                        placeholder="e.g. 20000"
+                    />
+                </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
                 <div>
                     <label className="text-sm font-medium mb-1 block">Level</label>
                     <Select name="level" required defaultValue={initialData?.level || "Beginner"}>

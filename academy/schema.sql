@@ -4,15 +4,16 @@ create table if not exists courses (
   title text not null,
   description text,
   price numeric,
+  original_price numeric,
   image_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 -- Insert dummy data
-insert into courses (title, description, price, image_url) values
-('Intro to React', 'Learn the basics of React from scratch.', 49.99, 'https://placehold.co/600x400/png'),
-('Advanced Next.js', 'Master Server Components, Server Actions, and more.', 79.99, 'https://placehold.co/600x400/png'),
-('Fullstack Supabase', 'Build production-grade apps with Supabase.', 59.99, 'https://placehold.co/600x400/png');
+insert into courses (title, description, price, original_price, image_url) values
+('Intro to Web Development', 'Master the foundations of the web: HTML, CSS, and JavaScript.', 16000, 20000, 'https://placehold.co/600x400/png'),
+('Intro to React', 'Build modern, interactive user interfaces with React.', 24000, 30000, 'https://placehold.co/600x400/png'),
+('Fullstack Development', 'Become a complete developer with MERN and Supabase mastery.', 75000, 89000, 'https://placehold.co/600x400/png');
 
 -- Create enrollments table
 create table if not exists enrollments (

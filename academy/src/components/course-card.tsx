@@ -46,7 +46,7 @@ export function CourseCard({ course, progress }: CourseCardProps) {
                     ) : (
                         <>
                             <div className="px-3 py-1 backdrop-blur-md bg-primary/90 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
-                                {course.price > 10000 ? 'Bestseller' : 'New'}
+                                {course.price > 20000 ? 'Bestseller' : 'New'}
                             </div>
                             <div className="px-3 py-1 backdrop-blur-md bg-white/10 border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-widest shadow-xl">
                                 {course.level || 'Advanced'}

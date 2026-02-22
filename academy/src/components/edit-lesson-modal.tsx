@@ -27,7 +27,7 @@ export function EditLessonModal({ lesson }: EditLessonModalProps) {
                 </DialogHeader>
                 <div className="py-4">
                     <LessonForm
-                        courseId={lesson.course_id}
+                        courseId={lesson.course_id || ""}
                         initialData={lesson}
                         onSuccess={() => setIsOpen(false)}
                     />

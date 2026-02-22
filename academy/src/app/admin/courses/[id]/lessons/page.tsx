@@ -1,14 +1,16 @@
-import { getCourseLessons, getLessonQuestions } from '@/lib/lessons'
+import { getCourseLessons, getLessonQuestions, getAllLessons } from '@/lib/lessons'
 import { getCourse } from '@/lib/courses'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { LessonForm } from '@/components/lesson-form'
+import { SharedLessonForm } from '@/components/shared-lesson-form'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditLessonModal } from '@/components/edit-lesson-modal'
 import { ManageQuizModal } from '@/components/manage-quiz-modal'
-import { deleteLesson } from '@/lib/admin'
+import { removeLessonFromCourse } from '@/lib/admin'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Trash2 } from 'lucide-react'
+import { Trash2, Link as LinkIcon } from 'lucide-react'
 
 interface LessonsPageProps {
     params: Promise<{ id: string }>
@@ -18,10 +20,14 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
     const { id: courseId } = await params
     const course = await getCourse(courseId)
     const lessons = await getCourseLessons(courseId)
+    const allLessons = await getAllLessons()
 
     if (!course) {
         notFound()
     }
+
+    // Filter out lessons that are already in this course for the dropdown
+    const availableLessons = allLessons.filter(l => !lessons.some(cl => cl.id === l.id))
 
     const lessonsWithQuestions = await Promise.all(lessons.map(async (lesson) => {
         const questions = await getLessonQuestions(lesson.id)
@@ -29,7 +35,7 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
     }))
 
     const nextOrderIndex = lessons.length > 0
-        ? Math.max(...lessons.map(l => l.order_index)) + 1
+        ? Math.max(...lessons.map(l => l.order_index || 0)) + 1
         : 1
 
     return (
@@ -78,9 +84,9 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
                                         <EditLessonModal lesson={lesson} />
                                         <form action={async () => {
                                             'use server'
-                                            await deleteLesson(lesson.id)
+                                            await removeLessonFromCourse(courseId, lesson.id)
                                         }}>
-                                            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all">
+                                            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all" title="Remove from course">
                                                 <Trash2 size={16} />
                                             </Button>
                                         </form>
@@ -90,14 +96,20 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
                         )}
                     </div>
 
-                    {/* Add Lesson Form */}
                     <div className="lg:col-span-1">
                         <Card className="p-6 sticky top-8 shadow-md ring-1 ring-black/5 dark:ring-white/5">
-                            <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-purple-600">
-                                <span className="p-1.5 rounded-md bg-purple-100 dark:bg-purple-900/40">+</span>
-                                Add New Lesson
-                            </h2>
-                            <LessonForm courseId={courseId} nextOrderIndex={nextOrderIndex} />
+                            <Tabs defaultValue="new" className="w-full">
+                                <TabsList className="grid w-full grid-cols-2 mb-6 bg-purple-100/50 dark:bg-purple-900/20">
+                                    <TabsTrigger value="new" className="text-xs font-bold data-[state=active]:bg-purple-600 data-[state=active]:text-white">New Lesson</TabsTrigger>
+                                    <TabsTrigger value="existing" className="text-xs font-bold data-[state=active]:bg-purple-600 data-[state=active]:text-white">From Library</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="new">
+                                    <LessonForm courseId={courseId} nextOrderIndex={nextOrderIndex} />
+                                </TabsContent>
+                                <TabsContent value="existing">
+                                    <SharedLessonForm courseId={courseId} nextOrderIndex={nextOrderIndex} availableLessons={availableLessons} />
+                                </TabsContent>
+                            </Tabs>
                         </Card>
                     </div>
                 </div>

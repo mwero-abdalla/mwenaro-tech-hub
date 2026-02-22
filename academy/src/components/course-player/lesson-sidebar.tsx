@@ -12,7 +12,7 @@ interface Lesson {
     id: string
     title: string
     duration_minutes: number | null
-    order_index: number
+    order_index?: number
     is_completed?: boolean
     is_locked?: boolean
 }

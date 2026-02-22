@@ -62,7 +62,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                             <h2 className="text-3xl font-bold tracking-tight">About this Course</h2>
                             {!canPreview && (
                                 <div className="text-3xl font-black text-primary drop-shadow-sm">
-                                    ${course.price.toFixed(2)}
+                                    KSh {course.price.toLocaleString()}
                                 </div>
                             )}
                         </div>

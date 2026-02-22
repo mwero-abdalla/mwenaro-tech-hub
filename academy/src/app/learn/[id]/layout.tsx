@@ -53,7 +53,7 @@ export default async function LearnLayout({
             id: lesson.id,
             title: lesson.title,
             duration_minutes: null, // Placeholder since schema doesn't have it yet
-            order_index: lesson.order_index,
+            order_index: lesson.order_index ?? 0,
             is_completed: lessonProgress?.is_completed || false,
             is_locked: !isUnlocked
         }

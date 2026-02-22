@@ -35,9 +35,29 @@ export async function isAuthorizedForCourse(courseId: string): Promise<boolean> 
 
 export async function isAuthorizedForLesson(lessonId: string): Promise<boolean> {
     const supabase = await createClient()
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', lessonId).single()
-    if (!lesson) return false
-    return isAuthorizedForCourse(lesson.course_id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return false
+    if (user.user_metadata?.role === 'admin') return true
+
+    // Check if the user is authorized for ANY course that includes this lesson
+    const { data: cls } = await supabase.from('course_lessons').select('course_id').eq('lesson_id', lessonId)
+    if (!cls) return false
+
+    for (const cl of cls) {
+        if (await isAuthorizedForCourse(cl.course_id)) return true
+    }
+    return false
+}
+
+async function revalidateLessonPaths(supabase: any, lessonId: string) {
+    const { data: cls } = await supabase.from('course_lessons').select('course_id').eq('lesson_id', lessonId)
+    if (cls) {
+        cls.forEach((cl: any) => {
+            revalidatePath(`/admin/courses/${cl.course_id}/lessons`)
+            revalidatePath(`/courses/${cl.course_id}/lessons`)
+            revalidatePath(`/courses/${cl.course_id}/lessons/${lessonId}`)
+        })
+    }
 }
 
 export async function getAllUsers(): Promise<User[]> {
@@ -261,34 +281,90 @@ export async function assignStudentToCohort(studentId: string, courseId: string,
 export async function createLesson(data: { course_id: string, title: string, content: string, video_url?: string, order_index: number, has_project: boolean }) {
     if (!await isAuthorizedForCourse(data.course_id)) throw new Error('Unauthorized')
     const supabase = await createClient()
-    const { error } = await supabase.from('lessons').insert(data)
+
+    // Insert into lessons table
+    const { data: lesson, error } = await supabase.from('lessons').insert({
+        title: data.title,
+        content: data.content,
+        video_url: data.video_url,
+        has_project: data.has_project
+    }).select().single()
+
     if (error) throw new Error(error.message)
+
+    // Link it to the current course
+    const { error: joinError } = await supabase.from('course_lessons').insert({
+        course_id: data.course_id,
+        lesson_id: lesson.id,
+        order_index: data.order_index
+    })
+
+    if (joinError) throw new Error(joinError.message)
+
     revalidatePath(`/admin/courses/${data.course_id}/lessons`)
     revalidatePath(`/courses/${data.course_id}/lessons`)
+}
+
+export async function assignSharedLesson(courseId: string, lessonId: string, orderIndex: number) {
+    if (!await isAuthorizedForCourse(courseId)) throw new Error('Unauthorized')
+    const supabase = await createClient()
+    const { error } = await supabase.from('course_lessons').insert({
+        course_id: courseId,
+        lesson_id: lessonId,
+        order_index: orderIndex
+    })
+    if (error) throw new Error(error.message)
+    revalidatePath(`/admin/courses/${courseId}/lessons`)
+    revalidatePath(`/courses/${courseId}/lessons`)
 }
 
 export async function updateLesson(id: string, data: Partial<Lesson>) {
     if (!await isAuthorizedForLesson(id)) throw new Error('Unauthorized')
     const supabase = await createClient()
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', id).single()
-    const { error } = await supabase.from('lessons').update(data).eq('id', id)
-    if (error) throw new Error(error.message)
-    if (lesson) {
-        revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons`)
+
+    const { course_id, order_index, ...lessonData } = data as any;
+
+    // Update core lesson content if any provided
+    if (Object.keys(lessonData).length > 0) {
+        const { error } = await supabase.from('lessons').update(lessonData).eq('id', id)
+        if (error) throw new Error(error.message)
     }
+
+    // Update the position within the specific course if provided
+    if (course_id && order_index !== undefined) {
+        await supabase.from('course_lessons').update({ order_index }).eq('course_id', course_id).eq('lesson_id', id)
+    }
+
+    await revalidateLessonPaths(supabase, id)
+}
+
+export async function updateLessonOrder(courseId: string, lessonId: string, newOrderIndex: number) {
+    if (!await isAuthorizedForCourse(courseId)) throw new Error('Unauthorized')
+    const supabase = await createClient()
+    const { error } = await supabase.from('course_lessons').update({ order_index: newOrderIndex }).eq('course_id', courseId).eq('lesson_id', lessonId)
+    if (error) throw new Error(error.message)
+    revalidatePath(`/admin/courses/${courseId}/lessons`)
+    revalidatePath(`/courses/${courseId}/lessons`)
 }
 
 export async function deleteLesson(id: string) {
     if (!await isAuthorizedForLesson(id)) throw new Error('Unauthorized')
     const supabase = await createClient()
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', id).single()
+
+    // Deleting the lesson will cascade and delete from course_lessons
     const { error } = await supabase.from('lessons').delete().eq('id', id)
     if (error) throw new Error(error.message)
-    if (lesson) {
-        revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons`)
-    }
+
+    await revalidateLessonPaths(supabase, id)
+}
+
+export async function removeLessonFromCourse(courseId: string, lessonId: string) {
+    if (!await isAuthorizedForCourse(courseId)) throw new Error('Unauthorized')
+    const supabase = await createClient()
+    const { error } = await supabase.from('course_lessons').delete().eq('course_id', courseId).eq('lesson_id', lessonId)
+    if (error) throw new Error(error.message)
+    revalidatePath(`/admin/courses/${courseId}/lessons`)
+    revalidatePath(`/courses/${courseId}/lessons`)
 }
 
 // --- Quiz Management ---
@@ -299,13 +375,7 @@ export async function createQuestion(data: { lesson_id: string, question_text: s
     const { error } = await supabase.from('questions').insert(data)
     if (error) throw new Error(error.message)
 
-    // Fetch course_id to revalidate
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', data.lesson_id).single()
-    if (lesson) {
-        revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons/${data.lesson_id}`)
-    }
+    await revalidateLessonPaths(supabase, data.lesson_id)
 }
 
 export async function updateQuestion(id: string, data: Partial<Question>) {
@@ -315,14 +385,7 @@ export async function updateQuestion(id: string, data: Partial<Question>) {
     const { error } = await supabase.from('questions').update(data).eq('id', id)
     if (error) throw new Error(error.message)
 
-    if (q) {
-        const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', q.lesson_id).single()
-        if (lesson) {
-            revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-            revalidatePath(`/courses/${lesson.course_id}/lessons`)
-            revalidatePath(`/courses/${lesson.course_id}/lessons/${q.lesson_id}`)
-        }
-    }
+    await revalidateLessonPaths(supabase, q.lesson_id)
 }
 
 export async function deleteQuestion(id: string) {
@@ -332,14 +395,7 @@ export async function deleteQuestion(id: string) {
     const { error } = await supabase.from('questions').delete().eq('id', id)
     if (error) throw new Error(error.message)
 
-    if (q) {
-        const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', q.lesson_id).single()
-        if (lesson) {
-            revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-            revalidatePath(`/courses/${lesson.course_id}/lessons`)
-            revalidatePath(`/courses/${lesson.course_id}/lessons/${q.lesson_id}`)
-        }
-    }
+    await revalidateLessonPaths(supabase, q.lesson_id)
 }
 
 export async function createQuestionsBulk(lessonId: string, questions: { question_text: string, options: string[], correct_answer: number, explanation?: string }[]) {
@@ -354,12 +410,7 @@ export async function createQuestionsBulk(lessonId: string, questions: { questio
     const { error } = await supabase.from('questions').insert(data)
     if (error) throw new Error(error.message)
 
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', lessonId).single()
-    if (lesson) {
-        revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons/${lessonId}`)
-    }
+    await revalidateLessonPaths(supabase, lessonId)
 }
 
 export async function deleteAllQuestions(lessonId: string) {
@@ -369,10 +420,5 @@ export async function deleteAllQuestions(lessonId: string) {
     const { error } = await supabase.from('questions').delete().eq('lesson_id', lessonId)
     if (error) throw new Error(error.message)
 
-    const { data: lesson } = await supabase.from('lessons').select('course_id').eq('id', lessonId).single()
-    if (lesson) {
-        revalidatePath(`/admin/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons`)
-        revalidatePath(`/courses/${lesson.course_id}/lessons/${lessonId}`)
-    }
+    await revalidateLessonPaths(supabase, lessonId)
 }

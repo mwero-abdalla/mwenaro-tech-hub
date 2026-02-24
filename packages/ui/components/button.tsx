@@ -1,19 +1,23 @@
 import React from 'react';
 import { cn } from '../lib/utils';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps<T extends React.ElementType = 'button'> {
+    as?: T;
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass';
     size?: 'sm' | 'md' | 'lg';
     children: React.ReactNode;
 }
 
-export const Button = ({
+export const Button = <T extends React.ElementType = 'button'>({
+    as,
     variant = 'primary',
     size = 'md',
     className,
     children,
     ...props
-}: ButtonProps) => {
+}: ButtonProps<T> & React.ComponentPropsWithoutRef<T>) => {
+    const Component = as || 'button';
+
     const variants = {
         primary: 'bg-primary text-primary-foreground shadow-lg hover:shadow-primary/30',
         secondary: 'bg-secondary text-secondary-foreground shadow-lg hover:shadow-secondary/30',
@@ -29,16 +33,16 @@ export const Button = ({
     };
 
     return (
-        <button
+        <Component
             className={cn(
                 'inline-flex items-center justify-center rounded-xl transition-all duration-300 active:scale-[0.98] btn-premium',
                 variants[variant],
                 sizes[size],
                 className
             )}
-            {...props}
+            {...(props as any)}
         >
             {children}
-        </button>
+        </Component>
     );
 };

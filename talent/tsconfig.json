@@ -21,7 +21,16 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@mwenaro/content/*": [
+        "../packages/content/*"
+      ]
+    },
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",

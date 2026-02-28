@@ -17,18 +17,18 @@ export const talentContent = {
       location: "Mombasa, KE"
     },
     {
-      name: "Ja Smith",
+      name: "Dama Karisa",
       role: "Frontend Architect",
       skills: ["React", "Tailwind", "Figma", "Redux"],
       status: "Project Ready",
-      location: "Lagos, NG"
+      location: "Kilifi, KE"
     },
     {
       name: "Alex Kamau",
       role: "Product Designer",
       skills: ["Figma", "Design Systems", "Prototyping"],
       status: "Available",
-      location: "Kigali, RW"
+      location: "Nyeri, KE"
     }
   ],
 

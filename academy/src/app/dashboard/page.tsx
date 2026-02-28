@@ -56,7 +56,7 @@ export default async function DashboardPage() {
     if (courseIds.length > 0) {
         const { data: lessonsData } = await supabase
             .from('lessons')
-            .select('id, course_id')
+            .select('id, course_id, duration_minutes')
             .in('course_id', courseIds)
 
         coursesWithProgress = enrolledCourses.map(course => {
@@ -78,10 +78,21 @@ export default async function DashboardPage() {
             return {
                 ...course,
                 progress: progressPercentage,
-                lastAccessedAt: lastActivity?.completed_at
+                lastAccessedAt: lastActivity?.completed_at,
+                completedLessons: courseProgressRecords.filter(p => p.is_completed).map(p => p.lesson_id)
             }
         })
     }
+
+    // Calculate total learning hours
+    const completedLessonIds = allProgress.filter(p => p.is_completed).map(p => p.lesson_id)
+    const { data: completedLessonsData } = await supabase
+        .from('lessons')
+        .select('duration_minutes')
+        .in('id', completedLessonIds)
+
+    const totalLearningMinutes = completedLessonsData?.reduce((acc, curr) => acc + (curr.duration_minutes || 0), 0) || 0
+    const totalLearningHours = Math.round(totalLearningMinutes / 60)
 
     const firstName = user.user_metadata?.full_name?.split(' ')[0] || 'Learner'
 
@@ -98,6 +109,7 @@ export default async function DashboardPage() {
                 courses={coursesWithProgress}
                 streak={currentStreak}
                 quizzesAttempted={totalQuizzes}
+                learningHours={totalLearningHours}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

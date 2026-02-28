@@ -72,7 +72,7 @@ export const Footer: React.FC<FooterProps> = ({ currentApp = 'hub' }) => {
                 </a>
               </li>
               <li>Mombasa, Kenya</li>
-              <li>+254 700 123 456</li>
+              <li>+254116477282</li>
             </ul>
           </div>
 

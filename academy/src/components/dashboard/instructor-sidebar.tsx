@@ -152,6 +152,11 @@ export function InstructorSidebar({ user, ...props }: InstructorSidebarProps) {
                                 <Link href={item.url}>
                                     <item.icon />
                                     <span>{item.title}</span>
+                                    {item.badge && (
+                                        <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-[10px] font-bold text-white">
+                                            {item.badge}
+                                        </span>
+                                    )}
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

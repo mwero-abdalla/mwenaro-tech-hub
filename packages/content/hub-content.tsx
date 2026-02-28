@@ -1,16 +1,17 @@
 // content/hubContent.ts
 
 import { GraduationCap, Briefcase, Settings, Target, Users, Zap } from "lucide-react";
+import { ecosystem } from "@mwenaro/config/ecosystem";
 
 export const hubContent = {
   hero: {
     badge: "Built in Africa. Built for Scale.",
-    title: "Building Africa’s Next Generation of Tech Talent",
+    title: "Building Africa's Next Generation of Tech Talent",
     description: `Mwenaro is a structured tech ecosystem connecting learning, talent, and innovation
       to drive digital growth across Africa.`,
     ctas: [
-      { text: "Explore Academy", href: "/academy", type: "primary" },
-      { text: "Discover Talent", href: "/talent", type: "outline" },
+      { text: "Explore Academy", href: ecosystem.academy, type: "primary" },
+      { text: "Discover Talent", href: ecosystem.talent, type: "outline" },
     ],
   },
 
@@ -21,7 +22,7 @@ export const hubContent = {
       headline: "Structured programs to produce job-ready developers",
       subtext: "Project-based programs with mentorship and guided learning.",
       cta: "Explore Academy",
-      href: "/academy",
+      href: ecosystem.academy,
       color: "bg-primary",
     },
     {
@@ -30,7 +31,7 @@ export const hubContent = {
       headline: "Curated network of African tech graduates",
       subtext: "Showcase verified portfolios to companies seeking talent.",
       cta: "Discover Talent",
-      href: "/talent",
+      href: ecosystem.talent,
       color: "bg-secondary",
     },
     {
@@ -39,7 +40,7 @@ export const hubContent = {
       headline: "Scalable digital solutions built with impact",
       subtext: "Custom web and software platforms for reliability and scale.",
       cta: "Explore Labs",
-      href: "/labs",
+      href: ecosystem.labs,
       color: "bg-orange-500",
     },
   ],
@@ -76,8 +77,8 @@ export const hubContent = {
     description:
       "Whether you want to learn, hire, or build digital solutions, Mwenaro is your structured partner in tech innovation.",
     ctas: [
-      { text: "Explore Academy", href: "/academy", type: "primary" },
-      { text: "Discover Talent", href: "/talent", type: "outline" },
+      { text: "Explore Academy", href: ecosystem.academy, type: "primary" },
+      { text: "Discover Talent", href: ecosystem.talent, type: "outline" },
     ],
   },
 };

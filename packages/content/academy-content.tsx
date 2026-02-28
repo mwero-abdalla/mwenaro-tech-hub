@@ -29,8 +29,8 @@ export const academyContent = {
     name: "Mwenaro Academy",
     links: [
       { text: "Courses", href: "/courses" },
-      { text: "Blog", href: "#" },
-      { text: "About", href: "#" }
+      { text: "About", href: "/about" },
+      { text: "Contact", href: "/contact" }
     ],
     copyright: "© 2026 Mwenaro Academy. All rights reserved."
   }

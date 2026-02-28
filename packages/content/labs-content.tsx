@@ -1,9 +1,11 @@
+import { ecosystem } from "@mwenaro/config/ecosystem";
+
 export const labsContent = {
   hero: {
     headline: "Custom Software Built for Growth",
     subtext: "We design, build, and maintain scalable web platforms and business systems for startups and growing organizations.",
-    primaryCTA: { text: "Start a Project", href: "/labs" },
-    secondaryCTA: { text: "Partner with Us", href: "/contact" }
+    primaryCTA: { text: "Start a Project", href: `${ecosystem.hub}/contact` },
+    secondaryCTA: { text: "Partner with Us", href: `${ecosystem.hub}/contact` }
   },
 
   pillars: [
@@ -44,6 +46,6 @@ export const labsContent = {
   finalCTA: {
     headline: "Have a big idea? Let's build it.",
     subtext: "We partner with visionary founders and established enterprises to ship digital products that matter. Our labs team is ready to scale your vision.",
-    cta: { text: "Start a Conversation", href: "/contact" }
+    cta: { text: "Start a Conversation", href: `${ecosystem.hub}/contact` }
   }
 };

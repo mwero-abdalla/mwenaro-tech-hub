@@ -30,7 +30,7 @@ export function QuizReview({ questions, answers, correctAnswers }: QuizReviewPro
                         </div>
                         <RadioGroup
                             disabled
-                            value={userAnswer.toString()}
+                            value={userAnswer?.toString() ?? ""}
                         >
                             {q.options.map((opt, optIdx) => {
                                 const isThisCorrect = optIdx === correctAnswer

@@ -45,65 +45,67 @@ export const NavBar = ({
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-nav bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-border/50">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-nav bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-        {/* Logo */}
-        <a href={ecosystem.hub} className="hover:opacity-80 transition-opacity z-50">
-          <BrandLogo subtext={subtexts[currentApp]} />
-        </a>
+          {/* Logo */}
+          <a href={ecosystem.hub} className="hover:opacity-80 transition-opacity z-50">
+            <BrandLogo subtext={subtexts[currentApp]} />
+          </a>
 
-        {/* Desktop Navigation Links */}
-        <ul className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className={cn(
-                  'text-sm font-bold tracking-wide transition-all duration-300 relative group',
-                  link.active
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {link.name}
-                <span
+          {/* Desktop Navigation Links */}
+          <ul className="hidden md:flex items-center gap-10">
+            {links.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
                   className={cn(
-                    'absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300',
-                    link.active ? 'w-full' : 'w-0 group-hover:w-full'
+                    'text-sm font-bold tracking-wide transition-all duration-300 relative group',
+                    link.active
+                      ? 'text-primary'
+                      : 'text-muted-foreground hover:text-foreground'
                   )}
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
+                >
+                  {link.name}
+                  <span
+                    className={cn(
+                      'absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300',
+                      link.active ? 'w-full' : 'w-0 group-hover:w-full'
+                    )}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
 
-        {/* Desktop CTA & Mobile Menu Toggle */}
-        <div className="flex items-center gap-4 z-50">
-          <Button
-            variant={defaultCTA.variant as any}
-            size="sm"
-            className="hidden md:flex rounded-full px-8 shadow-primary/20"
-            as="a"
-            href={defaultCTA.href}
-          >
-            {ctaLabel || defaultCTA.label}
-          </Button>
+          {/* Desktop CTA & Mobile Menu Toggle */}
+          <div className="flex items-center gap-4 z-50">
+            <Button
+              variant={defaultCTA.variant as any}
+              size="sm"
+              className="hidden md:flex rounded-full px-8 shadow-primary/20"
+              as="a"
+              href={defaultCTA.href}
+            >
+              {ctaLabel || defaultCTA.label}
+            </Button>
 
-          <button
-            className="md:hidden p-2 text-foreground focus:outline-none"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            <button
+              className="md:hidden p-2 text-foreground focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Navigation Menu */}
       <div
         className={cn(
-          "fixed inset-0 top-20 bg-background backdrop-blur-2xl border-t border-border/50 transition-all duration-300 ease-in-out md:hidden flex flex-col items-center p-6 pt-12 overflow-y-auto",
+          "fixed inset-0 top-20 z-40 bg-background backdrop-blur-2xl border-t border-border/50 transition-all duration-300 ease-in-out md:hidden flex flex-col items-center p-6 pt-12 overflow-y-auto",
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         )}
       >
@@ -139,6 +141,6 @@ export const NavBar = ({
           </Button>
         </div>
       </div>
-    </nav>
+    </>
   );
 };

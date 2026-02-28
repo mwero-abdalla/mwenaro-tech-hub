@@ -23,7 +23,7 @@ export function QuizzesManagementClient({ initialSubmissions }: { initialSubmiss
         (s.profiles?.email?.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (s.profiles?.full_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (s.lessons?.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (s.lessons?.courses?.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        (s.lessons?.phase_lessons?.[0]?.phases?.courses?.title.toLowerCase().includes(searchQuery.toLowerCase()))
     )
 
     return (
@@ -75,7 +75,7 @@ export function QuizzesManagementClient({ initialSubmissions }: { initialSubmiss
                                         </td>
                                         <td className="p-6">
                                             <div className="space-y-1">
-                                                <p className="text-sm font-black text-primary uppercase tracking-tight">{s.lessons?.courses?.title || 'Unknown Course'}</p>
+                                                <p className="text-sm font-black text-primary uppercase tracking-tight">{s.lessons?.phase_lessons?.[0]?.phases?.courses?.title || 'Unknown Course'}</p>
                                                 <p className="text-sm text-zinc-500 font-medium line-clamp-1">{s.lessons?.title}</p>
                                             </div>
                                         </td>

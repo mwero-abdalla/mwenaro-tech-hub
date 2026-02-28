@@ -10,6 +10,8 @@ export interface Lesson {
     // Added by join queries:
     course_id?: string
     order_index?: number
+    phase_id?: string
+    phase_title?: string
 }
 
 export interface Question {
@@ -24,13 +26,18 @@ export interface Question {
 export async function getCourseLessons(courseId: string): Promise<Lesson[]> {
     const supabase = await createClient()
 
-    // We join through course_lessons to fetch the actual lesson data
+    // Join through phases -> phase_lessons -> lessons to fetch the actual lesson data
     const { data, error } = await supabase
-        .from('course_lessons')
+        .from('phases')
         .select(`
-            order_index,
+            id,
             course_id,
-            lessons (*)
+            order_index,
+            title,
+            phase_lessons (
+                order_index,
+                lessons (*)
+            )
         `)
         .eq('course_id', courseId)
         .order('order_index', { ascending: true })
@@ -40,12 +47,29 @@ export async function getCourseLessons(courseId: string): Promise<Lesson[]> {
         return []
     }
 
-    // Flatten the result so the frontend still gets a simple array of Lessons
-    const formattedLessons = data.map((item: any) => ({
-        ...item.lessons,
-        course_id: item.course_id,
-        order_index: item.order_index
-    })) as Lesson[]
+    // Flatten the result so the frontend still gets a simple array of Lessons (ordered by phase then by lesson)
+    const formattedLessons: Lesson[] = []
+
+    // Ensure phases are sorted
+    const sortedPhases = [...data].sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
+
+    for (const phase of sortedPhases) {
+        if (phase.phase_lessons) {
+            const sortedPhaseLessons = [...phase.phase_lessons].sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0))
+            for (const pl of sortedPhaseLessons) {
+                const lesson = Array.isArray(pl.lessons) ? pl.lessons[0] : pl.lessons
+                if (lesson) {
+                    formattedLessons.push({
+                        ...lesson,
+                        course_id: phase.course_id,
+                        order_index: pl.order_index,
+                        phase_id: phase.id,
+                        phase_title: phase.title
+                    } as Lesson)
+                }
+            }
+        }
+    }
 
     return formattedLessons
 }

@@ -52,7 +52,9 @@ export default async function LessonsLayout({ children, params }: LessonsLayoutP
             id: lesson.id,
             title: lesson.title,
             isCompleted,
-            isLocked
+            isLocked,
+            phase_id: lesson.phase_id,
+            phase_title: lesson.phase_title || 'Main Content'
         }
     })
 

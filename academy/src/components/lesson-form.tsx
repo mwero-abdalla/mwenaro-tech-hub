@@ -8,22 +8,27 @@ import { Textarea } from '@/components/ui/textarea'
 import { useRouter } from 'next/navigation'
 import type { Lesson } from '@/lib/lessons'
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import type { CoursePhase } from '@/lib/courses'
+
 interface LessonFormProps {
     courseId: string
     initialData?: Lesson
     nextOrderIndex?: number
+    phases: CoursePhase[]
     onSuccess?: () => void
 }
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-export function LessonForm({ courseId, initialData, nextOrderIndex, onSuccess }: LessonFormProps) {
+export function LessonForm({ courseId, initialData, nextOrderIndex, phases, onSuccess }: LessonFormProps) {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [previewMode, setPreviewMode] = useState(false)
     const [content, setContent] = useState(initialData?.content || '')
+    const [phaseId, setPhaseId] = useState<string>(initialData?.phase_id || (phases.length > 0 ? phases[0].id : ''))
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -33,6 +38,7 @@ export function LessonForm({ courseId, initialData, nextOrderIndex, onSuccess }:
         const formData = new FormData(e.currentTarget)
         const data = {
             course_id: courseId,
+            phase_id: phaseId,
             title: formData.get('title') as string,
             content: content,
             video_url: formData.get('video_url') as string,
@@ -65,6 +71,21 @@ export function LessonForm({ courseId, initialData, nextOrderIndex, onSuccess }:
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
+                    <label className="text-sm font-medium mb-1 block">Course Phase</label>
+                    <Select value={phaseId} onValueChange={setPhaseId} required>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a phase" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {phases.map((phase) => (
+                                <SelectItem key={phase.id} value={phase.id}>
+                                    {phase.title}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
                 <div>
                     <label className="text-sm font-medium mb-1 block">Lesson Title</label>
                     <Input name="title" defaultValue={initialData?.title} placeholder="e.g. Intro to Hooks" required />

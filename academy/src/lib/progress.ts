@@ -35,8 +35,7 @@ export interface QuizSubmission {
     profiles?: { full_name: string | null; email: string | null }
     lessons?: {
         title: string;
-        course_id: string;
-        courses?: { title: string }
+        phase_lessons?: any[];
     }
 }
 
@@ -349,9 +348,15 @@ export async function getUserQuizzes(): Promise<QuizSubmission[]> {
         .select(`
             *,
             lessons (
-                title, 
-                course_id,
-                courses (title)
+                title,
+                phase_lessons (
+                    phases (
+                        courses (
+                            id,
+                            title
+                        )
+                    )
+                )
             )
         `)
         .eq('user_id', user.id)
@@ -379,9 +384,15 @@ export async function getAllQuizzes(): Promise<QuizSubmission[]> {
             *,
             profiles (full_name, email),
             lessons (
-                title, 
-                course_id,
-                courses (title)
+                title,
+                phase_lessons (
+                    phases (
+                        courses (
+                            id,
+                            title
+                        )
+                    )
+                )
             )
         `)
         .order('created_at', { ascending: false })
@@ -403,9 +414,15 @@ export async function getQuizSubmission(id: string): Promise<QuizSubmission | nu
             *,
             profiles (full_name, email),
             lessons (
-                title, 
-                course_id,
-                courses (title)
+                title,
+                phase_lessons (
+                    phases (
+                        courses (
+                            id,
+                            title
+                        )
+                    )
+                )
             )
         `)
         .eq('id', id)
@@ -417,4 +434,89 @@ export async function getQuizSubmission(id: string): Promise<QuizSubmission | nu
     }
 
     return data as QuizSubmission
+}
+
+export async function getLatestQuizSubmission(lessonId: string): Promise<QuizSubmission | null> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return null
+
+    const { data, error } = await supabase
+        .from('quiz_submissions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('lesson_id', lessonId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+
+    if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching latest quiz submission:', error)
+        return null
+    }
+
+    return data as QuizSubmission | null
+}
+
+export interface QuizReviewData {
+    id: string
+    score: number
+    passed: boolean
+    created_at: string
+    questions: {
+        id: string
+        question_text: string
+        options: string[]
+        correct_answer: number
+        explanation: string | null
+    }[]
+    user_answers: number[]
+}
+
+export async function getQuizReview(submissionId: string): Promise<QuizReviewData | null> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    // Fetch submission
+    const { data: submission, error: subError } = await supabase
+        .from('quiz_submissions')
+        .select('*')
+        .eq('id', submissionId)
+        .single()
+
+    if (subError || !submission) {
+        console.error('Error fetching quiz submission for review:', subError)
+        return null
+    }
+
+    // Authorization check: only the owner, instructor, or admin can view
+    const role = user.user_metadata?.role || 'student'
+    if (submission.user_id !== user.id && role !== 'admin' && role !== 'instructor') {
+        return null
+    }
+
+    // Fetch questions for the lesson
+    const { data: questions, error: qError } = await supabase
+        .from('questions')
+        .select('id, question_text, options, correct_answer, explanation')
+        .eq('lesson_id', submission.lesson_id)
+        // Maintain the same ordering as when they took the quiz. 
+        // We're assuming created_at is standard. Order index would be better if it existed.
+        .order('created_at', { ascending: true })
+
+    if (qError || !questions) {
+        console.error('Error fetching questions for review:', qError)
+        return null
+    }
+
+    return {
+        id: submission.id,
+        score: submission.score,
+        passed: submission.passed,
+        created_at: submission.created_at,
+        questions: questions as any[], // Casting options directly to any[] because supabase jsonb is returned as object/array directly
+        user_answers: submission.answers
+    }
 }

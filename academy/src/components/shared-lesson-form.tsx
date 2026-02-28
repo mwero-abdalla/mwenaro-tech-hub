@@ -6,19 +6,22 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import type { Lesson } from '@/lib/lessons'
+import type { CoursePhase } from '@/lib/courses'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 interface SharedLessonFormProps {
     courseId: string
     nextOrderIndex: number
     availableLessons: Lesson[]
+    phases: CoursePhase[]
 }
 
-export function SharedLessonForm({ courseId, nextOrderIndex, availableLessons }: SharedLessonFormProps) {
+export function SharedLessonForm({ courseId, nextOrderIndex, availableLessons, phases }: SharedLessonFormProps) {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [selectedLessonId, setSelectedLessonId] = useState<string>('')
+    const [phaseId, setPhaseId] = useState<string>(phases.length > 0 ? phases[0].id : '')
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -34,7 +37,7 @@ export function SharedLessonForm({ courseId, nextOrderIndex, availableLessons }:
         const orderIndex = parseInt(formData.get('order_index') as string)
 
         try {
-            await assignSharedLesson(courseId, selectedLessonId, orderIndex)
+            await assignSharedLesson(courseId, phaseId, selectedLessonId, orderIndex)
             router.refresh()
             setSelectedLessonId('')
             const form = e.target as HTMLFormElement
@@ -48,6 +51,21 @@ export function SharedLessonForm({ courseId, nextOrderIndex, availableLessons }:
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+                <label className="text-sm font-medium mb-1 block">Course Phase</label>
+                <Select value={phaseId} onValueChange={setPhaseId} required>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a phase" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {phases.map((phase) => (
+                            <SelectItem key={phase.id} value={phase.id}>
+                                {phase.title}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
             <div>
                 <label className="text-sm font-medium mb-1 block">Select Existing Lesson</label>
                 <Select value={selectedLessonId} onValueChange={setSelectedLessonId}>

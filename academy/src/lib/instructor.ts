@@ -99,9 +99,13 @@ export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
             lessons!inner(
                 id,
                 title,
-                courses!inner(
-                    id,
-                    title
+                phase_lessons(
+                    phases(
+                        courses(
+                            id,
+                            title
+                        )
+                    )
                 )
             ),
             ai_rating,
@@ -147,8 +151,8 @@ export async function getAllSubmissions(): Promise<SubmissionWithDetails[]> {
         student_email: emailMap.get(submission.user_id) || 'Unknown',
         student_name: profileMap.get(submission.user_id) || null,
         lesson_title: (submission.lessons as any).title,
-        course_title: (submission.lessons as any).courses.title,
-        course_id: (submission.lessons as any).courses.id,
+        course_title: (submission.lessons as any).phase_lessons?.[0]?.phases?.courses?.title || 'Unknown',
+        course_id: (submission.lessons as any).phase_lessons?.[0]?.phases?.courses?.id || 'unknown',
         ai_rating: (submission as any).ai_rating,
         ai_feedback: (submission as any).ai_feedback,
         ai_status: (submission as any).ai_status,
@@ -207,9 +211,13 @@ export async function getStudentSubmission(
                 id,
                 title,
                 content,
-                courses!inner(
-                    id,
-                    title
+                phase_lessons(
+                    phases(
+                        courses(
+                            id,
+                            title
+                        )
+                    )
                 )
             ),
             ai_rating,
@@ -244,8 +252,8 @@ export async function getStudentSubmission(
         student_email: authUser?.email || 'Unknown',
         student_name: profile?.full_name || null,
         lesson_title: (data.lessons as any).title,
-        course_title: (data.lessons as any).courses.title,
-        course_id: (data.lessons as any).courses.id,
+        course_title: (data.lessons as any).phase_lessons?.[0]?.phases?.courses?.title || 'Unknown',
+        course_id: (data.lessons as any).phase_lessons?.[0]?.phases?.courses?.id || 'unknown',
         ai_rating: (data as any).ai_rating,
         ai_feedback: (data as any).ai_feedback,
         ai_status: (data as any).ai_status,

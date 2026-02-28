@@ -13,6 +13,7 @@ export default async function QuizDetailPage({ params }: { params: { id: string 
     if (!submission) notFound()
 
     const questions = await getLessonQuestions(submission.lesson_id)
+    const courseId = submission.lessons?.phase_lessons?.[0]?.phases?.courses?.id || ''
 
     return (
         <div className="container mx-auto px-4 py-8 space-y-8 max-w-4xl">
@@ -63,7 +64,7 @@ export default async function QuizDetailPage({ params }: { params: { id: string 
             </Card>
 
             <div className="flex justify-center pt-8">
-                <Link href={`/courses/${submission.lessons?.course_id}/lessons/${submission.lesson_id}`}>
+                <Link href={`/courses/${courseId}/lessons/${submission.lesson_id}`}>
                     <Button size="lg" className="rounded-2xl px-12 h-14 font-black text-lg bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all">
                         {submission.passed ? 'Continue Learning' : 'Try Again'}
                     </Button>

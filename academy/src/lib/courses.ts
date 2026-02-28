@@ -138,3 +138,27 @@ export async function getInstructorWorkload(instructorId: string): Promise<Instr
 
     return workload
 }
+
+export interface CoursePhase {
+    id: string
+    course_id: string
+    title: string
+    description?: string
+    order_index: number
+}
+
+export async function getCoursePhases(courseId: string): Promise<CoursePhase[]> {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+        .from('phases')
+        .select('*')
+        .eq('course_id', courseId)
+        .order('order_index', { ascending: true })
+
+    if (error) {
+        console.error('Error fetching phases:', error)
+        return []
+    }
+
+    return data as CoursePhase[]
+}

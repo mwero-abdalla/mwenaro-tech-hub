@@ -1,5 +1,5 @@
 import { getLesson, getCourseLessons, getLessonQuestions } from '@/lib/lessons'
-import { getLessonProgress, isLessonLocked } from '@/lib/progress'
+import { getLessonProgress, isLessonLocked, getLatestQuizSubmission, getQuizReview } from '@/lib/progress'
 import { createClient } from '@/lib/supabase/server'
 import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { QuizModal } from '@/components/quiz-modal'
 import { ProjectSubmission } from '@/components/project-submission'
 import { VideoPlayer } from '@/components/video-player'
+import { QuizReview } from '@/components/quiz-review'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ChevronLeft, ChevronRight, Monitor } from 'lucide-react'
@@ -50,11 +51,17 @@ export default async function LessonPage({ params }: LessonPageProps) {
         notFound()
     }
 
-    const [questions, progress, allLessons] = await Promise.all([
+    const [questions, progress, allLessons, latestSubmission] = await Promise.all([
         getLessonQuestions(lessonId),
         getLessonProgress(lessonId),
-        getCourseLessons(courseId)
+        getCourseLessons(courseId),
+        getLatestQuizSubmission(lessonId)
     ])
+
+    let reviewData = null
+    if (latestSubmission) {
+        reviewData = await getQuizReview(latestSubmission.id)
+    }
 
     // Determine Navigation
     const currentIndex = allLessons.findIndex(l => l.id === lessonId)
@@ -115,10 +122,44 @@ export default async function LessonPage({ params }: LessonPageProps) {
                                 Instructor Preview: Quizzes are disabled.
                             </p>
                         ) : progress?.is_completed ? (
-                            <div className="space-y-2">
+                            <div className="space-y-6">
                                 <p className="text-muted-foreground">
                                     You've already passed this quiz with a score of <span className="font-bold text-foreground">{progress.highest_quiz_score}%</span>.
                                 </p>
+                                {reviewData && (
+                                    <div className="border rounded-xl p-6 bg-background/50">
+                                        <h3 className="text-xl font-bold mb-4">Quiz Feedback</h3>
+                                        <QuizReview
+                                            questions={reviewData.questions as any}
+                                            answers={reviewData.user_answers}
+                                            correctAnswers={reviewData.questions.map((q: any) => q.correct_answer)}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        ) : latestSubmission ? (
+                            <div className="space-y-6 mt-6">
+                                <p className="text-muted-foreground">
+                                    Your latest attempt scored <span className="font-bold text-red-500">{latestSubmission.score}%</span>. You need 70% to pass.
+                                </p>
+                                {reviewData && (
+                                    <div className="border rounded-xl p-6 bg-red-50/10 border-red-100 dark:border-red-900/30">
+                                        <h3 className="text-xl font-bold text-red-800 dark:text-red-400 mb-4">Review Your Mistakes</h3>
+                                        <QuizReview
+                                            questions={reviewData.questions as any}
+                                            answers={reviewData.user_answers}
+                                            correctAnswers={reviewData.questions.map((q: any) => q.correct_answer)}
+                                        />
+                                    </div>
+                                )}
+                                <QuizModal
+                                    lessonId={lesson.id}
+                                    questions={questions}
+                                    initialProgress={progress ? {
+                                        highest_quiz_score: progress.highest_quiz_score,
+                                        quiz_attempts: progress.quiz_attempts
+                                    } : undefined}
+                                />
                             </div>
                         ) : (
                             <QuizModal

@@ -18,6 +18,8 @@ interface LessonSidebarProps {
         title: string
         isCompleted: boolean
         isLocked: boolean
+        phase_id?: string
+        phase_title?: string
     }[]
 }
 
@@ -34,44 +36,57 @@ export function LessonSidebar({ course, lessons }: LessonSidebarProps) {
                 </Link>
             </div>
             <div className="flex-1 overflow-y-auto">
-                <div className="flex flex-col gap-2 p-4">
-                    {lessons.map((lesson, index) => {
-                        const isActive = pathname.includes(lesson.id)
-                        const isLocked = lesson.isLocked && !lesson.isCompleted
+                <div className="flex flex-col gap-6 p-4">
+                    {Object.entries(lessons.reduce((acc, lesson) => {
+                        const phase = lesson.phase_title || 'Main Content'
+                        if (!acc[phase]) acc[phase] = []
+                        acc[phase].push(lesson)
+                        return acc
+                    }, {} as Record<string, typeof lessons>)).map(([phaseTitle, phaseLessons]) => (
+                        <div key={phaseTitle} className="space-y-2">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground pl-3">{phaseTitle}</h3>
+                            <div className="flex flex-col gap-1">
+                                {phaseLessons.map((lesson) => {
+                                    const index = lessons.findIndex(l => l.id === lesson.id)
+                                    const isActive = pathname.includes(lesson.id)
+                                    const isLocked = lesson.isLocked && !lesson.isCompleted
 
-                        return (
-                            <Link
-                                key={lesson.id}
-                                href={isLocked ? "#" : `/courses/${course.id}/lessons/${lesson.id}`}
-                                onClick={() => setOpen(false)}
-                                className={cn(
-                                    "group flex items-start gap-3 rounded-lg p-3 text-sm transition-all",
-                                    isActive
-                                        ? "bg-primary/10 text-primary font-medium"
-                                        : "hover:bg-muted",
-                                    isLocked && "opacity-50 cursor-not-allowed hover:bg-transparent"
-                                )}
-                            >
-                                <div className="mt-0.5 shrink-0">
-                                    {lesson.isCompleted ? (
-                                        <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-                                    ) : isLocked ? (
-                                        <Lock className="h-4 w-4 text-muted-foreground" />
-                                    ) : (
-                                        <div className={cn(
-                                            "flex h-4 w-4 items-center justify-center rounded-full border text-[10px]",
-                                            isActive ? "border-primary text-primary" : "border-muted-foreground text-muted-foreground"
-                                        )}>
-                                            {index + 1}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="grid gap-1">
-                                    <span className="leading-tight">{lesson.title}</span>
-                                </div>
-                            </Link>
-                        )
-                    })}
+                                    return (
+                                        <Link
+                                            key={lesson.id}
+                                            href={isLocked ? "#" : `/courses/${course.id}/lessons/${lesson.id}`}
+                                            onClick={() => setOpen(false)}
+                                            className={cn(
+                                                "group flex items-start gap-3 rounded-lg p-3 text-sm transition-all",
+                                                isActive
+                                                    ? "bg-primary/10 text-primary font-medium"
+                                                    : "hover:bg-muted",
+                                                isLocked && "opacity-50 cursor-not-allowed hover:bg-transparent"
+                                            )}
+                                        >
+                                            <div className="mt-0.5 shrink-0">
+                                                {lesson.isCompleted ? (
+                                                    <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                                ) : isLocked ? (
+                                                    <Lock className="h-4 w-4 text-muted-foreground" />
+                                                ) : (
+                                                    <div className={cn(
+                                                        "flex h-4 w-4 items-center justify-center rounded-full border text-[10px]",
+                                                        isActive ? "border-primary text-primary" : "border-muted-foreground text-muted-foreground"
+                                                    )}>
+                                                        {index + 1}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="grid gap-1">
+                                                <span className="leading-tight">{lesson.title}</span>
+                                            </div>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

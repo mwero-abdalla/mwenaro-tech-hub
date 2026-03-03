@@ -37,10 +37,16 @@ export function StudentDirectoryClient({ initialStudents }: StudentDirectoryClie
     const filteredStudents = initialStudents.filter(student => {
         const matchesSearch =
             student.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            student.email.toLowerCase().includes(searchQuery.toLowerCase())
+            student.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            student.course_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            student.cohort_name.toLowerCase().includes(searchQuery.toLowerCase())
         const matchesCohort = cohortFilter === 'all' || student.cohort_name === cohortFilter
         return matchesSearch && matchesCohort
     })
+
+    const completionRate = initialStudents.length > 0
+        ? Math.round((initialStudents.filter(s => s.is_completed).length / initialStudents.length) * 100)
+        : 0
 
     const getInitials = (name: string | null, email: string) => {
         if (name) {
@@ -87,7 +93,7 @@ export function StudentDirectoryClient({ initialStudents }: StudentDirectoryClie
                         </div>
                         <div>
                             <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Completion Rate</p>
-                            <p className="text-3xl font-black">0%</p>
+                            <p className="text-3xl font-black">{completionRate}%</p>
                         </div>
                     </div>
                 </Card>
@@ -126,8 +132,9 @@ export function StudentDirectoryClient({ initialStudents }: StudentDirectoryClie
                         <TableHeader className="bg-zinc-50 dark:bg-zinc-900/80 sticky top-0 z-10">
                             <TableRow className="border-zinc-200 dark:border-zinc-800">
                                 <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Student</TableHead>
-                                <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Enrollment</TableHead>
                                 <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Course & Cohort</TableHead>
+                                <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Progress</TableHead>
+                                <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Avg Grade</TableHead>
                                 <TableHead className="font-bold text-zinc-900 dark:text-zinc-100 h-14">Status</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -151,11 +158,6 @@ export function StudentDirectoryClient({ initialStudents }: StudentDirectoryClie
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                                                {format(new Date(student.enrolled_at), 'MMM d, yyyy')}
-                                            </p>
-                                        </TableCell>
-                                        <TableCell>
                                             <div className="space-y-1">
                                                 <p className="text-sm font-bold text-zinc-900 dark:text-white">{student.course_title}</p>
                                                 <Badge variant="secondary" className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-bold text-[10px] uppercase tracking-wider flex items-center w-fit gap-1">
@@ -163,6 +165,28 @@ export function StudentDirectoryClient({ initialStudents }: StudentDirectoryClie
                                                     {student.cohort_name}
                                                 </Badge>
                                             </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex-1 max-w-[100px]">
+                                                    <div className="h-1.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                                        <div
+                                                            className="h-full bg-primary transition-all duration-500"
+                                                            style={{ width: `${student.progress}%` }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <span className="text-xs font-bold font-mono">{student.progress}%</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            {student.average_grade > 0 ? (
+                                                <Badge variant="outline" className="font-black text-xs border-zinc-200 dark:border-zinc-800">
+                                                    {student.average_grade}%
+                                                </Badge>
+                                            ) : (
+                                                <span className="text-zinc-400 text-xs italic">N/A</span>
+                                            )}
                                         </TableCell>
                                         <TableCell>
                                             <Badge className={student.is_completed ? "bg-green-500/10 text-green-500 border-green-500/20" : "bg-blue-500/10 text-blue-500 border-blue-500/20"}>

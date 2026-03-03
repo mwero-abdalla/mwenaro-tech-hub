@@ -93,6 +93,30 @@ export async function updateUserRole(userId: string, role: 'student' | 'instruct
     revalidatePath('/admin/users')
 }
 
+export async function getAllCourses(): Promise<Course[]> {
+    if (!await isAdmin()) throw new Error('Unauthorized')
+    const supabase = await createClient()
+    const { data, error } = await supabase
+        .from('courses')
+        .select('*')
+        .order('title')
+
+    if (error) throw new Error(error.message)
+    return data as Course[]
+}
+
+export async function getUserEnrollments(userId: string) {
+    if (!await isAdmin()) throw new Error('Unauthorized')
+    const supabase = createAdminClient()
+    const { data, error } = await supabase
+        .from('enrollments')
+        .select('*, courses(title)')
+        .eq('user_id', userId)
+
+    if (error) throw new Error(error.message)
+    return data
+}
+
 export async function getDashboardStats() {
     if (!await isAdmin()) throw new Error('Unauthorized')
 

@@ -23,10 +23,11 @@ export default async function LearnLayout({
         redirect('/login')
     }
 
-    const [course, lessons, progress] = await Promise.all([
+    const [course, lessons, progress, enrollment] = await Promise.all([
         getCourse(courseId),
         getCourseLessons(courseId),
-        getCourseProgress(courseId)
+        getCourseProgress(courseId),
+        supabase.from('enrollments').select('status, access_until').eq('user_id', user.id).eq('course_id', courseId).single()
     ])
 
     if (!course) {
@@ -36,6 +37,16 @@ export default async function LearnLayout({
     const isAdmin = user?.user_metadata?.role === 'admin'
     const isInstructor = user?.user_metadata?.role === 'instructor'
     const canBypass = isAdmin || isInstructor
+
+    // Strict Payment Gate for Learning
+    const enrollmentData = enrollment.data as { status: string, access_until: string | null } | null
+    const isPaid = enrollmentData?.status === 'active'
+    const hasValidTempAccess = enrollmentData?.access_until && new Date(enrollmentData.access_until) > new Date()
+    const hasAccess = isPaid || hasValidTempAccess
+
+    if (!canBypass && !hasAccess) {
+        redirect(`/checkout/${courseId}`)
+    }
 
     // Enrich lessons with status
     const enrichedLessons = lessons.map((lesson, index) => {

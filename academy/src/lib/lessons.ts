@@ -6,6 +6,7 @@ export interface Lesson {
     content: string
     video_url?: string
     has_project: boolean
+    duration_minutes: number
     created_at: string
     // Added by join queries:
     course_id?: string
@@ -36,7 +37,15 @@ export async function getCourseLessons(courseId: string): Promise<Lesson[]> {
             title,
             phase_lessons (
                 order_index,
-                lessons (*)
+                lessons (
+                    id,
+                    title,
+                    content,
+                    video_url,
+                    has_project,
+                    duration_minutes,
+                    created_at
+                )
             )
         `)
         .eq('course_id', courseId)

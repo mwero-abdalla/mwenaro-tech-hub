@@ -42,6 +42,13 @@ export async function POST(req: Request) {
                 .single()
 
             if (payment) {
+                // Update enrollment status to active
+                await supabase
+                    .from('enrollments')
+                    .update({ status: 'active' })
+                    .eq('user_id', userId)
+                    .eq('course_id', courseId)
+
                 // Enroll the user
                 await enrollUser(courseId, payment.id)
             }

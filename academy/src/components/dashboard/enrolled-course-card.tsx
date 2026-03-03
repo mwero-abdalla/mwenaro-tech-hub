@@ -10,10 +10,20 @@ import type { Course } from "@/lib/courses"
 interface EnrolledCourseCardProps {
     course: Course
     progress: number
-    lastAccessed?: string // Pending implementation in DB, but prop can exist
+    lastAccessed?: string
+    completedLessons?: number
+    totalLessons?: number
+    averageQuizScore?: number
 }
 
-export function EnrolledCourseCard({ course, progress, lastAccessed }: EnrolledCourseCardProps) {
+export function EnrolledCourseCard({
+    course,
+    progress,
+    lastAccessed,
+    completedLessons,
+    totalLessons,
+    averageQuizScore
+}: EnrolledCourseCardProps) {
     return (
         <Card className="overflow-hidden border-border hover:shadow-lg transition-shadow">
             <div className="flex flex-col sm:flex-row">
@@ -59,10 +69,22 @@ export function EnrolledCourseCard({ course, progress, lastAccessed }: EnrolledC
                         <div className="mt-4 space-y-3">
                             <div className="space-y-1">
                                 <div className="flex items-center justify-between text-sm">
-                                    <span className="text-muted-foreground text-xs">
+                                    <span className="text-muted-foreground text-xs flex items-center gap-2">
                                         {progress === 100 ? "Completed" : `${progress}% Complete`}
+                                        {completedLessons !== undefined && totalLessons !== undefined && (
+                                            <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground font-mono">
+                                                {completedLessons}/{totalLessons} Lessons
+                                            </span>
+                                        )}
                                     </span>
-                                    <span className="font-medium text-foreground text-xs">{progress}%</span>
+                                    <div className="flex items-center gap-3">
+                                        {averageQuizScore !== undefined && averageQuizScore > 0 && (
+                                            <Badge variant="secondary" className="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 text-[10px] h-5 py-0 px-1.5 font-bold border-green-200">
+                                                {averageQuizScore}% Avg Quiz
+                                            </Badge>
+                                        )}
+                                        <span className="font-medium text-foreground text-xs">{progress}%</span>
+                                    </div>
                                 </div>
                                 <Progress value={progress} className="h-2" />
                             </div>

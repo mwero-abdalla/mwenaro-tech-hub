@@ -30,26 +30,20 @@ export async function enrollUser(courseId: string, paymentIdOrFormData?: string 
         return
     }
 
-    // Verify course is free or payment is provided
     const { data: course } = await supabase.from('courses').select('price').eq('id', courseId).single()
-    if (course && course.price > 0 && !paymentId) {
-        if (typeof paymentIdOrFormData !== 'string') {
-            // In a real app, we'd handle this with useActionState for UI feedback
-            redirect(`/checkout/${courseId}`)
-        }
-        return
-    }
+    const isFree = course && course.price === 0
+    const initialStatus = isFree ? 'active' : 'pending'
 
     const { error } = await supabase
         .from('enrollments')
         .insert({
             user_id: user.id,
             course_id: courseId,
+            status: initialStatus
         })
 
     if (error) {
         console.error('Error enrolling user:', error)
-        // If it's a webhook, we might want to throw to trigger retry or log
         if (typeof paymentIdOrFormData === 'string') {
             throw new Error('Failed to enroll student')
         }
@@ -60,11 +54,15 @@ export async function enrollUser(courseId: string, paymentIdOrFormData?: string 
     revalidatePath('/dashboard')
 
     if (typeof paymentIdOrFormData !== 'string') {
-        redirect('/dashboard')
+        if (isFree) {
+            redirect('/dashboard')
+        } else {
+            redirect(`/checkout/${courseId}`)
+        }
     }
 }
 
-export async function hasEnrolled(courseId: string): Promise<boolean> {
+export async function hasEnrolled(courseId: string, onlyActive: boolean = true): Promise<boolean> {
     const supabase = await createClient()
 
     const {
@@ -75,22 +73,83 @@ export async function hasEnrolled(courseId: string): Promise<boolean> {
         return false
     }
 
-    const { data, error } = await supabase
+    const { data: enrollment, error } = await supabase
         .from('enrollments')
-        .select('course_id')
+        .select('course_id, status, access_until')
         .eq('user_id', user.id)
         .eq('course_id', courseId)
         .single()
 
-    if (error && error.code !== 'PGRST116') { // PGRST116 is "Relation not found" or "No rows found" depending on context, usually no rows for single()
-        // actually for .single(), if no row is found it returns an error.
+    if (error || !enrollment) {
         return false
     }
 
-    return !!data
+    // Check if actively enrolled
+    if (enrollment.status === 'active') {
+        return true
+    }
+
+    // Check if temporary access is granted and not expired
+    if (enrollment.access_until) {
+        const now = new Date()
+        const accessUntil = new Date(enrollment.access_until)
+        if (accessUntil > now) {
+            return true
+        }
+    }
+
+    return false
 }
 
-export async function getEnrolledCourses(): Promise<Course[]> {
+export async function getEnrollmentStatus(courseId: string): Promise<{ status: string, accessUntil: string | null } | null> {
+    const supabase = await createClient()
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    const { data } = await supabase
+        .from('enrollments')
+        .select('status, access_until')
+        .eq('user_id', user.id)
+        .eq('course_id', courseId)
+        .single()
+
+    if (!data) return null
+    return {
+        status: data.status,
+        accessUntil: data.access_until
+    }
+}
+
+export async function grantTemporaryAccess(studentId: string, courseId: string, untilDate: string): Promise<void> {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (user?.user_metadata?.role !== 'admin') {
+        throw new Error('Unauthorized: Admin access required')
+    }
+
+    // Upsert avoids duplicate enrollments if student already has one
+    const { error } = await supabase
+        .from('enrollments')
+        .upsert({
+            user_id: studentId,
+            course_id: courseId,
+            access_until: untilDate,
+            status: 'pending' // Keep pending if not paid, but access_until grants bypass
+        }, { onConflict: 'user_id,course_id' })
+
+    if (error) throw new Error(error.message)
+
+    revalidatePath(`/courses/${courseId}`)
+    revalidatePath('/dashboard')
+    revalidatePath('/admin/users')
+}
+
+export async function getEnrolledCourses(onlyActive: boolean = true): Promise<Course[]> {
     const supabase = await createClient()
 
     const {
@@ -101,13 +160,20 @@ export async function getEnrolledCourses(): Promise<Course[]> {
         return []
     }
 
-    const { data, error } = await supabase
+    let query = supabase
         .from('enrollments')
         .select(`
             course_id,
+            status,
             courses (*)
         `)
         .eq('user_id', user.id)
+
+    if (onlyActive) {
+        query = query.eq('status', 'active')
+    }
+
+    const { data, error } = await query
 
     if (error) {
         console.error('Error fetching enrolled courses:', error)

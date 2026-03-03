@@ -6,17 +6,12 @@ interface StatsCardsProps {
     courses: (Course & { progress: number })[]
     streak?: number
     quizzesAttempted?: number
+    learningHours?: number
 }
 
-export function StatsCards({ courses, streak = 0, quizzesAttempted = 0 }: StatsCardsProps) {
+export function StatsCards({ courses, streak = 0, quizzesAttempted = 0, learningHours = 0 }: StatsCardsProps) {
     const enrolledCount = courses.length
     const completedCount = courses.filter(c => c.progress === 100).length
-
-    // Mocking active hours roughly based on progress. 
-    // Assuming each course is roughly 10 hours for now purely for visual.
-    // In a real app, we'd sum up lesson durations.
-    const averageProgress = courses.reduce((acc, curr) => acc + curr.progress, 0) / (enrolledCount || 1)
-    const activeHours = Math.round((averageProgress / 100) * (enrolledCount * 10))
 
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -51,14 +46,14 @@ export function StatsCards({ courses, streak = 0, quizzesAttempted = 0 }: StatsC
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Quizzes Done
+                        Learning Hours
                     </CardTitle>
-                    <ShieldCheck className="h-4 w-4 text-muted-foreground" />
+                    <Clock className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{quizzesAttempted}</div>
+                    <div className="text-2xl font-bold">{learningHours}h</div>
                     <p className="text-xs text-muted-foreground">
-                        Total attempts
+                        Time spent learning
                     </p>
                 </CardContent>
             </Card>

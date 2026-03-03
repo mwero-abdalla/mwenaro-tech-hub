@@ -56,7 +56,7 @@ export default async function DashboardPage() {
     if (courseIds.length > 0) {
         const { data: lessonsData } = await supabase
             .from('lessons')
-            .select('id, course_id')
+            .select('id, course_id, duration_minutes')
             .in('course_id', courseIds)
 
         coursesWithProgress = enrolledCourses.map(course => {
@@ -78,10 +78,23 @@ export default async function DashboardPage() {
             return {
                 ...course,
                 progress: progressPercentage,
-                lastAccessedAt: lastActivity?.completed_at
+                lastAccessedAt: lastActivity?.completed_at,
+                completedLessonsCount: completedLessons,
+                totalLessonsCount: lessonCount,
+                lessons: courseLessons
             }
         })
     }
+
+    // Calculate total learning hours
+    const completedLessonIds = allProgress.filter(p => p.is_completed).map(p => p.lesson_id)
+    const { data: completedLessonsData } = await supabase
+        .from('lessons')
+        .select('duration_minutes')
+        .in('id', completedLessonIds)
+
+    const totalLearningMinutes = completedLessonsData?.reduce((acc, curr) => acc + (curr.duration_minutes || 0), 0) || 0
+    const totalLearningHours = Math.round(totalLearningMinutes / 60)
 
     const firstName = user.user_metadata?.full_name?.split(' ')[0] || 'Learner'
 
@@ -98,6 +111,7 @@ export default async function DashboardPage() {
                 courses={coursesWithProgress}
                 streak={currentStreak}
                 quizzesAttempted={totalQuizzes}
+                learningHours={totalLearningHours}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -129,14 +143,31 @@ export default async function DashboardPage() {
                                 </CardContent>
                             </Card>
                         ) : (
-                            coursesWithProgress.slice(0, 3).map((course) => (
-                                <EnrolledCourseCard
-                                    key={course.id}
-                                    course={course}
-                                    progress={course.progress}
-                                    lastAccessed={course.lastAccessedAt ? format(new Date(course.lastAccessedAt), 'MMM d, yyyy') : undefined}
-                                />
-                            ))
+                            coursesWithProgress.slice(0, 3).map((course) => {
+                                // Calculate course-specific average quiz score
+                                const courseLessons = course.lessons || []
+                                const progressRecords = allProgress.filter(p =>
+                                    courseLessons.some((cl: any) => cl.id === p.lesson_id)
+                                )
+                                const quizScores = progressRecords
+                                    .map(p => p.highest_quiz_score)
+                                    .filter(s => s > 0)
+                                const avgQuizScore = quizScores.length > 0
+                                    ? Math.round(quizScores.reduce((a, b) => a + b, 0) / quizScores.length)
+                                    : 0
+
+                                return (
+                                    <EnrolledCourseCard
+                                        key={course.id}
+                                        course={course}
+                                        progress={course.progress}
+                                        lastAccessed={course.lastAccessedAt ? format(new Date(course.lastAccessedAt), 'MMM d, yyyy') : undefined}
+                                        completedLessons={progressRecords.filter(p => p.is_completed).length}
+                                        totalLessons={courseLessons.length}
+                                        averageQuizScore={avgQuizScore}
+                                    />
+                                )
+                            })
                         )}
                     </div>
                 </div>

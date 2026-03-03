@@ -28,7 +28,14 @@ export async function POST(req: Request) {
                 .update({ status: 'completed' })
                 .eq('id', payment.id)
 
-            // Enroll the user
+            // Update enrollment status to active
+            await supabase
+                .from('enrollments')
+                .update({ status: 'active' })
+                .eq('user_id', payment.user_id)
+                .eq('course_id', payment.course_id)
+
+            // Enroll the user (this will revalidate paths)
             await enrollUser(payment.course_id, payment.id)
         }
     } else {

@@ -304,11 +304,22 @@ export async function getInstructorStats(instructorId: string) {
 
     const totalRevenue = payments?.reduce((acc, curr) => acc + Number(curr.amount), 0) || 0
 
+    // 5. Total Earnings (Payouts) from instructor_payments
+    const { data: payouts } = await supabase
+        .from('instructor_payments')
+        .select('amount, status')
+        .eq('instructor_id', instructorId)
+
+    const totalEarnings = payouts?.reduce((acc, curr) => acc + (curr.status === 'paid' ? Number(curr.amount) : 0), 0) || 0
+    const pendingPayouts = payouts?.reduce((acc, curr) => acc + (curr.status === 'pending' ? Number(curr.amount) : 0), 0) || 0
+
     return {
         totalCourses: allUniqueCourseIds.size,
         totalStudents: studentsCount,
         totalCohorts: cohortIds.length,
-        totalRevenue
+        totalRevenue,
+        totalEarnings,
+        pendingPayouts
     }
 }
 
@@ -321,6 +332,8 @@ export interface EnrolledStudent {
     cohort_name: string
     enrolled_at: string
     is_completed: boolean
+    progress: number
+    average_grade: number
 }
 
 /**
@@ -378,11 +391,51 @@ export async function getInstructorStudents(instructorId: string): Promise<Enrol
         course_title: (c.courses as any)?.title || 'Unknown Course'
     }]))
 
-    // 4. Transform to EnrolledStudent format
+    // 4. Get progress data for these students
+    const { data: allProgress } = await supabase
+        .from('lesson_progress')
+        .select('*')
+        .in('user_id', Array.from(new Set(enrollments.map(e => e.user_id))))
+
+    // 5. Get total lessons per course for progress calculation
+    const courseIds = Array.from(new Set(enrollments.map(e => e.course_id)))
+    const { data: courseLessons } = await supabase
+        .from('phase_lessons')
+        .select(`
+            lesson_id,
+            phases!inner(course_id)
+        `)
+        .in('phases.course_id', courseIds)
+
+    const lessonsPerCourse = new Map<string, number>()
+    courseLessons?.forEach((cl: any) => {
+        const cId = cl.phases.course_id
+        lessonsPerCourse.set(cId, (lessonsPerCourse.get(cId) || 0) + 1)
+    })
+
+    // 6. Transform to EnrolledStudent format
     const students: EnrolledStudent[] = enrollments.map(e => {
         const email = emailMap.get(e.user_id) || 'unknown'
         const fullName = profileMap.get(e.user_id) || email.split('@')[0] || 'Student'
         const cohort = cohortMap.get(e.cohort_id)
+
+        // Calculate progress
+        const studentProgress = allProgress?.filter(p =>
+            p.user_id === e.user_id &&
+            courseLessons?.some((cl: any) => cl.phases.course_id === e.course_id && cl.lesson_id === p.lesson_id)
+        ) || []
+
+        const completedCount = studentProgress.filter(p => p.is_completed).length
+        const totalCount = lessonsPerCourse.get(e.course_id) || 1
+        const progressPercent = Math.round((completedCount / totalCount) * 100)
+
+        // Calculate Average Grade
+        const quizScores = studentProgress
+            .map(p => p.highest_quiz_score)
+            .filter(s => s > 0)
+        const avgGrade = quizScores.length > 0
+            ? Math.round(quizScores.reduce((a, b) => a + b, 0) / quizScores.length)
+            : 0
 
         return {
             id: `${e.user_id}-${e.cohort_id}`,
@@ -392,7 +445,9 @@ export async function getInstructorStudents(instructorId: string): Promise<Enrol
             course_title: cohort?.course_title || 'Unknown',
             cohort_name: cohort?.name || 'Unknown',
             enrolled_at: e.enrolled_at,
-            is_completed: false
+            is_completed: progressPercent === 100,
+            progress: progressPercent,
+            average_grade: avgGrade
         }
     })
 

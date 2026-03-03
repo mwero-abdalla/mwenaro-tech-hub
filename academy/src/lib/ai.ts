@@ -94,7 +94,23 @@ export async function analyzeProject(lessonId: string, repoLink: string, student
 export async function getRecommendedCourses(userId: string) {
     const supabase = await createClient()
 
-    // 1. Get user's enrolled course IDs and their categories
+    // 1. Get user profile (role) and average performance
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single()
+
+    const { data: progress } = await supabase
+        .from('lesson_progress')
+        .select('highest_quiz_score')
+        .eq('user_id', userId)
+
+    const avgScore = progress && progress.length > 0
+        ? progress.reduce((acc, curr) => acc + (curr.highest_quiz_score || 0), 0) / progress.length
+        : 0
+
+    // 2. Get user's enrolled course IDs and their categories
     const { data: enrollments } = await supabase
         .from('enrollments')
         .select(`
@@ -108,14 +124,26 @@ export async function getRecommendedCourses(userId: string) {
     const enrolledCourseIds = enrollments?.map(e => e.course_id) || []
     const categories = Array.from(new Set(enrollments?.map(e => (e.courses as any)?.category).filter(Boolean)))
 
-    // 2. Fetch recommendations
+    // 3. Fetch recommendations
     let query = supabase.from('courses').select('*').eq('is_published', true)
 
     if (enrolledCourseIds.length > 0) {
         query = query.not('id', 'in', `(${enrolledCourseIds.join(',')})`)
     }
 
-    if (categories.length > 0) {
+    // Role-based filtering logic
+    if (profile?.role === 'admin' || profile?.role === 'instructor') {
+        // Recommend advanced or management courses
+        query = query.or('level.eq.Advanced,category.eq.Management')
+    } else if (avgScore > 85) {
+        // High performer: Recommend advanced courses in their categories
+        if (categories.length > 0) {
+            query = query.in('category', categories as any[]).eq('level', 'Advanced')
+        } else {
+            query = query.eq('level', 'Advanced')
+        }
+    } else if (categories.length > 0) {
+        // Normal path: Recommend courses in their categories
         query = query.in('category', categories as any[])
     }
 

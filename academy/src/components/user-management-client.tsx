@@ -79,7 +79,7 @@ export function UserManagementClient({ initialUsers, initialRoleFilter = 'all' }
                         <thead>
                             <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
                                 <th className="text-left p-6 font-bold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">User Identity</th>
-                                <th className="text-left p-6 font-bold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Access Level</th>
+                                <th className="text-left p-6 font-bold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Role & Permissions</th>
                                 <th className="text-left p-6 font-bold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Member Since</th>
                                 <th className="text-right p-6 font-bold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Actions</th>
                             </tr>

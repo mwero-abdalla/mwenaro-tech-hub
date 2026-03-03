@@ -102,26 +102,28 @@ export function UserActions({ userId, currentRole }: { userId: string, currentRo
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" disabled={isLoading}>
-                        {isLoading ? '...' : 'Manage Role'}
+                    <Button variant="outline" size="sm" className="bg-primary/5 border-primary/20 hover:bg-primary/10 font-bold" disabled={isLoading}>
+                        {isLoading ? '...' : 'Manage Access'}
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuItem onClick={() => handleRoleChange('student')} disabled={currentRole === 'student'}>
-                        Demote to Student
+                <DropdownMenuContent align="end" className="w-64 p-2 rounded-xl border-zinc-200 dark:border-zinc-800 shadow-2xl">
+                    <div className="px-2 py-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">Access Management</div>
+                    <DropdownMenuItem onClick={handleOpenDialog} className="rounded-lg py-3 cursor-pointer focus:bg-primary focus:text-white">
+                        <Clock className="w-4 h-4 mr-2" />
+                        <span className="font-bold">Adjust Pay Day / Access</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleRoleChange('instructor')} disabled={currentRole === 'instructor'}>
+
+                    <DropdownMenuSeparator className="my-2" />
+
+                    <div className="px-2 py-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">Permissions & Role</div>
+                    <DropdownMenuItem onClick={() => handleRoleChange('student')} disabled={currentRole === 'student'} className="rounded-lg">
+                        Promote to Student
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleRoleChange('instructor')} disabled={currentRole === 'instructor'} className="rounded-lg">
                         Promote to Instructor
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleRoleChange('admin')} className="text-red-600 focus:text-red-600" disabled={currentRole === 'admin'}>
+                    <DropdownMenuItem onClick={() => handleRoleChange('admin')} className="text-red-600 focus:text-red-600 rounded-lg" disabled={currentRole === 'admin'}>
                         Promote to Admin
-                    </DropdownMenuItem>
-
-                    <DropdownMenuSeparator />
-
-                    <DropdownMenuItem onClick={handleOpenDialog}>
-                        <Clock className="w-4 h-4 mr-2" />
-                        Grant Temporary Access
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
@@ -129,9 +131,9 @@ export function UserActions({ userId, currentRole }: { userId: string, currentRo
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Grant Temporary Access</DialogTitle>
-                        <DialogDescription>
-                            Authorize a student to access course content for a limited time.
+                        <DialogTitle className="text-2xl font-black text-primary">Adjust Access / Pay Day</DialogTitle>
+                        <DialogDescription className="font-medium text-zinc-500">
+                            Authorize a learner to access specific course content until a chosen date.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4 py-4">

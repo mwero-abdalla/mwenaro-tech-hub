@@ -42,7 +42,10 @@ export default function SignupPage() {
                 toast.error(result.error);
                 setIsLoading(false);
             } else {
-                // Redirect happens in server action on success
+                toast.success("Account created successfully! Please check your inbox for an activation email.", {
+                    duration: 10000, // Show for a bit longer
+                });
+                setIsLoading(false); // Stop loading so user can see message
             }
         } catch (err) {
             const message = err instanceof Error ? err.message : "Sign up failed";

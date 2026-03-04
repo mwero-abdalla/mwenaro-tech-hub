@@ -183,7 +183,7 @@ export async function sendMessage(conversationId: string, content: string) {
 
             const { data: recipient } = await supabase.auth.admin.getUserById(participants.user_id)
             if (recipient.user?.email) {
-                await sendNotificationEmail(recipient.user.email, 'New Message on Mwenaro Tech', `You have a new message from ${user.user_metadata?.name || 'a user'}.`, '/instructor/messages')
+                await sendNotificationEmail(recipient.user.email, 'New Message on Mwenaro', `You have a new message from ${user.user_metadata?.name || 'a user'}.`, '/instructor/messages')
             }
         }
     } catch (e) {

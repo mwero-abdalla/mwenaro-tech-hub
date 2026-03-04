@@ -3,6 +3,7 @@ import { getCourse } from '@/lib/courses'
 import { getLessonProgress } from '@/lib/progress'
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
+import { updateLastCourse } from '@/lib/user'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { QuizModal } from '@/components/quiz-modal'
@@ -22,6 +23,9 @@ interface LessonPageProps {
 
 export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
     const { id: courseId, lessonId } = await params
+
+    // Update last active course
+    await updateLastCourse(courseId)
 
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()

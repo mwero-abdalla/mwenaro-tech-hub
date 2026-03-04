@@ -5,10 +5,10 @@ import {
 } from "lucide-react";
 
 const stats = [
-    { value: "10,000+", label: "Active Learners", icon: Users },
-    { value: "150+", label: "Expert-Led Courses", icon: BookOpen },
+    { value: "100+", label: "Active Learners", icon: Users },
+    { value: "10+", label: "Expert-Led Courses", icon: BookOpen },
     { value: "98%", label: "Completion Rate", icon: Award },
-    { value: "50+", label: "Countries Reached", icon: Globe },
+    { value: "3+", label: "Countries Reached", icon: Globe },
 ];
 
 const values = [
@@ -36,28 +36,28 @@ const values = [
 
 const team = [
     {
-        name: "Alex Mwero",
+        name: "Mwero Abdalla",
         role: "Founder & CEO",
-        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop",
-        bio: "Former Google engineer with a passion for democratizing tech education.",
+        image: "/images/team/mwero.png",
+        bio: "A seasoned Fullstack Developer | Tech Educator | Tech Mentor.",
     },
     {
-        name: "Sarah Chen",
+        name: "Faith Mutua",
         role: "Head of Curriculum",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop",
-        bio: "10+ years in educational technology, building courses at top universities.",
+        image: "/images/team/faith.png",
+        bio: "EdTech specialist with 10+ years experience designing technical curricula for African contexts.",
     },
     {
-        name: "David Okonkwo",
+        name: "John Otieno",
         role: "Lead Instructor",
-        image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&h=300&fit=crop",
-        bio: "Full-stack developer and AWS certified architect with 15+ years experience.",
+        image: "/images/team/john.png",
+        bio: "Senior Full-stack engineer and community mentor dedicated to building the next generation of Kenyan developers.",
     },
     {
-        name: "Emily Martinez",
+        name: "Brenda Njeri",
         role: "Student Success Manager",
-        image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=300&fit=crop",
-        bio: "Dedicated to helping every student achieve their career goals in tech.",
+        image: "/images/team/brenda.png",
+        bio: "Passionate about community building and ensuring every Mwenaro learner reaches their full potential.",
     },
 ];
 
@@ -72,7 +72,7 @@ export default function AboutPage() {
                             Empowering the Next Generation of Tech Talent
                         </h1>
                         <p className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl mx-auto mb-8">
-                            Mwero Tech Academy is on a mission to make high-quality tech education accessible to everyone,
+                            Mwenaro Academy is on a mission to make high-quality tech education accessible to everyone,
                             everywhere. We believe that with the right guidance and resources, anyone can build a successful career in technology.
                         </p>
                         <Button variant="accent" size="xl" className="hover:scale-105 transition-transform">
@@ -109,16 +109,16 @@ export default function AboutPage() {
                                 </h2>
                                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                                     <p>
-                                        Mwero Tech Academy was founded in 2020 with a simple belief: quality tech education
+                                        Mwenaro Academy was founded in 2025 with a simple belief: quality tech education
                                         shouldn't be limited by geography, background, or financial status.
                                     </p>
                                     <p>
-                                        Our founder, Alex Mwero, experienced firsthand the challenges of learning to code
+                                        Our founder, Mwero Abdalla, experienced firsthand the challenges of learning to code
                                         without proper resources. After building a successful career at leading tech companies,
                                         he set out to create the learning platform he wished he had.
                                     </p>
                                     <p>
-                                        Today, we've helped over 10,000 learners from 50+ countries launch their careers in tech.
+                                        Today, we've helped over 100 learners from 3+ countries launch their careers in tech.
                                         From self-paced courses to instructor-led bootcamps, we offer multiple pathways to success.
                                     </p>
                                 </div>
@@ -215,7 +215,7 @@ export default function AboutPage() {
                                 Ready to Start Your Journey?
                             </h2>
                             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-                                Join thousands of learners who have transformed their careers with Mwero Tech Academy.
+                                Join thousands of learners who have transformed their careers with Mwenaro Academy.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <Button variant="accent" size="xl" className="hover:scale-105 transition-transform">

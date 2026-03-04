@@ -24,7 +24,7 @@ export const talentContent = {
       location: "Kilifi, KE"
     },
     {
-      name: "Alex Kamau",
+      name: "Kamau Mwangi",
       role: "Product Designer",
       skills: ["Figma", "Design Systems", "Prototyping"],
       status: "Available",

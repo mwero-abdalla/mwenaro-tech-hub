@@ -24,4 +24,4 @@ npm run dev -w talent
 The app will be available at `http://localhost:3003`.
 
 ---
-Part of the [Mwenaro Tech ecosystem](../README.md).
+Part of the [Mwenaro ecosystem](../README.md).

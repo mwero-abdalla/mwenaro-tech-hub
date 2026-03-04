@@ -43,7 +43,7 @@ export function CertificateDownload({ certificate }: CertificateDownloadProps) {
             doc.setFont('helvetica', 'bold')
             doc.setFontSize(40)
             doc.setTextColor(37, 99, 235)
-            doc.text('MWENARO TECH ACADEMY', pageWidth / 2, 40, { align: 'center' })
+            doc.text('MWENARO ACADEMY', pageWidth / 2, 40, { align: 'center' })
 
             doc.setFont('helvetica', 'normal')
             doc.setFontSize(20)

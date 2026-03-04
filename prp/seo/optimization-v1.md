@@ -26,7 +26,7 @@ For all applications, we will implement or update:
 
 ### 3.2 Mwenaro Academy (`academy.mwenaro.co.ke`)
 - **Focus**: Education, upskilling, coding bootcamp, project-based learning.
-- **Key Target Phrases**: "Learn coding in Kenya", "software engineering bootcamp Africa", "project-based tech education", "Mwenaro Tech Academy".
+- **Key Target Phrases**: "Learn coding in Kenya", "software engineering bootcamp Africa", "project-based tech education", "Mwenaro Academy".
 - **Action**: Update `academy/src/app/layout.tsx`, and ensure individual course pages (if dynamically generated) use `generateMetadata`.
 
 ### 3.3 Mwenaro Talent (`talent.mwenaro.co.ke`)

@@ -137,7 +137,7 @@ export function DashboardSidebar({ user, ...props }: DashboardSidebarProps) {
                                     <span className="font-bold">M</span>
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold">Mwenaro Tech</span>
+                                    <span className="truncate font-semibold">Mwenaro</span>
                                     <span className="truncate text-xs">Academy</span>
                                 </div>
                             </Link>

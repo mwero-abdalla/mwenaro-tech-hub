@@ -52,7 +52,7 @@ export async function analyzeProject(lessonId: string, repoLink: string, student
             messages: [
                 {
                     role: "system",
-                    content: "You are an expert software engineering instructor at Mwenaro Tech Academy. Your task is to review student project submissions based on lesson requirements. Provide a rating (0-100) and constructive feedback."
+                    content: "You are an expert software engineering instructor at Mwenaro Academy. Your task is to review student project submissions based on lesson requirements. Provide a rating (0-100) and constructive feedback."
                 },
                 {
                     role: "user",

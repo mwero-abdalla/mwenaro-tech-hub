@@ -1,31 +1,60 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrandLogo } from './brand-logo';
 import { Button } from './button';
 import { cn } from '../lib/utils';
-import { ecosystem } from '@mwenaro/config/ecosystem';
+import { ecosystem, SITE_LINKS, type NavLink } from '@mwenaro/config/ecosystem';
 import { Menu, X } from 'lucide-react';
 
 interface NavBarProps {
   currentApp?: 'hub' | 'academy' | 'talent' | 'labs';
   ctaLabel?: string;
   ctaHref?: string;
+  links?: NavLink[];
 }
 
 export const NavBar = ({
   currentApp = 'hub',
   ctaLabel,
   ctaHref,
+  links: customLinks,
 }: NavBarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [pathname, setPathname] = useState('');
 
-  const links = [
-    { name: 'Hub', href: ecosystem.hub, active: currentApp === 'hub' },
-    { name: 'Academy', href: ecosystem.academy, active: currentApp === 'academy' },
-    { name: 'Talent', href: ecosystem.talent, active: currentApp === 'talent' },
-    { name: 'Labs', href: ecosystem.labs, active: currentApp === 'labs' },
-  ];
+  useEffect(() => {
+    // Client-side only
+    if (typeof window !== 'undefined') {
+      setPathname(window.location.pathname);
+    }
+  }, []);
+
+  const getLinks = () => {
+    if (customLinks) return customLinks;
+
+    const baseLinks = SITE_LINKS[currentApp] || [];
+
+    return baseLinks.map(link => {
+      const isHome = link.href === '/' || link.href === '';
+      const isCurrentApp = link.active === currentApp;
+      const isExactMatch = pathname === link.href;
+
+      let isActive = false;
+      if (isHome) {
+        isActive = isExactMatch && (isCurrentApp || link.active === true);
+      } else {
+        isActive = isExactMatch || link.active === true;
+      }
+
+      return {
+        ...link,
+        active: isActive
+      };
+    });
+  };
+
+  const links = getLinks();
 
   const defaultCTA = {
     label: currentApp === 'academy' ? 'My Courses' : 'Get Started',
@@ -37,12 +66,16 @@ export const NavBar = ({
     variant: currentApp === 'academy' ? 'primary' : 'secondary',
   };
 
-  const subtexts = {
-    hub: 'Innovation Hub',
-    academy: 'Tech Academy',
-    talent: 'Talent Network',
-    labs: 'Innovation Labs',
+  const getAppSubtext = () => {
+    switch (currentApp) {
+      case 'academy': return 'Academy';
+      case 'talent': return 'Talent';
+      case 'labs': return 'Labs';
+      default: return 'Hub';
+    }
   };
+
+  const subtext = getAppSubtext();
 
   return (
     <>
@@ -51,7 +84,7 @@ export const NavBar = ({
 
           {/* Logo */}
           <a href={ecosystem.hub} className="hover:opacity-80 transition-opacity z-50">
-            <BrandLogo subtext={subtexts[currentApp]} />
+            <BrandLogo subtext={subtext} />
           </a>
 
           {/* Desktop Navigation Links */}

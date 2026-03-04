@@ -13,6 +13,7 @@ export interface Profile {
     website_url: string | null
     linkedin_url: string | null
     avatar_url: string | null
+    last_course_id: string | null
     updated_at: string
 }
 
@@ -91,5 +92,21 @@ export async function updatePassword(newPassword: string) {
     if (error) {
         console.error('Error updating password:', error)
         throw new Error(error.message)
+    }
+}
+
+export async function updateLastCourse(courseId: string) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return
+
+    const { error } = await supabase
+        .from('profiles')
+        .update({ last_course_id: courseId })
+        .eq('id', user.id)
+
+    if (error) {
+        console.error('Error updating last_course_id:', error)
     }
 }

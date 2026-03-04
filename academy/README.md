@@ -1,6 +1,6 @@
-# Mwenaro Tech Academy
+# Mwenaro Academy
 
-Mwenaro Tech Academy is a premium, AI-powered ed-tech platform designed to empower the next generation of tech leaders. Built with a modern tech stack and a focus on interactive learning, it provides a seamless experience for students, instructors, and administrators.
+Mwenaro Academy is a premium, AI-powered ed-tech platform designed to empower the next generation of tech leaders. Built with a modern tech stack and a focus on interactive learning, it provides a seamless experience for students, instructors, and administrators.
 
 ## 🚀 Key Features
 
@@ -33,7 +33,7 @@ Tailored experiences for every user role:
 
 ## 🏁 Getting Started
 
-This application is part of the [Mwenaro Tech Monorepo](../README.md).
+This application is part of the [Mwenaro Monorepo](../README.md).
 
 ### Prerequisites
 - Node.js 20+
@@ -60,4 +60,4 @@ The platform is optimized for [Vercel](https://vercel.com/) and utilizes Next.js
 
 ---
 
-© 2026 Mwenaro Tech Academy. All rights reserved.
+© 2026 Mwenaro Academy. All rights reserved.

@@ -7,10 +7,11 @@ import { SharedLessonForm } from '@/components/shared-lesson-form'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { EditLessonModal } from '@/components/edit-lesson-modal'
 import { ManageQuizModal } from '@/components/manage-quiz-modal'
+import { ManagePhasesModal } from '@/components/manage-phases-modal'
 import { removeLessonFromPhase } from '@/lib/admin'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Trash2, Link as LinkIcon } from 'lucide-react'
+import { Trash2, Link as LinkIcon, Layers } from 'lucide-react'
 
 interface LessonsPageProps {
     params: Promise<{ id: string }>
@@ -42,13 +43,25 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
             <div className="max-w-7xl mx-auto">
-                <div className="flex items-center gap-4 mb-8">
-                    <Link href="/admin/courses">
-                        <Button variant="ghost" size="sm">← Back</Button>
-                    </Link>
-                    <div>
-                        <h1 className="text-3xl font-black text-purple-600 dark:text-purple-400 tracking-tight">Curriculum Designer</h1>
-                        <p className="text-muted-foreground font-medium">{course.title}</p>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+                    <div className="flex items-center gap-4">
+                        <Link href="/admin/courses">
+                            <Button variant="ghost" size="sm" className="rounded-xl h-10 w-10 p-0 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                                <span className="text-xl">←</span>
+                            </Button>
+                        </Link>
+                        <div>
+                            <h1 className="text-4xl font-black text-zinc-900 dark:text-white tracking-tight">Curriculum Designer</h1>
+                            <p className="text-zinc-500 font-medium mt-1">{course.title}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <ManagePhasesModal courseId={courseId} phases={phases} />
+                        <Link href={`/learn/${courseId}`}>
+                            <Button variant="ghost" size="sm" className="font-bold text-primary">
+                                Preview Live
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
@@ -63,11 +76,19 @@ export default async function CourseLessonsPage({ params }: LessonsPageProps) {
                             phases.map(phase => {
                                 const phaseLessons = lessonsWithQuestions.filter(l => l.phase_id === phase.id)
                                 return (
-                                    <div key={phase.id} className="space-y-4">
-                                        <div className="flex items-center justify-between pb-2 border-b">
-                                            <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{phase.title}</h2>
-                                            <span className="text-xs font-semibold text-muted-foreground bg-muted px-2 py-1 rounded-md">
-                                                {phaseLessons.length} lessons
+                                    <div key={phase.id} className="space-y-4 group/phase">
+                                        <div className="flex items-center justify-between pb-3 border-b-2 border-zinc-100 dark:border-zinc-800 transition-colors group-hover/phase:border-primary/20">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover/phase:bg-primary/5 transition-colors">
+                                                    <Layers className="w-5 h-5 text-zinc-400 group-hover/phase:text-primary transition-colors" />
+                                                </div>
+                                                <div>
+                                                    <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{phase.title}</h2>
+                                                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Phase {phase.order_index}</p>
+                                                </div>
+                                            </div>
+                                            <span className="text-[10px] font-black text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                                {phaseLessons.length} {phaseLessons.length === 1 ? 'Lesson' : 'Lessons'}
                                             </span>
                                         </div>
                                         {phaseLessons.length === 0 ? (

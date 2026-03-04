@@ -7,33 +7,34 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
     Mail, Phone, MapPin, MessageCircle, Clock,
-    Send, HelpCircle, BookOpen, Users, Headphones
+    Send, HelpCircle, BookOpen, Users, Headphones, Video, Calendar, ArrowRight
 } from "lucide-react";
 
 const contactInfo = [
     {
         icon: Mail,
         title: "Email Us",
-        detail: "support@mwerotech.com",
+        detail: "support@mwenaro.co.ke",
         description: "We'll respond within 24 hours",
     },
     {
         icon: Phone,
         title: "Call Us",
-        detail: "+1 (555) 123-4567",
-        description: "Mon-Fri, 9am-6pm EST",
+        detail: "+254 116 477 282",
+        description: "Mon-Fri, 9am-6pm EAT",
+    },
+    {
+        icon: Video,
+        title: "Book a Call",
+        detail: "15-min Discovery",
+        description: "Schedule via Calendly",
+        href: "https://calendly.com/mwenaro"
     },
     {
         icon: MapPin,
         title: "Visit Us",
-        detail: "123 Tech Street, San Francisco, CA",
+        detail: "Likoni, Mombasa",
         description: "By appointment only",
-    },
-    {
-        icon: Clock,
-        title: "Support Hours",
-        detail: "24/7 Online Support",
-        description: "Live chat available",
     },
 ];
 
@@ -57,6 +58,12 @@ const faqItems = [
 ];
 
 const supportOptions = [
+    {
+        icon: Calendar,
+        title: "Discovery Call",
+        description: "Book a free 15-minute intro",
+        href: "https://calendly.com/mwenaro"
+    },
     {
         icon: MessageCircle,
         title: "Live Chat",
@@ -119,16 +126,32 @@ export default function ContactPage() {
                             {contactInfo.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="bg-card rounded-2xl p-6 card-shadow hover:card-shadow-hover transition-all duration-300"
+                                    className="bg-card rounded-2xl p-6 card-shadow hover:card-shadow-hover transition-all duration-300 group"
                                 >
-                                    <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-4">
-                                        <item.icon className="w-6 h-6 text-primary-foreground" />
-                                    </div>
-                                    <h3 className="font-display font-bold text-lg text-foreground mb-1">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-primary font-medium">{item.detail}</p>
-                                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                                    {(item as any).href ? (
+                                        <a href={(item as any).href} target="_blank" rel="noopener noreferrer">
+                                            <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                                <item.icon className="w-6 h-6 text-primary-foreground" />
+                                            </div>
+                                            <h3 className="font-display font-bold text-lg text-foreground mb-1 flex items-center gap-2">
+                                                {item.title}
+                                                <ArrowRight className="w-4 h-4 text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                                            </h3>
+                                            <p className="text-primary font-medium">{item.detail}</p>
+                                            <p className="text-sm text-muted-foreground">{item.description}</p>
+                                        </a>
+                                    ) : (
+                                        <>
+                                            <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-4">
+                                                <item.icon className="w-6 h-6 text-primary-foreground" />
+                                            </div>
+                                            <h3 className="font-display font-bold text-lg text-foreground mb-1">
+                                                {item.title}
+                                            </h3>
+                                            <p className="text-primary font-medium">{item.detail}</p>
+                                            <p className="text-sm text-muted-foreground">{item.description}</p>
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -226,18 +249,22 @@ export default function ContactPage() {
                                 </h2>
                                 <div className="space-y-4">
                                     {supportOptions.map((option, index) => (
-                                        <button
+                                        <a
                                             key={index}
+                                            href={(option as any).href || "#"}
+                                            target={(option as any).href ? "_blank" : undefined}
+                                            rel={(option as any).href ? "noopener noreferrer" : undefined}
                                             className="w-full flex items-center gap-4 bg-card rounded-xl p-4 card-shadow hover:card-shadow-hover transition-all duration-300 text-left group"
                                         >
                                             <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center group-hover:gradient-bg transition-all">
                                                 <option.icon className="w-6 h-6 text-foreground group-hover:text-primary-foreground transition-colors" />
                                             </div>
-                                            <div>
+                                            <div className="flex-1">
                                                 <h3 className="font-semibold text-foreground">{option.title}</h3>
                                                 <p className="text-sm text-muted-foreground">{option.description}</p>
                                             </div>
-                                        </button>
+                                            <ArrowRight className="w-5 h-5 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                                        </a>
                                     ))}
                                 </div>
                             </div>

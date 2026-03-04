@@ -5,12 +5,12 @@ import { ecosystem } from "@mwenaro/config/ecosystem";
 export const metadata: Metadata = {
     metadataBase: new URL(ecosystem.hub),
     title: {
-        default: "Mwenaro Tech Hub | Premier Tech Ecosystem in Africa",
-        template: "%s | Mwenaro Tech Hub",
+        default: "Mwenaro Hub | Premier Tech Ecosystem in Africa",
+        template: "%s | Mwenaro Hub",
     },
-    description: "Mwenaro Tech Hub is Africa's premier technology ecosystem. We drive tech innovation in Kenya, empowering startups, developers, and businesses through our Academy, Talent network, and Labs.",
+    description: "Mwenaro Hub is Africa's premier technology ecosystem. We drive tech innovation in Kenya, empowering startups, developers, and businesses through our Academy, Talent network, and Labs.",
     keywords: [
-        "Mwenaro Tech Hub",
+        "Mwenaro Hub",
         "tech innovation in Kenya",
         "African tech ecosystem",
         "tech startup builder Africa",
@@ -18,20 +18,20 @@ export const metadata: Metadata = {
         "Kenya tech talent",
         "Mwenaro",
     ],
-    authors: [{ name: "Mwenaro Tech Hub" }],
-    creator: "Mwenaro Tech Hub",
-    publisher: "Mwenaro Tech Hub",
+    authors: [{ name: "Mwenaro Hub" }],
+    creator: "Mwenaro Hub",
+    publisher: "Mwenaro Hub",
     openGraph: {
-        title: "Mwenaro Tech Hub | Africa's Premier Tech Ecosystem",
+        title: "Mwenaro Hub | Africa's Premier Tech Ecosystem",
         description: "Connecting innovation, talent, and tech education across the African ecosystem.",
         url: ecosystem.hub,
-        siteName: "Mwenaro Tech Hub",
+        siteName: "Mwenaro Hub",
         images: [
             {
                 url: "/logo-full.svg",
                 width: 1200,
                 height: 630,
-                alt: "Mwenaro Tech Hub Logo - Technology Ecosystem in Africa",
+                alt: "Mwenaro Hub Logo - Technology Ecosystem in Africa",
             },
         ],
         locale: "en_KE",
@@ -39,10 +39,10 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Mwenaro Tech Hub | Tech Ecosystem",
+        title: "Mwenaro Hub | Tech Ecosystem",
         description: "Driving tech innovation in Kenya and across Africa. Join our ecosystem.",
         images: ["/logo-full.svg"],
-        creator: "@mwenarotech",
+        creator: "@mwenaro",
     },
     robots: {
         index: true,

@@ -543,3 +543,69 @@ export async function deleteAllQuestions(lessonId: string) {
 
     await revalidateLessonPaths(supabase, lessonId)
 }
+
+// --- Phase Management ---
+
+export async function createPhase(courseId: string, title: string) {
+    if (!await isAuthorizedForCourse(courseId)) throw new Error('Unauthorized')
+    const supabase = await createClient()
+
+    const { data: phases } = await supabase.from('phases').select('order_index').eq('course_id', courseId).order('order_index', { ascending: false }).limit(1)
+    const nextOrderIndex = (phases && phases.length > 0) ? (phases[0].order_index || 0) + 1 : 1
+
+    const { error } = await supabase.from('phases').insert({
+        course_id: courseId,
+        title,
+        order_index: nextOrderIndex
+    })
+
+    if (error) throw new Error(error.message)
+    revalidatePath(`/admin/courses/${courseId}/lessons`)
+    revalidatePath(`/courses/${courseId}`)
+}
+
+export async function updatePhase(id: string, data: { title?: string, order_index?: number }) {
+    const supabase = await createClient()
+    const { data: phase } = await supabase.from('phases').select('course_id').eq('id', id).single()
+    if (!phase || !await isAuthorizedForCourse(phase.course_id)) throw new Error('Unauthorized')
+
+    const { error } = await supabase.from('phases').update(data).eq('id', id)
+    if (error) throw new Error(error.message)
+
+    revalidatePath(`/admin/courses/${phase.course_id}/lessons`)
+    revalidatePath(`/courses/${phase.course_id}`)
+}
+
+export async function deletePhase(id: string) {
+    const supabase = await createClient()
+    const { data: phase } = await supabase.from('phases').select('course_id').eq('id', id).single()
+    if (!phase || !await isAuthorizedForCourse(phase.course_id)) throw new Error('Unauthorized')
+
+    // Check if phase has lessons
+    const { count } = await supabase.from('phase_lessons').select('*', { count: 'exact', head: true }).eq('phase_id', id)
+    if (count && count > 0) throw new Error('Cannot delete phase because it contains lessons. Move or delete them first.')
+
+    const { error } = await supabase.from('phases').delete().eq('id', id)
+    if (error) throw new Error(error.message)
+
+    revalidatePath(`/admin/courses/${phase.course_id}/lessons`)
+    revalidatePath(`/courses/${phase.course_id}`)
+}
+
+export async function reorderPhases(courseId: string, phaseIds: string[]) {
+    if (!await isAuthorizedForCourse(courseId)) throw new Error('Unauthorized')
+    const supabase = await createClient()
+
+    const updates = phaseIds.map((id, index) => ({
+        id,
+        order_index: index + 1
+    }))
+
+    // Batch update order_index
+    for (const update of updates) {
+        await supabase.from('phases').update({ order_index: update.order_index }).eq('id', update.id)
+    }
+
+    revalidatePath(`/admin/courses/${courseId}/lessons`)
+    revalidatePath(`/courses/${courseId}`)
+}

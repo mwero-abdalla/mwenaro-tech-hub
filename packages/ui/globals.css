@@ -159,6 +159,26 @@
   .btn-premium:hover {
     box-shadow: 0 10px 15px -3px rgba(232, 93, 59, 0.2);
   }
+
+  .gradient-hero {
+    @apply bg-gradient-to-br from-primary via-orange-500 to-orange-600 text-primary-foreground relative overflow-hidden;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-primary to-orange-500;
+  }
+
+  .card-shadow {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-shadow-hover:hover {
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.15);
+  }
+
+  .font-display {
+    @apply font-black tracking-tight;
+  }
 }
 
 @layer utilities {

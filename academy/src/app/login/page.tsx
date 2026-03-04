@@ -35,6 +35,7 @@ export default function LoginPage() {
                 toast.error(result.error);
                 setIsLoading(false);
             } else {
+                toast.success("Welcome back!");
                 // Redirect happens in server action on success
             }
         } catch (err) {

@@ -11,8 +11,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatsCards } from '@/components/dashboard/stats-cards'
 import { EnrolledCourseCard } from '@/components/dashboard/enrolled-course-card'
 import { UpcomingSessionCard } from '@/components/dashboard/upcoming-session-card'
-import { ArrowRight, BookOpen, Calendar, Award, ShieldCheck, Sparkles } from "lucide-react"
+import { ArrowRight, BookOpen, Calendar, Award, ShieldCheck, Sparkles, PlayCircle } from "lucide-react"
 import { format } from 'date-fns'
+import { getProfile } from '@/lib/user'
 
 export const revalidate = 0 // Ensure dynamic data
 
@@ -33,12 +34,13 @@ export default async function DashboardPage() {
     }
 
     // Proceed as Learner
-    const [enrolledCourses, upcomingSessions, allProgress, streakData, recommendations] = await Promise.all([
+    const [enrolledCourses, upcomingSessions, allProgress, streakData, recommendations, profile] = await Promise.all([
         getEnrolledCourses(),
         getStudentSessions(),
         getUserProgress(),
         getLearningStreak(user.id),
-        getRecommendedCourses(user.id)
+        getRecommendedCourses(user.id),
+        getProfile()
     ])
 
     // Calculate current streak (0 if not active)
@@ -84,6 +86,19 @@ export default async function DashboardPage() {
                 lessons: courseLessons
             }
         })
+
+        // Sort by last active course if available, then by lastAccessedAt
+        coursesWithProgress.sort((a, b) => {
+            if (profile?.last_course_id) {
+                if (a.id === profile.last_course_id) return -1
+                if (b.id === profile.last_course_id) return 1
+            }
+
+            if (a.lastAccessedAt && b.lastAccessedAt) {
+                return new Date(b.lastAccessedAt).getTime() - new Date(a.lastAccessedAt).getTime()
+            }
+            return 0
+        })
     }
 
     // Calculate total learning hours
@@ -103,7 +118,10 @@ export default async function DashboardPage() {
             <div className="flex flex-col gap-2">
                 <h1 className="text-3xl font-bold tracking-tight">Welcome back, {firstName}!</h1>
                 <p className="text-muted-foreground">
-                    Track your progress and continue learning.
+                    {profile?.last_course_id
+                        ? "Pick up right where you left off."
+                        : "Track your progress and continue learning."
+                    }
                 </p>
             </div>
 

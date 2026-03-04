@@ -1,6 +1,6 @@
 # Mwenaro Hub
 
-The **Hub** is the central gateway to the Mwenaro Tech ecosystem. It provides a high-level overview of our mission, pillars, and provides the main entry point for students, talent, and partners.
+The **Hub** is the central gateway to the Mwenaro ecosystem. It provides a high-level overview of our mission, pillars, and provides the main entry point for students, talent, and partners.
 
 ## ✨ Features
 
@@ -24,4 +24,4 @@ npm run dev -w hub
 The app will be available at `http://localhost:3002`.
 
 ---
-Part of the [Mwenaro Tech ecosystem](../README.md).
+Part of the [Mwenaro ecosystem](../README.md).

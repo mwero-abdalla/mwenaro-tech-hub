@@ -1,6 +1,6 @@
-# Mwenaro Tech Ecosystem
+# Mwenaro Ecosystem
 
-Welcome to the **Mwenaro Tech** monorepo—Africa's premier digital ecosystem for talent development, innovation, and digital solutions.
+Welcome to the **Mwenaro** monorepo—Africa's premier digital ecosystem for talent development, innovation, and digital solutions.
 
 This repository hosts a suite of interconnected platforms built with Next.js, Tailwind CSS (v4), and Supabase, designed to scale and provide a premium "Elite Tech" experience.
 
@@ -72,4 +72,4 @@ All apps share a premium **Tailwind CSS v4** design system located in `packages/
 
 ---
 
-Built with ❤️ by the **Mwenaro Tech Team**.
+Built with ❤️ by the **Mwenaro Team**.

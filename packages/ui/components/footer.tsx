@@ -13,7 +13,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ currentApp = 'hub' }) => {
   // Dynamic description based on page
   const pageDescription: Record<string, string> = {
-    hub: "Mwenaro Tech Hub is Africa's premier ecosystem for tech talent and innovation. We bridge the gap between learning and industry excellence.",
+    hub: "Mwenaro Hub is Africa's premier ecosystem for tech talent and innovation. We bridge the gap between learning and industry excellence.",
     academy: 'Mwenaro Academy empowers learners with structured, project-based programs to build real-world tech skills.',
     talent: 'Mwenaro Talent connects you with developers trained through structured, project-based learning and real projects.',
     labs: 'Mwenaro Labs designs, builds, and maintains scalable digital solutions for startups and growing organizations.',
@@ -22,7 +22,7 @@ export const Footer: React.FC<FooterProps> = ({ currentApp = 'hub' }) => {
   // Ecosystem CTAs per page
   const ecosystemLinks: { text: string; href: string }[] = [
     { text: 'Mwenaro Academy', href: ecosystem.academy },
-    { text: 'Talent Platform', href: ecosystem.talent },
+    { text: 'Mwenaro Talent', href: ecosystem.talent },
     { text: 'Mwenaro Labs', href: ecosystem.labs },
   ];
 
@@ -65,14 +65,14 @@ export const Footer: React.FC<FooterProps> = ({ currentApp = 'hub' }) => {
             <ul className="space-y-4 text-sm font-medium text-secondary-foreground opacity-70">
               <li>
                 <a
-                  href="mailto:hello@mwenaro.co.ke"
+                  href="mailto:support@mwenaro.co.ke"
                   className="hover:text-primary hover:opacity-100 transition-all"
                 >
-                  hello@mwenaro.co.ke
+                  support@mwenaro.co.ke
                 </a>
               </li>
-              <li>Mombasa, Kenya</li>
-              <li>+254116477282</li>
+              <li>Likoni, Mombasa</li>
+              <li>+254 116 477 282</li>
             </ul>
           </div>
 
@@ -104,7 +104,7 @@ export const Footer: React.FC<FooterProps> = ({ currentApp = 'hub' }) => {
 
         {/* Bottom Section */}
         <div className="border-t border-white/10 mt-20 pt-10 flex flex-col md:flex-row items-center justify-between gap-6 opacity-60 text-xs font-bold tracking-widest uppercase">
-          <p>© {new Date().getFullYear()} Mwenaro Tech Hub. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} MWENARO HUB. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-10">
             <a href="/privacy" className="hover:text-primary transition-colors">
               Privacy

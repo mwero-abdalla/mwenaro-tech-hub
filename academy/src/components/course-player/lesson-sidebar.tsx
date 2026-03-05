@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle, Circle, Play, Clock, ChevronDown, ChevronUp, Lock } from "lucide-react"
+import { CheckCircle, Circle, Play, Clock, ChevronDown, ChevronUp, Lock, LayoutDashboard } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
@@ -137,6 +137,14 @@ export function LessonSidebar({
                     })}
                 </div>
             </ScrollArea>
+
+            {/* Footer Navigation */}
+            <div className={cn("p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50", isCollapsed && "hidden lg:block")}>
+                <Link href="/dashboard" className="flex items-center justify-center gap-2 p-3 w-full rounded-xl hover:bg-white dark:hover:bg-zinc-800 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700 hover:shadow-sm transition-all text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:text-foreground">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Back to Dashboard
+                </Link>
+            </div>
         </div>
     )
 }

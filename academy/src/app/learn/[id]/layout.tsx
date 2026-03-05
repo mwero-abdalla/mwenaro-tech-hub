@@ -73,7 +73,7 @@ export default async function LearnLayout({
     const completedCount = enrichedLessons.filter(l => l.is_completed).length
 
     return (
-        <div className="flex h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+        <div className="flex h-screen pt-20 overflow-hidden bg-zinc-50 dark:bg-zinc-950">
             {/* Desktop Sidebar */}
             <aside className="hidden lg:flex w-80 flex-col flex-shrink-0 border-r border-zinc-200 dark:border-zinc-800">
                 <div className="h-16 flex items-center px-6 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">

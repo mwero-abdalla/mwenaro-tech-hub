@@ -79,7 +79,7 @@ export const NavBar = ({
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-nav bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-border/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-nav bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl border-b border-zinc-200/50 dark:border-zinc-800/50 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
           {/* Logo */}
@@ -94,17 +94,17 @@ export const NavBar = ({
                 <a
                   href={link.href}
                   className={cn(
-                    'text-sm font-bold tracking-wide transition-all duration-300 relative group',
+                    'text-sm font-bold tracking-wide transition-all duration-300 relative group py-2',
                     link.active
                       ? 'text-primary'
-                      : 'text-muted-foreground hover:text-foreground'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                   )}
                 >
                   {link.name}
                   <span
                     className={cn(
-                      'absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300',
-                      link.active ? 'w-full' : 'w-0 group-hover:w-full'
+                      'absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 rounded-full',
+                      link.active ? 'w-full' : 'w-0 group-hover:w-full opacity-50'
                     )}
                   />
                 </a>
@@ -116,8 +116,8 @@ export const NavBar = ({
           <div className="flex items-center gap-4 z-50">
             <Button
               variant={defaultCTA.variant as any}
-              size="sm"
-              className="hidden md:flex rounded-full px-8 shadow-primary/20"
+              size="md"
+              className="hidden md:flex rounded-full shadow-[0_4px_14px_0_hsl(var(--primary)/30%)] hover:shadow-[0_6px_20px_hsl(var(--primary)/40%)] hover:-translate-y-0.5 transition-all"
               as="a"
               href={defaultCTA.href}
             >

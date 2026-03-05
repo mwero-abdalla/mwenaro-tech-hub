@@ -12,7 +12,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Pencil } from 'lucide-react'
+import { Pencil, FolderOpen } from 'lucide-react'
+import { EmptyState } from '@/components/ui/empty-state'
 
 export default async function CoursesPage() {
     const courses = await getCourses()
@@ -28,9 +29,11 @@ export default async function CoursesPage() {
                     {/* List */}
                     <div className="lg:col-span-2 space-y-4">
                         {courses.length === 0 ? (
-                            <Card className="p-12 text-center text-muted-foreground italic">
-                                No courses found.
-                            </Card>
+                            <EmptyState
+                                title="No Courses Yet"
+                                description="You haven't created any courses. Start by adding a new course using the form."
+                                icon={<FolderOpen className="w-12 h-12 text-zinc-300 dark:text-zinc-700" />}
+                            />
                         ) : (
                             courses.map(course => (
                                 <Card key={course.id} className="p-6 flex justify-between items-center group hover:border-purple-300 transition-all">

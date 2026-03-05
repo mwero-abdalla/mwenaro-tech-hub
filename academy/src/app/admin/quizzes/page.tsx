@@ -48,8 +48,14 @@ export default async function AdminQuizzesPage() {
                                 <tbody className="divide-y">
                                     {quizzes.length === 0 ? (
                                         <tr>
-                                            <td colSpan={5} className="px-8 py-20 text-center italic text-muted-foreground">
-                                                No submissions found.
+                                            <td colSpan={5} className="px-8 py-24 text-center">
+                                                <div className="flex flex-col items-center justify-center max-w-sm mx-auto">
+                                                    <div className="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mb-4 ring-4 ring-white dark:ring-zinc-950">
+                                                        <FileQuestion className="w-8 h-8 text-zinc-400" />
+                                                    </div>
+                                                    <h3 className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">No Submissions Yet</h3>
+                                                    <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">There are no recorded quiz attempts from students at this time. Check back later.</p>
+                                                </div>
                                             </td>
                                         </tr>
                                     ) : (

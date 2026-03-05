@@ -56,11 +56,11 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
         <div className="max-w-5xl mx-auto px-6 pt-32 pb-10 space-y-12 pb-32">
             {/* Top Bar / Metadata */}
             <div className="flex items-center justify-between group">
-                <div className="space-y-1">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                <div className="space-y-2">
+                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-primary/80 dark:text-primary">
                         Module {currentIndex + 1} of {allLessons.length}
                     </p>
-                    <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">
+                    <h1 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-tight">
                         {lesson.title}
                     </h1>
                 </div>
@@ -81,8 +81,8 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
 
             {/* Content & Activities */}
             <div className="grid grid-cols-1 gap-12">
-                <div className="prose prose-slate lg:prose-xl dark:prose-invert max-w-none">
-                    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 p-8 shadow-sm backdrop-blur-sm">
+                <div className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold hover:prose-a:text-primary/80 prose-img:rounded-3xl prose-img:shadow-xl">
+                    <div className="rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/50 p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {lesson.content}
                         </ReactMarkdown>
@@ -155,10 +155,10 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
 
             {/* Float Navigation */}
             <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 lg:pl-[340px] lg:pr-8 lg:max-w-none lg:left-0 lg:translate-x-0 lg:flex lg:justify-center">
-                <div className="bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-xl flex items-center justify-between gap-10 w-full max-w-2xl">
+                <div className="bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/50 dark:border-zinc-800/50 px-6 py-4 rounded-3xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] backdrop-blur-xl flex items-center justify-between gap-10 w-full max-w-2xl transition-all duration-300 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.3)] hover:-translate-y-1">
                     {prevLesson ? (
                         <Link href={`/learn/${courseId}/${prevLesson.id}`}>
-                            <Button variant="ghost" className="font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white px-4">
+                            <Button variant="ghost" className="font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white px-4 rounded-xl">
                                 <ChevronLeft className="w-5 h-5 mr-2" />
                                 Previous
                             </Button>

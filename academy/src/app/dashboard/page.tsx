@@ -114,13 +114,15 @@ export default async function DashboardPage() {
     const firstName = user.user_metadata?.full_name?.split(' ')[0] || 'Learner'
 
     return (
-        <div className="space-y-8">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight">Welcome back, {firstName}!</h1>
-                <p className="text-muted-foreground">
+        <div className="space-y-10">
+            <div className="flex flex-col gap-3">
+                <h1 className="text-4xl font-black tracking-tight text-foreground">
+                    Welcome back, <span className="text-primary">{firstName}</span>!
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
                     {profile?.last_course_id
-                        ? "Pick up right where you left off."
-                        : "Track your progress and continue learning."
+                        ? "Pick up right where you left off and keep the momentum going."
+                        : "Track your progress, explore new skills, and continue your learning journey."
                     }
                 </p>
             </div>
@@ -148,15 +150,20 @@ export default async function DashboardPage() {
 
                     <div className="space-y-4">
                         {coursesWithProgress.length === 0 ? (
-                            <Card className="border-dashed">
-                                <CardContent className="py-12 text-center">
-                                    <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                                    <h3 className="font-semibold text-foreground mb-2">No courses yet</h3>
-                                    <p className="text-muted-foreground mb-4">
-                                        Start your learning journey by enrolling in a course
+                            <Card className="border-none bg-zinc-50/50 dark:bg-zinc-900/50 shadow-none ring-1 ring-inset ring-zinc-200/50 dark:ring-zinc-800/50">
+                                <CardContent className="py-16 flex flex-col items-center justify-center text-center max-w-md mx-auto">
+                                    <div className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                                        <BookOpen className="h-8 w-8 text-primary" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-foreground mb-3">Your Journey Begins Here</h3>
+                                    <p className="text-muted-foreground mb-8">
+                                        Start building real-world skills today by enrolling in a project-based course.
                                     </p>
-                                    <Button asChild>
-                                        <Link href="/courses">Browse Courses</Link>
+                                    <Button asChild size="lg" className="w-full sm:w-auto relative overflow-hidden group">
+                                        <Link href="/courses">
+                                            <span className="relative z-10 flex items-center gap-2">Explore the Catalog <ArrowRight className="h-4 w-4" /></span>
+                                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                                        </Link>
                                     </Button>
                                 </CardContent>
                             </Card>
@@ -241,11 +248,16 @@ export default async function DashboardPage() {
 
                         <div className="space-y-3">
                             {upcomingSessions.length === 0 ? (
-                                <Card className="border-dashed">
-                                    <CardContent className="py-8 text-center">
-                                        <Calendar className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+                                <Card className="border-none bg-zinc-50/50 dark:bg-zinc-900/50 shadow-none ring-1 ring-inset ring-zinc-200/50 dark:ring-zinc-800/50">
+                                    <CardContent className="py-10 text-center flex flex-col items-center">
+                                        <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                                            <Calendar className="h-6 w-6 text-primary" />
+                                        </div>
+                                        <p className="font-semibold text-foreground mb-1">
+                                            Your schedule is clear
+                                        </p>
                                         <p className="text-sm text-muted-foreground">
-                                            No upcoming sessions
+                                            No live sessions scheduled at the moment.
                                         </p>
                                     </CardContent>
                                 </Card>

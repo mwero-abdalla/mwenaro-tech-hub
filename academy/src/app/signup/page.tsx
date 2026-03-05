@@ -103,10 +103,10 @@ export default function SignupPage() {
                         </span>
                     </Link>
 
-                    <h1 className="font-display text-3xl font-bold text-foreground mb-2">
+                    <h1 className="font-display text-4xl font-black text-foreground mb-3 tracking-tight">
                         Create your account
                     </h1>
-                    <p className="text-muted-foreground mb-8">
+                    <p className="text-zinc-500 dark:text-zinc-400 mb-8 leading-relaxed">
                         Start learning in-demand tech skills today
                     </p>
 
@@ -195,10 +195,10 @@ export default function SignupPage() {
                             </div>
                         )}
 
-                        <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isLoading}>
+                        <Button type="submit" size="lg" className="w-full text-lg h-14 rounded-2xl shadow-[0_8px_30px_rgb(232,93,59,0.3)] hover:shadow-[0_12px_40px_rgb(232,93,59,0.5)] hover:-translate-y-1 transition-all duration-300 font-bold" disabled={isLoading}>
                             {isLoading ? (
                                 <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                                     Creating account...
                                 </>
                             ) : (
@@ -216,8 +216,8 @@ export default function SignupPage() {
                         </div>
                     </div>
 
-                    <Button variant="outline" size="lg" className="w-full">
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                    <Button variant="outline" size="lg" className="w-full h-14 rounded-2xl border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all font-bold text-foreground">
+                        <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                             <path
                                 fill="currentColor"
                                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

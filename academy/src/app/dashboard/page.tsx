@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getUserProgress } from '@/lib/progress'
+import { getCourseLessons } from '@/lib/lessons'
 import { getLearningStreak, isStreakActive } from '@/lib/streaks'
 import { getRecommendedCourses } from '@/lib/ai'
 import { Button } from '@/components/ui/button'
@@ -56,13 +57,13 @@ export default async function DashboardPage() {
     let coursesWithProgress: any[] = []
 
     if (courseIds.length > 0) {
-        const { data: lessonsData } = await supabase
-            .from('lessons')
-            .select('id, course_id, duration_minutes')
-            .in('course_id', courseIds)
+        // Fetch lessons per course correctly via phases → phase_lessons → lessons
+        const allCourseLessons = await Promise.all(
+            enrolledCourses.map(course => getCourseLessons(course.id))
+        )
 
-        coursesWithProgress = enrolledCourses.map(course => {
-            const courseLessons = lessonsData?.filter(l => l.course_id === course.id) || []
+        coursesWithProgress = enrolledCourses.map((course, idx) => {
+            const courseLessons = allCourseLessons[idx] || []
             const lessonCount = courseLessons.length
 
             const courseProgressRecords = allProgress.filter(p =>

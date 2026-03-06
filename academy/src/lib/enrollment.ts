@@ -160,27 +160,34 @@ export async function getEnrolledCourses(onlyActive: boolean = true): Promise<Co
         return []
     }
 
-    let query = supabase
+    // Fetch ALL enrollments for this user including pending (for temp-access learners)
+    const { data, error } = await supabase
         .from('enrollments')
         .select(`
             course_id,
             status,
+            access_until,
             courses (*)
         `)
         .eq('user_id', user.id)
-
-    if (onlyActive) {
-        query = query.eq('status', 'active')
-    }
-
-    const { data, error } = await query
 
     if (error) {
         console.error('Error fetching enrolled courses:', error)
         return []
     }
 
-    return data
+    const now = new Date()
+
+    // Filter in-code to support both 'active' (paid) and valid temporary access (access_until in future)
+    const validEnrollments = onlyActive
+        ? data.filter((enrollment: any) => {
+            const isActive = enrollment.status === 'active'
+            const hasTempAccess = enrollment.access_until && new Date(enrollment.access_until) > now
+            return isActive || hasTempAccess
+        })
+        : data
+
+    return validEnrollments
         .map((enrollment: any) => enrollment.courses)
         .filter(Boolean) as Course[]
 }

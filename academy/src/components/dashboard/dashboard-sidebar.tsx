@@ -127,7 +127,7 @@ export function DashboardSidebar({ user, ...props }: DashboardSidebarProps) {
     ]
 
     return (
-        <Sidebar collapsible="icon" className="md:pt-20" {...props}>
+        <Sidebar collapsible="icon" className="pt-20 z-40" {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

@@ -1,8 +1,9 @@
 import { getEnrolledCourses } from '@/lib/enrollment'
 import { EnrolledCourseCard } from '@/components/dashboard/enrolled-course-card'
-import { createClient } from '@/lib/supabase/server'
 import { getUserProgress } from '@/lib/progress'
+import { getCourseLessons } from '@/lib/lessons'
 import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function DashboardCoursesPage() {
     const supabase = await createClient()
@@ -12,18 +13,17 @@ export default async function DashboardCoursesPage() {
 
     const enrolledCourses = await getEnrolledCourses()
     const allProgress = await getUserProgress()
-    const courseIds = enrolledCourses.map(c => c.id)
 
     let coursesWithProgress: any[] = []
 
-    if (courseIds.length > 0) {
-        const { data: lessonsData } = await supabase
-            .from('lessons')
-            .select('id, course_id')
-            .in('course_id', courseIds)
+    if (enrolledCourses.length > 0) {
+        // Fetch lessons per course correctly via phases → phase_lessons → lessons
+        const allCourseLessons = await Promise.all(
+            enrolledCourses.map(course => getCourseLessons(course.id))
+        )
 
-        coursesWithProgress = enrolledCourses.map(course => {
-            const courseLessons = lessonsData?.filter(l => l.course_id === course.id) || []
+        coursesWithProgress = enrolledCourses.map((course, idx) => {
+            const courseLessons = allCourseLessons[idx] || []
             const lessonCount = courseLessons.length
             const completedLessons = allProgress.filter(p =>
                 p.is_completed && courseLessons.some(cl => cl.id === p.lesson_id)

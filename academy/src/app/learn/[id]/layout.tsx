@@ -73,14 +73,14 @@ export default async function LearnLayout({
     const completedCount = enrichedLessons.filter(l => l.is_completed).length
 
     return (
-        <div className="flex h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+        <div className="flex h-screen pt-20 overflow-hidden bg-zinc-50 dark:bg-zinc-950">
             {/* Desktop Sidebar */}
             <aside className="hidden lg:flex w-80 flex-col flex-shrink-0 border-r border-zinc-200 dark:border-zinc-800">
                 <div className="h-16 flex items-center px-6 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-                    <Link href={isInstructor ? "/instructor/courses" : `/courses/${courseId}`}>
+                    <Link href={isInstructor ? "/instructor/courses" : "/dashboard"}>
                         <Button variant="ghost" size="sm" className="font-bold -ml-2 hover:bg-zinc-100 dark:hover:bg-zinc-900">
                             <ChevronLeft className="w-4 h-4 mr-1" />
-                            {isInstructor ? "Instructor Panel" : "Back to Overview"}
+                            {isInstructor ? "Instructor Panel" : "My Dashboard"}
                         </Button>
                     </Link>
                 </div>
@@ -97,7 +97,7 @@ export default async function LearnLayout({
             {/* Main Area */}
             <div className="flex-1 flex flex-col min-w-0">
                 <header className="h-16 flex items-center justify-between px-6 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 lg:hidden">
-                    <Link href={isInstructor ? "/instructor/courses" : `/courses/${courseId}`}>
+                    <Link href={isInstructor ? "/instructor/courses" : "/dashboard"}>
                         <ChevronLeft className="w-5 h-5" />
                     </Link>
                     <h1 className="font-bold truncate px-4 text-sm uppercase tracking-widest text-zinc-500">{course.title}</h1>

@@ -214,6 +214,8 @@ export async function submitQuiz(lessonId: string, answers: number[]): Promise<{
     }
 
     revalidatePath(`/courses`)
+    revalidatePath(`/dashboard`)
+    revalidatePath(`/dashboard/courses`)
     return { success: true, score, passed, message: passed ? 'Quiz passed!' : 'Quiz failed. Try again.', correctAnswers, streakData }
 }
 
@@ -274,6 +276,8 @@ export async function submitProject(lessonId: string, repoLink: string): Promise
     })
 
     revalidatePath(`/courses`)
+    revalidatePath(`/dashboard`)
+    revalidatePath(`/dashboard/courses`)
     return { streakData }
 }
 
@@ -334,6 +338,8 @@ export async function reviewProject(
     }
 
     revalidatePath(`/courses`)
+    revalidatePath(`/dashboard`)
+    revalidatePath(`/dashboard/courses`)
     revalidatePath(`/instructor`)
 }
 

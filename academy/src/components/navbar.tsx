@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { createClient } from '@/lib/supabase/server'
 import { signOut } from '@/app/auth/actions'
 import { NotificationBell } from './notification-bell'
-
+import { ecosystem } from '@mwenaro/config/ecosystem'
 export async function Navbar() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -28,12 +28,14 @@ export async function Navbar() {
                         <Link href="/courses" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Courses</Link>
                         <Link href="/about" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">About</Link>
                         <Link href="/contact" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Contact</Link>
+                        <a href={ecosystem.hub} className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Hub</a>
                     </div>
                 )}
 
                 <div className="flex items-center gap-4">
                     {user ? (
                         <div className="flex items-center gap-6">
+                            <a href={ecosystem.hub} className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">Hub</a>
                             <NotificationBell />
                             <Link href="/dashboard">
                                 <Button size="sm" className="font-black h-11 px-6 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 rounded-xl">

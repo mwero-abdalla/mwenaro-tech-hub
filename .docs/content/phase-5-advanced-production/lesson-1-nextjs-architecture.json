@@ -1,0 +1,171 @@
+{
+    "title": "Next.js Architecture",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=wm5gMKuwSYk",
+    "content": "## 🚀 Beyond the SPA\n\nClassic React apps (SPAs) have a problem: they are nearly empty until JavaScript loads. **Next.js** solves this by rendering content on the server, providing faster loads and better SEO.\n\n---\n\n## 1️⃣ Rendering Strategies\n\n*   **SSR (Server-Side Rendering)**: Generates HTML on *every* request. Best for personalized, dynamic data (e.g., a bank dashboard).\n*   **SSG (Static Site Generation)**: Generates HTML at *build time*. Extremely fast. Best for blogs or marketing pages.\n*   **ISR (Incremental Static Regeneration)**: Updates static pages in the background *after* deployment without rebuilding the whole site.\n\n---\n\n## 2️⃣ React Server Components (RSC)\n\nIn modern Next.js (App Router), components are **Server Components** by default. \n*   They stay on the server.\n*   They can talk to the database directly (no need for `fetch`!).\n*   Zero JavaScript is sent to the browser for these components.\n\n---\n\n## 3️⃣ Data Fetching Patterns\n\nInstead of `useEffect`, you just use `async/await` directly in your component:\n\n```javascript\n// This runs on the server!\nasync function Page() {\n  const data = await db.query(...);\n  return <View data={data} />;\n}\n```\n\n---\n\n## 💡 Professional Tip\nUse 'Client Components' (`'use client'`) only when you need interactivity like `onClick`, `useState`, or browser APIs like `localStorage`.",
+    "questions": [
+        {
+            "question_text": "What is the main difference between Next.js and React?",
+            "options": [
+                "React is a library, Next.js is a framework that provides routing, SSR, and SSG out of the box",
+                "Next.js is a database, React is for UI",
+                "React is faster than Next.js",
+                "There is no difference"
+            ],
+            "correct_answer": 0,
+            "explanation": "Next.js builds on top of React to provide a complete set of tools for building production-ready applications."
+        },
+        {
+            "question_text": "What does SSR stand for?",
+            "options": [
+                "Server-Side Rendering",
+                "Super Static Resource",
+                "Standard Software Repository",
+                "Simple Script Runner"
+            ],
+            "correct_answer": 0,
+            "explanation": "SSR generates HTML for each request on the server, which is great for SEO and dynamic data."
+        },
+        {
+            "question_text": "What does SSG stand for?",
+            "options": [
+                "Static Site Generation",
+                "Server System Gateway",
+                "Standard Style Guide",
+                "Sequential State Generator"
+            ],
+            "correct_answer": 0,
+            "explanation": "SSG generates HTML at build time, resulting in extremely fast page loads."
+        },
+        {
+            "question_text": "What is ISR (Incremental Static Regeneration)?",
+            "options": [
+                "A type of CSS animation",
+                "Updating static pages in the background without needing a full rebuild of the site",
+                "A database backup strategy",
+                "A way to delete files"
+            ],
+            "correct_answer": 1,
+            "explanation": "ISR allows you to have the benefits of static sites with the ability to update data on a schedule."
+        },
+        {
+            "question_text": "What are 'Server Components' in Next.js?",
+            "options": [
+                "Components that only run on the client",
+                "Components that execute ONLY on the server, reducing the amount of JS sent to the browser",
+                "Components for the database",
+                "Hidden components"
+            ],
+            "correct_answer": 1,
+            "explanation": "Server Components help keep your bundle size small and improve performance."
+        },
+        {
+            "question_text": "Which folder is used for the modern routing system in Next.js (version 13+)?",
+            "options": [
+                "pages",
+                "app",
+                "routes",
+                "src"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'app' router uses a file-system based routing with folders and `page.tsx`/`layout.tsx` files."
+        },
+        {
+            "question_text": "What is the purpose of `layout.tsx`?",
+            "options": [
+                "To define the CSS of the page",
+                "To create a UI that is shared across multiple pages (e.g., Navbar, Footer)",
+                "To handle API requests",
+                "To start the server"
+            ],
+            "correct_answer": 1,
+            "explanation": "Layouts preserve state and don't re-render when navigating between sibling pages."
+        },
+        {
+            "question_text": "How do you fetch data in a Next.js Server Component?",
+            "options": [
+                "Using useEffect",
+                "Using standard `fetch()` with `async/await` directly in the component function",
+                "Using a specialized hook",
+                "You can't fetch data in components"
+            ],
+            "correct_answer": 1,
+            "explanation": "Next.js extends the native fetch API to include caching and revalidation."
+        },
+        {
+            "question_text": "What is the 'Hydration' process?",
+            "options": [
+                "Drinking water",
+                "The process where React attaches event listeners to the static HTML sent by the server to make it interactive",
+                "Cleaning the database",
+                "Compiling the code"
+            ],
+            "correct_answer": 1,
+            "explanation": "Hydration turns static HTML into a live, interactive React application."
+        },
+        {
+            "question_text": "What does the 'use client' directive do?",
+            "options": [
+                "Makes the file faster",
+                "Marks a component as a Client Component, allowing it to use hooks like useState and useEffect",
+                "Downloads the component",
+                "Connects to the internet"
+            ],
+            "correct_answer": 1,
+            "explanation": "Next.js components are Server Components by default; you must opt-in to interactivity."
+        },
+        {
+            "question_text": "What is an 'API Route' in Next.js?",
+            "options": [
+                "A map for the API",
+                "A backend endpoint written inside the Next.js app (usually in the /api folder)",
+                "A link to Google",
+                "A type of CSS grid"
+            ],
+            "correct_answer": 1,
+            "explanation": "API routes allow you to build a full backend within your Next.js project."
+        },
+        {
+            "question_text": "What is 'Middleware' in Next.js?",
+            "options": [
+                "Express middleware",
+                "Code that runs before a request is completed, useful for authentication or redirects",
+                "A type of image",
+                "A database tool"
+            ],
+            "correct_answer": 1,
+            "explanation": "Middleware runs on the 'Edge' and is extremely fast."
+        },
+        {
+            "question_text": "Which component is used for optimized image loading in Next.js?",
+            "options": [
+                "<img>",
+                "<next-img>",
+                "<Image /> from 'next/image'",
+                "<Picture />"
+            ],
+            "correct_answer": 2,
+            "explanation": "The Image component automatically resizes and optimizes images for different devices."
+        },
+        {
+            "question_text": "What is 'Prefetching' in Next.js?",
+            "options": [
+                "Downloading the whole site",
+                "Automatically loading the data for a linked page in the background as soon as it appears in the viewport",
+                "A security check",
+                "A way to delete data"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes page transitions feel nearly instant."
+        },
+        {
+            "question_text": "True or False: Next.js requires a separate Express server to run in production.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "Next.js has its own built-in server and can also be deployed as a static site or to serverless functions."
+        }
+    ]
+}

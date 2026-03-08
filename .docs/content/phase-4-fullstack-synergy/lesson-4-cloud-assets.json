@@ -1,0 +1,184 @@
+{
+    "title": "Cloud Assets & File Handling",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=jo_B4LTHi3I",
+    "content": "## ☁️ Handling Heavy Lifting\n\nStoring images directly in your database is a bad idea—it makes the database huge and slow. Instead, we use **Cloud Storage** (like AWS S3 or Supabase Storage).\n\n---\n\n## 1️⃣ Multipart/Form-Data\n\nWhen sending images/videos, you can't use standard JSON. You must use `FormData` which allows \"binary\" data to be sent across the web.\n\n```javascript\nconst formData = new FormData();\nformData.append('profileImage', fileInput.files[0]);\n```\n\n---\n\n## 2️⃣ The Upload Pipeline\n\n1.  Client sends file to **Server**.\n2.  Server processes/resizes the image (using tools like **Sharp**).\n3.  Server uploads image to **Cloud Storage**.\n4.  Cloud Storage returns a **URL**.\n5.  Server saves that **URL** in the database.\n\n---\n\n## 3️⃣ CDN (Content Delivery Network)\n\nOnce your image is in the cloud, use a **CDN** to deliver it from a server physically close to your user. This makes images load in milliseconds instead of seconds.\n\n---\n\n## ✅ Deliverable: Phase 4 Final Project\nBuild a \"Mini Social Feed\" where users can upload profile pictures, post text updates with optimistic \"Like\" buttons, and stay logged in across page refreshes.",
+    "questions": [
+        {
+            "question_text": "Why shouldn't you store large image files directly in your main SQL or Mongo database?",
+            "options": [
+                "It is illegal",
+                "Images are too colorful for databases",
+                "It significantly degrades database performance and increases backup sizes",
+                "Databases can only store binary numbers"
+            ],
+            "correct_answer": 2,
+            "explanation": "Databases are optimized for structured text and numbers. Large files should be kept in specialized 'Object Storage' like S3 or Cloudinary."
+        },
+        {
+            "question_text": "Why should you NOT store media files (images/videos) directly inside your database?",
+            "options": [
+                "It's against the law",
+                "Databases are for text; binary files make databases huge, slow, and expensive to backup",
+                "The images will be pixelated",
+                "Users can't see them"
+            ],
+            "correct_answer": 1,
+            "explanation": "Standard practice is: store the FILE on a storage service and store the URL in the database."
+        },
+        {
+            "question_text": "What is 'Cloudinary'?",
+            "options": [
+                "A type of cloud",
+                "A cloud-based image and video management service with built-in optimization and transformation",
+                "A new coding language",
+                "A database"
+            ],
+            "correct_answer": 1,
+            "explanation": "Cloudinary handles resizing and cropping images on-the-fly via URLs."
+        },
+        {
+            "question_text": "What is 'Amazon S3'?",
+            "options": [
+                "An internet service provider",
+                "A scalable object storage service used for storing any type of file",
+                "The 3rd version of Amazon",
+                "A drone delivery system"
+            ],
+            "correct_answer": 1,
+            "explanation": "S3 is the industry standard for bulk file storage."
+        },
+        {
+            "question_text": "What does a 'File Upload' workflow look like in MERN?",
+            "options": [
+                "React -> DB -> Browser",
+                "React -> Express (Multer) -> Cloud Provider -> DB (Save URL)",
+                "Express -> React -> Cloud",
+                "Directly to DB"
+            ],
+            "correct_answer": 1,
+            "explanation": "The backend usually acts as a 'bridge' to securely upload files."
+        },
+        {
+            "question_text": "Which Node.js middleware is standard for handling 'multipart/form-data' (file uploads)?",
+            "options": [
+                "express.json()",
+                "Multer",
+                "FileHandler",
+                "UploadJS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Multer adds a `.file` or `.files` object to the request."
+        },
+        {
+            "question_text": "What is an 'Image Transformation'?",
+            "options": [
+                "Photoshop",
+                "Changing an image's size, format, or quality by modifying its URL (e.g., adding /w_500/)",
+                "Moving the file",
+                "Deleting the image"
+            ],
+            "correct_answer": 1,
+            "explanation": "This saves bandwidth by only serving the exact size the user needs."
+        },
+        {
+            "question_text": "What is a 'CDN' (Content Delivery Network)?",
+            "options": [
+                "A type of server",
+                "A network of servers globally that cache your images so they load fast for users everywhere",
+                "A security protocol",
+                "A database backup"
+            ],
+            "correct_answer": 1,
+            "explanation": "Cloudinary and S3 (with CloudFront) act as CDNs."
+        },
+        {
+            "question_text": "What is the danger of allowing any file type to be uploaded?",
+            "options": [
+                "The site will be too colorful",
+                "Security; an attacker could upload an executable script (.js, .php) and run it on your server",
+                "Images will look bad",
+                "None"
+            ],
+            "correct_answer": 1,
+            "explanation": "ALWAYS filter file types (Allow only .jpg, .png, etc.)."
+        },
+        {
+            "question_text": "How do you show a 'Preview' of an image in React before it is uploaded?",
+            "options": [
+                "You can't",
+                "Using URL.createObjectURL(file) to get a temporary local URL for the <img> tag",
+                "By uploading it first",
+                "By asking the user"
+            ],
+            "correct_answer": 1,
+            "explanation": "This creates a great user experience by showing what will be uploaded."
+        },
+        {
+            "question_text": "What is a 'Base64' string?",
+            "options": [
+                "A secret code",
+                "A binary-to-text encoding scheme that allows you to send file data as a string in a JSON body",
+                "A type of database",
+                "A new font"
+            ],
+            "correct_answer": 1,
+            "explanation": "Base64 is useful for small icons or quick uploads, but makes files 33% larger."
+        },
+        {
+            "question_text": "What is 'Lazily Loading' images?",
+            "options": [
+                "Not loading them at all",
+                "Only loading images as they enter the user's viewport (on scroll)",
+                "A slow server",
+                "A type of animation"
+            ],
+            "correct_answer": 1,
+            "explanation": "This significantly improves page load speed for sites with many images."
+        },
+        {
+            "question_text": "What is the purpose of the 'alt' tag on an image?",
+            "options": [
+                "To move the image",
+                "Accessibility for screen readers and as fallback text if the image fails to load",
+                "To change colors",
+                "To encrypt the file"
+            ],
+            "correct_answer": 1,
+            "explanation": "Good for SEO and for users with disabilities."
+        },
+        {
+            "question_text": "What is 'Signed URL' in S3?",
+            "options": [
+                "A URL with a signature",
+                "A temporary URL that gives limited-time access to a private file without making the whole bucket public",
+                "A very long URL",
+                "A URL for admins"
+            ],
+            "correct_answer": 1,
+            "explanation": "Essential for selling digital files or private user documents."
+        },
+        {
+            "question_text": "What is 'WebP'?",
+            "options": [
+                "A type of spider",
+                "A modern image format that provides superior lossless and lossy compression for images on the web",
+                "A website",
+                "A security tool"
+            ],
+            "correct_answer": 1,
+            "explanation": "WebP images are much smaller than PNG or JPG equivalents."
+        },
+        {
+            "question_text": "How do you delete a file from Cloudinary in Node.js?",
+            "options": [
+                "By deleting the URL from the DB",
+                "By using the Cloudinary SDK's `destroy(public_id)` method",
+                "By restarting the server",
+                "You can't delete files"
+            ],
+            "correct_answer": 1,
+            "explanation": "Clearing the URL from the DB is not enough; you must also remove the file from storage to save space."
+        }
+    ]
+}

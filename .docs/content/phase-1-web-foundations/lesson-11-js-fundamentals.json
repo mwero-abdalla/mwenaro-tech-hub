@@ -1,0 +1,185 @@
+{
+    "title": "JavaScript Fundamentals",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=W6NZfCO5SIk",
+    "content": "## 🧠 The Brain of the Browser\n\nJavaScript (JS) makes your page interactive. To build complex apps, we must master the core engine first.\n\n---\n\n## 1️⃣ Variables & Types\n\n*   `let`: For values that change.\n*   `const`: For constant values (Reference this by default!).\n*   **Primitive Types**: `string`, `number`, `boolean`, `null`, `undefined`.\n*   **Objects**: Key-value pairs. Arrays are a special type of object.\n\n---\n\n## 2️⃣ Functions & Scope\n\nFunctions are blocks of code designed to perform a particular task.\n\n*   **Declaration**: `function name() { ... }`\n*   **Expression**: `const name = () => { ... }` (Arrow function).\n\n**Scope**: \n*   `Global`: Accessible everywhere.\n*   `Local`: Accessible only inside a function/block.\n\n---\n\n## 3️⃣ Logic & Loops\n\n*   **If/Else**: Decision making.\n*   **Switch**: Clean alternative to many nested if statements.\n*   **Loops**: `for`, `while`, `map`, `forEach`. `map` is the most common in modern React development.\n\n---\n\n## 4️⃣ Closures: The Magic\n\nA closure is a function that remembers the environment it was created in, even after that environment has closed. Essential for state management!",
+    "questions": [
+        {
+            "question_text": "Which keyword should you use by default for variables that won't be reassigned?",
+            "options": [
+                "var",
+                "let",
+                "const",
+                "static"
+            ],
+            "correct_answer": 2,
+            "explanation": "'const' (constant) is the best practice for almost all variables to prevent accidental reassignments."
+        },
+        {
+            "question_text": "What is the correct way to declare a variable that can be reassigned but is block-scoped?",
+            "options": [
+                "var x = 10",
+                "const x = 10",
+                "let x = 10",
+                "variable x = 10"
+            ],
+            "correct_answer": 2,
+            "explanation": "let allows reassignment and is restricted to the block where it's defined (unlike 'var')."
+        },
+        {
+            "question_text": "Which of these is NOT a primitive data type in JavaScript?",
+            "options": [
+                "String",
+                "Boolean",
+                "Object",
+                "Undefined"
+            ],
+            "correct_answer": 2,
+            "explanation": "Objects (including arrays and functions) are reference types, not primitives."
+        },
+        {
+            "question_text": "What is the difference between '==' and '==='?",
+            "options": [
+                "They are exactly the same",
+                "== checks for value; === checks for value AND type",
+                "=== is for strings only",
+                "== is faster"
+            ],
+            "correct_answer": 1,
+            "explanation": "Always use '===' (strict equality) to avoid unexpected type coercion bugs."
+        },
+        {
+            "question_text": "How do you create a function in JavaScript?",
+            "options": [
+                "function myFunction() {}",
+                "def myFunction() {}",
+                "func myFunction() {}",
+                "new Function myFunction() {}"
+            ],
+            "correct_answer": 0,
+            "explanation": "The 'function' keyword is the standard way to declare a named function."
+        },
+        {
+            "question_text": "What result does 'typeof []' return?",
+            "options": [
+                "'array'",
+                "'object'",
+                "'list'",
+                "'undefined'"
+            ],
+            "correct_answer": 1,
+            "explanation": "In JavaScript, arrays are technically special types of objects."
+        },
+        {
+            "question_text": "Which operator is used to check if two values are NOT equal?",
+            "options": [
+                "<>",
+                "!=",
+                "!==",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "!= checks value; !== checks value and type (strict inequality)."
+        },
+        {
+            "question_text": "What is 'NaN' in JavaScript?",
+            "options": [
+                "Not a Name",
+                "Not a Number",
+                "Null and None",
+                "Network and Node"
+            ],
+            "correct_answer": 1,
+            "explanation": "NaN is a special value representing a mathematical operation that failed to return a valid number."
+        },
+        {
+            "question_text": "How do you add a comment in JavaScript?",
+            "options": [
+                "// This is a comment",
+                "<!-- This is a comment -->",
+                "# This is a comment",
+                "/* This is a comment */",
+                "Both A and D"
+            ],
+            "correct_answer": 4,
+            "explanation": "// is for single lines, and /* */ is for multi-line comments."
+        },
+        {
+            "question_text": "What is the purpose of the 'return' keyword?",
+            "options": [
+                "To stop the program",
+                "To send a value back to where the function was called",
+                "To restart a loop",
+                "To display text in the console"
+            ],
+            "correct_answer": 1,
+            "explanation": "Functions return 'undefined' by default if no return statement is specified."
+        },
+        {
+            "question_text": "Which method adds a new element to the END of an array?",
+            "options": [
+                "array.unshift()",
+                "array.pop()",
+                "array.push()",
+                "array.shift()"
+            ],
+            "correct_answer": 2,
+            "explanation": "push() adds to the end; unshift() adds to the beginning."
+        },
+        {
+            "question_text": "What is a 'Truthy' value?",
+            "options": [
+                "The boolean 'true'",
+                "Any value that is considered true when evaluated in a boolean context",
+                "A string that says 'yes'",
+                "A number greater than 1"
+            ],
+            "correct_answer": 1,
+            "explanation": "Most values are truthy; exceptions are false, 0, '', null, undefined, and NaN."
+        },
+        {
+            "question_text": "Which statement is used to execute different code based on various conditions?",
+            "options": [
+                "if/else",
+                "for/while",
+                "try/catch",
+                "break/continue"
+            ],
+            "correct_answer": 0,
+            "explanation": "Conditional statements allow logic branching."
+        },
+        {
+            "question_text": "How do you access the first element of an array named 'colors'?",
+            "options": [
+                "colors[1]",
+                "colors[first]",
+                "colors[0]",
+                "colors.get(1)"
+            ],
+            "correct_answer": 2,
+            "explanation": "JavaScript arrays are zero-indexed."
+        },
+        {
+            "question_text": "What does 'console.log()' do?",
+            "options": [
+                "Saves data to a database",
+                "Prints a message to the browser's developer console",
+                "Creates a popup for the user",
+                "Stops the execution of code"
+            ],
+            "correct_answer": 1,
+            "explanation": "Console logging is the most basic tool for debugging JS."
+        },
+        {
+            "question_text": "Which loop is best used when you know exactly how many times you want to iterate?",
+            "options": [
+                "while loop",
+                "do...while loop",
+                "for loop",
+                "if loop"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'for' loop has a built-in counter mechanism (init, condition, increment)."
+        }
+    ]
+}

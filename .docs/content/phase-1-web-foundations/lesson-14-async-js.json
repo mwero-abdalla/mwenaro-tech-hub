@@ -1,0 +1,173 @@
+{
+    "title": "Asynchronous JS & APIs",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=QSnoP7f1Efk",
+    "content": "## ⏳ Waiting Without Blocking\n\nIn the web, fetching data from a database takes time. We can't freeze the whole browser while waiting. We use **Asynchronous** patterns.\n\n---\n\n## 1️⃣ The Call Stack & Event Loop\n\n*   **Call Stack**: Executes your code line-by-line.\n*   **Event Loop**: Handles tasks that take time (APIs, Timeouts) and \"pushes\" them back to the stack when ready.\n\n---\n\n## 2️⃣ Fetch & Promises\n\n`fetch` is the built-in browser API to talk to servers. It returns a **Promise** (a value that will exist in the future).\n\n```javascript\nfetch('https://api.example.com/data')\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error(error));\n```\n\n---\n\n## 3️⃣ Async / Await: The Modern Way\n\nSyntactic sugar to make async code look like synchronous code.\n\n```javascript\nasync function getData() {\n  try {\n    const res = await fetch('...');\n    const data = await res.json();\n    console.log(data);\n  } catch (err) {\n    alert(\"Failed to load!\");\n  }\n}\n```\n\n---\n\n## ✅ Deliverable: Phase 1 Final Project\nUsing everything you've learned, fetch data from a public API (like JSONPlaceholder) and display it on a responsive, semantic HTML page styled with Tailwind CSS.",
+    "questions": [
+        {
+            "question_text": "What is the primary difference between Synchronous and Asynchronous code?",
+            "options": [
+                "Sync is faster",
+                "Sync code runs line-by-line and blocks; Async allows tasks to run in the background without blocking the main thread",
+                "Async is only for databases",
+                "Sync code is only for modern browsers"
+            ],
+            "correct_answer": 1,
+            "explanation": "Async programming is essential for tasks like fetching data from a server without freezing the UI."
+        },
+        {
+            "question_text": "What is a 'Callback' in JS?",
+            "options": [
+                "A phone call to the server",
+                "A function passed as an argument to another function to be executed later",
+                "A way to return a value",
+                "A bug fix"
+            ],
+            "correct_answer": 1,
+            "explanation": "Callbacks were the original way JS handled asynchronous events."
+        },
+        {
+            "question_text": "What is 'Callback Hell'?",
+            "options": [
+                "A place where programmers go",
+                "The deeply nested structure of multiple callbacks that makes code unreadable",
+                "A performance issue",
+                "When a callback never finishes"
+            ],
+            "correct_answer": 1,
+            "explanation": "Promises and Async/Await were created to solve this 'pyramid of doom'."
+        },
+        {
+            "question_text": "What are the three possible states of a 'Promise'?",
+            "options": [
+                "Start, Middle, End",
+                "Pending, Fulfilled, Rejected",
+                "Open, Closed, Error",
+                "Requesting, Receiving, Done"
+            ],
+            "correct_answer": 1,
+            "explanation": "A promise represents a value that might be available now, later, or never."
+        },
+        {
+            "question_text": "Which method is used to handle the SUCCESSful result of a Promise?",
+            "options": [
+                ".then()",
+                ".catch()",
+                ".finally()",
+                ".done()"
+            ],
+            "correct_answer": 0,
+            "explanation": ".then() takes a callback that receives the resolved value."
+        },
+        {
+            "question_text": "Which method is used to handle ERRORS in a Promise?",
+            "options": [
+                ".then()",
+                ".error()",
+                ".catch()",
+                ".fail()"
+            ],
+            "correct_answer": 2,
+            "explanation": ".catch() is essential for robust apps to handle network failures."
+        },
+        {
+            "question_text": "What is the 'Fetch API' used for?",
+            "options": [
+                "To get files from the computer",
+                "To make HTTP requests (like GET and POST) to a server",
+                "To search for text in the DOM",
+                "To download images automatically"
+            ],
+            "correct_answer": 1,
+            "explanation": "fetch() is the modern, promise-based replacement for XMLHttpRequest."
+        },
+        {
+            "question_text": "What does the 'await' keyword do exactly?",
+            "options": [
+                "It makes the code run instantly",
+                "It pauses the execution of the async function until the promise resolves",
+                "It stops all other programs on the computer",
+                "It deletes the promise"
+            ],
+            "correct_answer": 1,
+            "explanation": "'await' makes async code look and behave more like synchronous code."
+        },
+        {
+            "question_text": "Where can you use the 'await' keyword?",
+            "options": [
+                "Anywhere in your JS file",
+                "Only inside a function marked with the 'async' keyword",
+                "Only in the terminal",
+                "Only in React components"
+            ],
+            "correct_answer": 1,
+            "explanation": "Using 'await' in a regular function will cause a Syntax Error."
+        },
+        {
+            "question_text": "What is a 'JSON' response?",
+            "options": [
+                "A JavaScript Object Name",
+                "JavaScript Object Notation - a lightweight data-interchange format across different languages",
+                "A type of image format",
+                "A security protocol"
+            ],
+            "correct_answer": 1,
+            "explanation": "Most APIs return data in JSON format."
+        },
+        {
+            "question_text": "Why do we need to call '.json()' after fetching data?",
+            "options": [
+                "To make the code look better",
+                "Because fetch returns a Response object; .json() extracts the body and parses it as a JS object/array (returning another promise)",
+                "To save the data to a file",
+                "To verify the user's identity"
+            ],
+            "correct_answer": 1,
+            "explanation": "This is a common 2-step process in JS."
+        },
+        {
+            "question_text": "How do you handle errors when using async/await?",
+            "options": [
+                "Using .catch() after the function",
+                "Using a try...catch block",
+                "Using if (error)",
+                "Both A and B"
+            ],
+            "correct_answer": 3,
+            "explanation": "try...catch is generally preferred for cleaner async code."
+        },
+        {
+            "question_text": "What does 'Promise.all()' do?",
+            "options": [
+                "Runs all promises one by one",
+                "Takes an array of promises and waits for ALL of them to resolve before continuing",
+                "Deletes all active promises",
+                "Cancels a request"
+            ],
+            "correct_answer": 1,
+            "explanation": "It's faster to run multiple independent fetches simultaneously using Promise.all()."
+        },
+        {
+            "question_text": "What is the 'Event Loop' in JS responsible for?",
+            "options": [
+                "Running loops like 'for' and 'while'",
+                "Monitoring the Call Stack and the Callback Queue to decide when to run async tasks",
+                "Handling user clicks only",
+                "Connecting to the internet"
+            ],
+            "correct_answer": 1,
+            "explanation": "The Event Loop is what allows JS to be single-threaded yet handle async operations smoothly."
+        },
+        {
+            "question_text": "What is an 'API Endpoint'?",
+            "options": [
+                "The end of a program",
+                "A specific URL used to interact with a server's resources",
+                "A secret password",
+                "A type of bug"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: https://api.example.com/users is an endpoint for user data."
+        }
+    ]
+}

@@ -1,0 +1,182 @@
+{
+    "title": "Git Internals",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=lG908ixpqsw",
+    "content": "## 🧠 Git Architecture: Beyond the Surface\n\nGit is more than just a backup tool. It is a **Content-Addressable File System**. Let's peek under the hood.\n\n---\n\n## 1️⃣ Three Core Objects\n\n1.  **Blobs**: (Binary Large Objects) The content of your files.\n2.  **Trees**: The directory structure (pointers to blobs or other trees).\n3.  **Commits**: Points to a top-level tree, with metadata like user, time, and parent commit.\n\n---\n\n## 2️⃣ The Workflow Stages\n\n*   **Working Directory**: Your actual files on disk.\n*   **Staging Area (Index)**: The \"prep zone\" for the next snapshot.\n*   **Repository (.git)**: Where all the objects and history are stored.\n\n---\n\n## 3️⃣ Commits as Snapshots\n\nEvery time you commit, Git doesn't save *changes*; it saves a complete **snapshot** of the project. If a file hasn't changed, Git just points to the previous blob.\n\n---\n\n## 📝 Key Command: `git status` \nUse this to see exactly which stage your files are in: Untracked, Modified, or Staged.",
+    "questions": [
+        {
+            "question_text": "What does Git use to represent the contents of a single file?",
+            "options": [
+                "Tree",
+                "Blob",
+                "Node",
+                "Commit"
+            ],
+            "correct_answer": 1,
+            "explanation": "A Blob stores the content of a file, but not its name or metadata."
+        },
+        {
+            "question_text": "Where does Git store all its internal data and history in a project?",
+            "options": [
+                ".git folder",
+                "node_modules",
+                "src/git",
+                "Database"
+            ],
+            "correct_answer": 0,
+            "explanation": "The .git directory contains the database, configuration, and history of your repo."
+        },
+        {
+            "question_text": "Which area contains the files you have modified but not yet committed?",
+            "options": [
+                "History",
+                "The Staging Area (Index)",
+                "Remote Repos",
+                "Recycle Bin"
+            ],
+            "correct_answer": 1,
+            "explanation": "The Staging Area is the middle ground where you prepare content for a commit."
+        },
+        {
+            "question_text": "What command initializes a new Git repository?",
+            "options": [
+                "git new",
+                "git create",
+                "git init",
+                "git setup"
+            ],
+            "correct_answer": 2,
+            "explanation": "git init creates the hidden .git folder."
+        },
+        {
+            "question_text": "Which command adds files to the Staging Area?",
+            "options": [
+                "git commit",
+                "git add",
+                "git push",
+                "git status"
+            ],
+            "correct_answer": 1,
+            "explanation": "git add marks changes to be included in the next snapshot."
+        },
+        {
+            "question_text": "What is a 'Commit' in Git?",
+            "options": [
+                "A backup of the entire computer",
+                "A snapshot of your project at a specific point in time",
+                "A way to delete code",
+                "A link to GitHub"
+            ],
+            "correct_answer": 1,
+            "explanation": "Commits are the building blocks of Git history."
+        },
+        {
+            "question_text": "What command shows the current state of your working directory?",
+            "options": [
+                "git log",
+                "git check",
+                "git status",
+                "git view"
+            ],
+            "correct_answer": 2,
+            "explanation": "git status tells you which files are modified, staged, or untracked."
+        },
+        {
+            "question_text": "How do you view the history of commits in your repo?",
+            "options": [
+                "git history",
+                "git list",
+                "git log",
+                "git timeline"
+            ],
+            "correct_answer": 2,
+            "explanation": "git log displays the commit ID, author, and message for every commit."
+        },
+        {
+            "question_text": "What is the 'HEAD' in Git?",
+            "options": [
+                "The main branch",
+                "A pointer to the current branch/commit you are working on",
+                "The first line of a file",
+                "The GitHub server"
+            ],
+            "correct_answer": 1,
+            "explanation": "HEAD moves whenever you switch branches or make a new commit."
+        },
+        {
+            "question_text": "Which command undoes changes in your working directory to match the last commit?",
+            "options": [
+                "git undo",
+                "git delete",
+                "git checkout -- <file>",
+                "git revert"
+            ],
+            "correct_answer": 2,
+            "explanation": "Checkout discards local changes (modern Git also uses 'git restore')."
+        },
+        {
+            "question_text": "What is a 'Blob' in Git internals?",
+            "options": [
+                "A bug in the code",
+                "A file's content (Binary Large Object)",
+                "A commit message",
+                "A branch name"
+            ],
+            "correct_answer": 1,
+            "explanation": "Git stores file contents as blobs, decoupled from filenames."
+        },
+        {
+            "question_text": "What is a 'Tree' object in Git?",
+            "options": [
+                "The structure of branches",
+                "A representation of a directory and its contents",
+                "A list of authors",
+                "A visual log"
+            ],
+            "correct_answer": 1,
+            "explanation": "Trees map filenames to blobs and other nested trees."
+        },
+        {
+            "question_text": "Which command allows you to name a specific commit (e.g., 'v1.0')?",
+            "options": [
+                "git name",
+                "git label",
+                "git tag",
+                "git mark"
+            ],
+            "correct_answer": 2,
+            "explanation": "Tags are permanent labels for specific points in history."
+        },
+        {
+            "question_text": "What is the purpose of the .gitignore file?",
+            "options": [
+                "To speed up Git",
+                "To list files that Git should never track (e.g., passwords, node_modules)",
+                "To delete files automatically",
+                "To hide files from the user"
+            ],
+            "correct_answer": 1,
+            "explanation": ".gitignore ensures temporary or sensitive files don't clutter the repo."
+        },
+        {
+            "question_text": "What character is used as a wildcard in .gitignore?",
+            "options": [
+                "$",
+                "!",
+                "*",
+                "?"
+            ],
+            "correct_answer": 2,
+            "explanation": "The asterisk matches any number of characters."
+        },
+        {
+            "question_text": "True or False: Git is the same thing as GitHub.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "Git is the local tool; GitHub is a cloud hosting platform for Git repositories."
+        }
+    ]
+}

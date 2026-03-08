@@ -1,0 +1,169 @@
+{
+    "title": "The Effect Lifecycle",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=0ZJgIjIuY7U",
+    "content": "## 🔄 Synchronizing with the World\n\nSometimes a component needs to do something *outside* of React—like fetching data, starting a timer, or manually changing the DOM. We call these **Side Effects**.\n\n---\n\n## 1️⃣ The `useEffect` Hook\n\n`useEffect` runs after the component renders. It takes two arguments: a function and a **dependency array**.\n\n```javascript\nuseEffect(() => {\n  console.log(\"Component rendered!\");\n}, []); // Empty array = run ONLY on mount\n```\n\n---\n\n## 2️⃣ Dependency Arrays\n\n*   `[prop, state]`: Re-run whenever `prop` or `state` changes.\n*   `no array`: Run after *every* render (Dangerous! Can cause infinite loops).\n*   `[]`: Run once after the initial render.\n\n---\n\n## 3️⃣ Cleanups: Leaving no trace\n\nIf you start a subscription or a timer, you must stop it when the component unmounts to prevent memory leaks.\n\n```javascript\nuseEffect(() => {\n  const timer = setInterval(() => { ... }, 1000);\n  return () => clearInterval(timer); // Cleanup function\n}, []);\n```\n\n---\n\n## 💡 Pro Tip\nThink of `useEffect` as a way to synchronize your component with an external system, not just a lifecycle hook.",
+    "questions": [
+        {
+            "question_text": "Which Hook is used to handle 'Side Effects' in React?",
+            "options": [
+                "useState",
+                "useEffect",
+                "useCallback",
+                "useMemo"
+            ],
+            "correct_answer": 1,
+            "explanation": "useEffect allows you to run code for data fetching, subscriptions, or manual DOM changes."
+        },
+        {
+            "question_text": "What does the 'Dependency Array' (second argument) in useEffect do?",
+            "options": [
+                "It lists all the variables the effect relies on and tells React to re-run it ONLY when those change",
+                "It stores the results of the effect",
+                "It deletes the component",
+                "It tells React how many times to run the effect"
+            ],
+            "correct_answer": 0,
+            "explanation": "If you omit it, the effect runs on every single render."
+        },
+        {
+            "question_text": "How do you run an effect ONLY ONCE when the component mounts?",
+            "options": [
+                "Pass 'null' as the dependency array",
+                "Pass an empty array []",
+                "Don't pass any second argument",
+                "Use the 'useOnce' hook"
+            ],
+            "correct_answer": 1,
+            "explanation": "The empty array signifies that the effect depends on nothing, so it only runs once."
+        },
+        {
+            "question_text": "What is the 'Cleanup Function' in useEffect?",
+            "options": [
+                "A function that deletes old code",
+                "A function returned by the effect to clean up resources (like timers or subscriptions) before the component unmounts or before the effect runs again",
+                "A way to reset the state",
+                "A function that clears the browser cache"
+            ],
+            "correct_answer": 1,
+            "explanation": "Cleanup prevents memory leaks."
+        },
+        {
+            "question_text": "In what order does the lifecycle of an effect happen?",
+            "options": [
+                "Cleanup -> Render -> Effect",
+                "Render -> Effect -> Cleanup (on next update/unmount)",
+                "Effect -> Render -> Cleanup",
+                "Unmount -> Effect -> Render"
+            ],
+            "correct_answer": 1,
+            "explanation": "React renders first, updates the DOM, then runs effects."
+        },
+        {
+            "question_text": "What happens if you set state inside an effect without a dependency array?",
+            "options": [
+                "The app crashes",
+                "An infinite loop of re-renders",
+                "Nothing at all",
+                "The state is not updated"
+            ],
+            "correct_answer": 1,
+            "explanation": "Setting state triggers a render, which triggers the effect, which sets state again..."
+        },
+        {
+            "question_text": "How do you handle a fetch request in useEffect to avoid 'race conditions'?",
+            "options": [
+                "By using a 'cancel' flag or AbortController in the cleanup function",
+                "By make the fetch faster",
+                "By using more states",
+                "You can't"
+            ],
+            "correct_answer": 0,
+            "explanation": "This ensures that if the component re-renders quickly, old requests don't overwrite new data."
+        },
+        {
+            "question_text": "True or False: You should include every variable used inside useEffect in the dependency array.",
+            "options": [
+                "True (mostly)",
+                "False"
+            ],
+            "correct_answer": 0,
+            "explanation": "Excluding variables used in the effect can lead to 'stale closures' and bugs."
+        },
+        {
+            "question_text": "What is the purpose of 'Strict Mode' in React 18 development?",
+            "options": [
+                "It makes the code harder to write",
+                "It intentionally mounts, unmounts, and re-mounts components to help find bugs in effects and cleanup",
+                "It encrypts the code",
+                "It disables CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "This helps ensure your effects are resilient to being restarted."
+        },
+        {
+            "question_text": "Where should you declare functions used inside useEffect?",
+            "options": [
+                "At the very bottom of the file",
+                "Ideally inside the useEffect itself, or wrapped in useCallback",
+                "Outside the component completely",
+                "In a separate JSON file"
+            ],
+            "correct_answer": 1,
+            "explanation": "This keeps dependency tracking accurate."
+        },
+        {
+            "question_text": "What does a 'Return' in useEffect signify?",
+            "options": [
+                "The end of the program",
+                "The cleanup logic",
+                "The value of the component",
+                "A new state value"
+            ],
+            "correct_answer": 1,
+            "explanation": "React calls this function before it performs the next effect run or unmounts."
+        },
+        {
+            "question_text": "Which of these is a valid use-case for useEffect?",
+            "options": [
+                "Calculating a value based on props (should be done during render)",
+                "Fetching data from an API",
+                "Handling a button click (should be done in an event handler)",
+                "Applying global CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Avoid overusing effects for logic that belongs in render or event handlers."
+        },
+        {
+            "question_text": "What's the difference between 'mounting' and 'updating'?",
+            "options": [
+                "Mounting is the first time; Updating is every time after",
+                "They are the same",
+                "Mounting is for mobile; Updating is for desktop",
+                "Mounting is changing state"
+            ],
+            "correct_answer": 0,
+            "explanation": "A component 'mounts' once and 'updates' many times."
+        },
+        {
+            "question_text": "If you have `[count]` as the dependency, will the effect run if `user` changes?",
+            "options": [
+                "Yes",
+                "No"
+            ],
+            "correct_answer": 1,
+            "explanation": "Only changes to the specifically listed dependencies trigger the effect."
+        },
+        {
+            "question_text": "What hook should you use for side-effects that need to run BEFORE the browser paints (to avoid flickering)?",
+            "options": [
+                "useEffect",
+                "useLayoutEffect",
+                "useInsertionEffect",
+                "useMemo"
+            ],
+            "correct_answer": 1,
+            "explanation": "useLayoutEffect runs synchronously after DOM mutations but before the screen update."
+        }
+    ]
+}

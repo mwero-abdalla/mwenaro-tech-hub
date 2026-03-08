@@ -1,0 +1,184 @@
+{
+    "title": "Tailwind CSS",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=lCxcTsOHr54",
+    "content": "## 💨 Velocity in Documentation\n\nTailwind CSS is a **utility-first** framework. Instead of writing custom CSS, you apply pre-defined classes directly to your HTML.\n\n---\n\n## 1️⃣ Why Tailwind?\n\n*   **No context switching**: You don't have to jump between HTML and CSS files.\n*   **Consistent design**: Tailwind uses a strict spacing and color system.\n*   **Tiny CSS file**: Tailwind automatically removes unused classes when you build for production.\n\n---\n\n## 2️⃣ The Utility Syntax\n\n```html\n<div class=\"bg-blue-500 p-4 rounded-xl text-white hover:bg-blue-600 transition\">\n  Click Me\n</div>\n```\n\n*   `bg-blue-500`: Background color.\n*   `p-4`: Padding.\n*   `hover:bg-blue-600`: State variants.\n*   `rounded-xl`: Border radius.\n\n---\n\n## 3️⃣ Responsive Modifiers\n\nTailwind makes media queries easy with prefixes:\n`w-full md:w-1/2 lg:w-1/3` \n(Full width on mobile, half on tablet, third on desktop).\n\n---\n\n## 💡 Pro Tip\nUse **Tailwind CSS IntelliSense** extension in VS Code to see class documentation as you type.",
+    "questions": [
+        {
+            "question_text": "In Tailwind CSS, what does the 'md:' prefix represent?",
+            "options": [
+                "Medium device (Tablet and up)",
+                "Main Dash",
+                "Monthly Data",
+                "Middle density"
+            ],
+            "correct_answer": 0,
+            "explanation": "'md:' is a breakpoint prefix that typically targets screens at 768px and larger."
+        },
+        {
+            "question_text": "What is Tailwind CSS?",
+            "options": [
+                "A component library like Bootstrap",
+                "A utility-first CSS framework",
+                "A JavaScript library for animations",
+                "A new web browser"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tailwind provides low-level utility classes that you use directly in your HTML to build custom designs."
+        },
+        {
+            "question_text": "How do you add a red background with Tailwind?",
+            "options": [
+                "class='red'",
+                "class='bg-red-500'",
+                "style='background: red'",
+                "class='background-red'"
+            ],
+            "correct_answer": 1,
+            "explanation": "'bg' is the utility for background, and 'red' is the color name followed by a shade (500)."
+        },
+        {
+            "question_text": "What does the code 'p-4' do in Tailwind?",
+            "options": [
+                "Adds 4px of margin",
+                "Adds 1rem (16px) of padding on all sides",
+                "Changes the text size to 4",
+                "Creates 4 paragraph tags"
+            ],
+            "correct_answer": 1,
+            "explanation": "In Tailwind, 'p' is padding, and the number is multiplied by 0.25rem by default."
+        },
+        {
+            "question_text": "How do you apply a style ONLY on hover in Tailwind?",
+            "options": [
+                "hover='bg-blue-500'",
+                "class='hover:bg-blue-500'",
+                "class='on-hover-blue'",
+                "class='bg-blue-500-hover'"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tailwind uses 'State Modifiers' (like hover:, focus:, active:) as prefixes."
+        },
+        {
+            "question_text": "How do you apply a style ONLY on medium screens (e.g. tablets) and up?",
+            "options": [
+                "class='tablet:w-1/2'",
+                "class='md:w-1/2'",
+                "class='@md:w-1/2'",
+                "class='w-1/2-md'"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tailwind uses a mobile-first responsive system with prefixes like sm:, md:, lg:, and xl:."
+        },
+        {
+            "question_text": "What is the 'Utility-First' philosophy?",
+            "options": [
+                "Writing as little CSS as possible by reusing small helper classes",
+                "Creating a new CSS file for every component",
+                "Using only !important on every line",
+                "Prioritizing performance over design"
+            ],
+            "correct_answer": 0,
+            "explanation": "Instead of naming classes like '.card', you use '.rounded .shadow .p-4'."
+        },
+        {
+            "question_text": "How do you center text in Tailwind?",
+            "options": [
+                "class='text-middle'",
+                "class='text-center'",
+                "class='align-text-center'",
+                "class='justify-text'"
+            ],
+            "correct_answer": 1,
+            "explanation": "text-center is the utility for text-align: center."
+        },
+        {
+            "question_text": "Which class would you use to create a Flex container in Tailwind?",
+            "options": [
+                "class='display-flex'",
+                "class='flex'",
+                "class='flexbox'",
+                "class='d-flex'"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'flex' class applies 'display: flex'."
+        },
+        {
+            "question_text": "How do you add a custom value (like 13px) that isn't in Tailwind's default theme?",
+            "options": [
+                "You can't do it",
+                "class='p-[13px]'",
+                "class='p-13px'",
+                "class='custom-p-13'"
+            ],
+            "correct_answer": 1,
+            "explanation": "Square brackets [] allow you to use 'Arbitrary Values' in Tailwind."
+        },
+        {
+            "question_text": "What does the 'w-full' class do?",
+            "options": [
+                "Sets height to 100%",
+                "Sets width to 100%",
+                "Sets width to 100vw",
+                "Sets font-weight to bold"
+            ],
+            "correct_answer": 1,
+            "explanation": "w-full is the equivalent of 'width: 100%'."
+        },
+        {
+            "question_text": "Why is Tailwind's file size small in production despite having thousands of classes?",
+            "options": [
+                "It is delivered via a very fast CDN",
+                "It uses 'Purge' (or JIT) to remove all unused classes from the final CSS file",
+                "The classes are compressed",
+                "It doesn't actually contain any CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tailwind scans your HTML files and only keeps the CSS for the classes you actually wrote."
+        },
+        {
+            "question_text": "How do you make an element take up half the width of its parent?",
+            "options": [
+                "class='w-50'",
+                "class='w-1/2'",
+                "class='w-half'",
+                "class='w-[50%]'"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tailwind's fraction system (w-1/2, w-1/3, etc.) is highly intuitive for layouts."
+        },
+        {
+            "question_text": "Which utility class adds rounded corners to an element?",
+            "options": [
+                "class='border-radius'",
+                "class='rounded'",
+                "class='curve'",
+                "class='circle'"
+            ],
+            "correct_answer": 1,
+            "explanation": "rounded-sm, rounded, rounded-lg, or rounded-full are common variants."
+        },
+        {
+            "question_text": "How do you change the text color to white in Tailwind?",
+            "options": [
+                "class='font-white'",
+                "class='text-white'",
+                "class='color-white'",
+                "class='fg-white'"
+            ],
+            "correct_answer": 1,
+            "explanation": "'text-color' utilities are simply prefixed with 'text-'."
+        },
+        {
+            "question_text": "What is the purpose of the 'tailwind.config.js' file?",
+            "options": [
+                "To store your database passwords",
+                "To customize the framework (add custom colors, fonts, spacing, etc.)",
+                "To run the JavaScript for the website",
+                "To install the Tailwind extension"
+            ],
+            "correct_answer": 1,
+            "explanation": "This file is where you 'extend' Tailwind to match your specific brand design."
+        }
+    ]
+}

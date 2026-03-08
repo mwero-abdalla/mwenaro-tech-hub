@@ -1,0 +1,182 @@
+{
+    "title": "Authentication (Base)",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=67_aMPDk27M",
+    "content": "## 🔐 Who Are You?\n\nAuthentication is how you verify a user's identity. Security is the most important part of backend engineering.\n\n---\n\n## 1️⃣ Password Hashing: Never store plain text!\n\nIf a hacker steals your database, they shouldn't see passwords. We use **bcrypt** to turn `password123` into a long, unreadable string.\n\n```javascript\nconst hashedPassword = await bcrypt.hash(password, 12);\n```\n\n---\n\n## 2️⃣ Sessions vs. Tokens\n\n*   **Sessions**: The server remembers the user (Stateful). Great for traditional websites.\n*   **Tokens (JWT)**: The user carries their own ID card (Stateless). Perfect for modern web apps and APIs.\n\n---\n\n## 3️⃣ The Login Flow\n\n1.  User sends Email/Password.\n2.  Server finds User in Database.\n3.  Server **compares** hashes using `bcrypt.compare()`.\n4.  If correct, Server issues a \"Ticket\" (Session or Token).\n\n---\n\n## ⚠️ Security Rule\nNever send passwords in a GET request. Always use POST to keep them out of the browser history and server logs.",
+    "questions": [
+        {
+            "question_text": "What is the purpose of 'salting' a password during hashing?",
+            "options": [
+                "To make the hashing process faster",
+                "To encrypt the password twice",
+                "To ensure the same password results in a different hash every time",
+                "To compress the file size"
+            ],
+            "correct_answer": 2,
+            "explanation": "Salting adds a random string to the password before hashing, making it impossible for hackers to use 'pre-computed' tables of common passwords."
+        },
+        {
+            "question_text": "What is 'Authentication'?",
+            "options": [
+                "Deciding what a user can do",
+                "Verifying WHO the user is (Identity)",
+                "encrypting data",
+                "Loading images"
+            ],
+            "correct_answer": 1,
+            "explanation": "Authentication answers the question 'Are you who you say you are?'."
+        },
+        {
+            "question_text": "What is 'Authorization'?",
+            "options": [
+                "Verifying who the user is",
+                "Deciding WHAT a user is allowed to do (Permissions)",
+                "Updating a profile",
+                "Resetting a password"
+            ],
+            "correct_answer": 1,
+            "explanation": "Authorization happens AFTER Authentication."
+        },
+        {
+            "question_text": "Why should you NEVER store passwords in plain text?",
+            "options": [
+                "They take up too much space",
+                "If the database is leaked, hackers can see everyone's password instantly",
+                "It's against the law",
+                "The database will crash"
+            ],
+            "correct_answer": 1,
+            "explanation": "Security 101: Always use hashing + salting."
+        },
+        {
+            "question_text": "What is 'Hashing'?",
+            "options": [
+                "A type of encryption that can be reversed",
+                "A one-way mathematical function that turns a password into a unique string of characters",
+                "Making a password shorter",
+                "A search algorithm"
+            ],
+            "correct_answer": 1,
+            "explanation": "You cannot 'un-hash' a value to get the original password."
+        },
+        {
+            "question_text": "What is a 'Salt' in the context of security?",
+            "options": [
+                "A seasoning for food",
+                "A random string added to a password before hashing to make it unique even if two users have the same password",
+                "A type of cookie",
+                "A hidden variable"
+            ],
+            "correct_answer": 1,
+            "explanation": "Salting prevents 'Rainbow Table' attacks."
+        },
+        {
+            "question_text": "Which library is most commonly used for hashing passwords in Node.js?",
+            "options": [
+                "Crypto",
+                "Bcrypt",
+                "PasswordJS",
+                "SafeText"
+            ],
+            "correct_answer": 1,
+            "explanation": "Bcrypt is slow on purpose, making it harder for hackers to brute-force passwords."
+        },
+        {
+            "question_text": "What is 'Session-Based Authentication'?",
+            "options": [
+                "Storing user data in a cookie",
+                "Storing user state on the server (usually in memory or Redis) and giving the user a Session ID",
+                "A temporary login",
+                "Logging in without a password"
+            ],
+            "correct_answer": 1,
+            "explanation": "The server 'remembers' the user as long as the session is active."
+        },
+        {
+            "question_text": "What is a 'Token-Based Authentication' (e.g., JWT)?",
+            "options": [
+                "The server doesn't store state; the user carries their identity in a signed token",
+                "Using a physical coin to log in",
+                "A type of encryption",
+                "Only for mobile apps"
+            ],
+            "correct_answer": 0,
+            "explanation": "Tokens are 'Stateless' and great for scaling across multiple servers."
+        },
+        {
+            "question_text": "What is 'OAuth 2.0'?",
+            "options": [
+                "A login form",
+                "An open standard for access delegation (e.g., 'Login with Google')",
+                "A new version of JS",
+                "A type of firewall"
+            ],
+            "correct_answer": 1,
+            "explanation": "It allows users to share data with 3rd party apps without sharing their password."
+        },
+        {
+            "question_text": "What is 'Multi-Factor Authentication' (MFA)?",
+            "options": [
+                "Logging in twice",
+                "Requiring two or more pieces of evidence to verify identity (e.g., password + SMS code)",
+                "Using multiple passwords",
+                "A premium feature"
+            ],
+            "correct_answer": 1,
+            "explanation": "MFA significantly increases security."
+        },
+        {
+            "question_text": "What is CSRF (Cross-Site Request Forgery)?",
+            "options": [
+                "A type of CSS error",
+                "An attack where a malicious site tricks a user's browser into performing an action on another site where they are logged in",
+                "Stealing passwords",
+                "Deleting the database"
+            ],
+            "correct_answer": 1,
+            "explanation": "Security measures like 'anti-csrf' tokens prevent this."
+        },
+        {
+            "question_text": "What is the danger of 'XSS' (Cross-Site Scripting)?",
+            "options": [
+                "It makes the site slow",
+                "An attacker injects malicious scripts into your site, which run in other users' browsers",
+                "It deletes images",
+                "It changes colors"
+            ],
+            "correct_answer": 1,
+            "explanation": "Attacker could steal session cookies using XSS."
+        },
+        {
+            "question_text": "What is 'Rate Limiting'?",
+            "options": [
+                "Making the internet faster",
+                "Restricting the number of requests a user can make in a set time to prevent brute-force attacks or DDoS",
+                "Charging users for use",
+                "Deleting old accounts"
+            ],
+            "correct_answer": 1,
+            "explanation": "Crucial for protecting login endpoints."
+        },
+        {
+            "question_text": "What is a 'Middleware's' role in authentication?",
+            "options": [
+                "To show the login page",
+                "To check if a request has a valid token/session before allowing access to a protected route",
+                "To encrypt files",
+                "To save user data"
+            ],
+            "correct_answer": 1,
+            "explanation": "Think of it as a 'Guard' at the gate of your API."
+        },
+        {
+            "question_text": "True or False: Storing sensitive data like API keys in the code is safe if the repo is private.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "NEVER store secrets in code. Use environment variables (.env)."
+        }
+    ]
+}

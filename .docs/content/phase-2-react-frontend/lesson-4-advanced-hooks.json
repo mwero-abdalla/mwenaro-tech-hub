@@ -1,0 +1,182 @@
+{
+    "title": "Advanced Hooks",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=qySthOcnaO4",
+    "content": "## 🚀 Optimizing and Referencing\n\nBeyond `useState` and `useEffect`, React provides tools to optimize performance and interact with the DOM directly.\n\n---\n\n## 1️⃣ `useMemo`: Caching Calculations\n\nUseful for expensive calculations. It only re-calculates the value when its dependencies change.\n\n```javascript\nconst expensiveValue = useMemo(() => compute(data), [data]);\n```\n\n---\n\n## 2️⃣ `useCallback`: Caching Functions\n\nPrevents a function from being re-created on every render. Crucial when passing functions to optimized child components (`memo`).\n\n---\n\n## 3️⃣ `useRef`: The Escape Hatch\n\n`useRef` allows you to:\n1.  Access a DOM element directly (e.g., focusing an input).\n2.  Store a value that doesn't trigger a re-render when it changes.\n\n```javascript\nconst inputRef = useRef(null);\nconst handleClick = () => inputRef.current.focus();\n```\n\n---\n\n## 🧠 Why Optimization Matters\nIn large apps, unnecessary re-renders can make the UI feel sluggish. These hooks help keep your app snappy.",
+    "questions": [
+        {
+            "question_text": "Which hook would you use to store a value that persists across renders but DOES NOT trigger a re-render when changed?",
+            "options": [
+                "useState",
+                "useMemo",
+                "useRef",
+                "useCallback"
+            ],
+            "correct_answer": 2,
+            "explanation": "useRef returns a mutable ref object whose .current property is initialized to the passed argument. Changing .current does not cause a re-render."
+        },
+        {
+            "question_text": "What is the purpose of 'useMemo'?",
+            "options": [
+                "To store files in memory",
+                "To memoize (cache) a calculated value to avoid expensive re-computations on every render",
+                "To remember user passwords",
+                "To make the code look better"
+            ],
+            "correct_answer": 1,
+            "explanation": "useMemo only re-calculates when its dependencies change."
+        },
+        {
+            "question_text": "What does 'useCallback' return?",
+            "options": [
+                "A value",
+                "A memoized (cached) version of the function itself",
+                "A promise",
+                "A state variable"
+            ],
+            "correct_answer": 1,
+            "explanation": "This prevents child components from re-rendering unnecessarily when a parent function is redefined on every render."
+        },
+        {
+            "question_text": "When should you use 'useRef' to store a value?",
+            "options": [
+                "When you want to trigger a re-render on change",
+                "When you need to persist a value between renders WITHOUT triggering a re-render (like a timer ID or DOM element)",
+                "To store global variables",
+                "Never, it's deprecated"
+            ],
+            "correct_answer": 1,
+            "explanation": "Changing a ref's .current property does NOT cause a re-render."
+        },
+        {
+            "question_text": "What is the 'useContext' Hook used for?",
+            "options": [
+                "To manage local state",
+                "To consume data from a Context Provider without 'prop drilling'",
+                "To connect to a database",
+                "To create a new component"
+            ],
+            "correct_answer": 1,
+            "explanation": "Context is ideal for global data like themes, user auth, or language settings."
+        },
+        {
+            "question_text": "Which hook is a replacement for complex state logic (similar to Redux reducers)?",
+            "options": [
+                "useState",
+                "useReducer",
+                "useLogic",
+                "useEffect"
+            ],
+            "correct_answer": 1,
+            "explanation": "useReducer handles sophisticated state transitions based on 'actions'."
+        },
+        {
+            "question_text": "How do you access a DOM element directly in React?",
+            "options": [
+                "document.getElementById()",
+                "Using the 'ref' attribute and the 'useRef' hook",
+                "element.get()",
+                "React.getDOMNode()"
+            ],
+            "correct_answer": 1,
+            "explanation": "Pass the ref object to the 'ref' prop of the element."
+        },
+        {
+            "question_text": "True or False: You should wrap EVERY function in useCallback for performance.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "Memoization has its own cost. Use it only when passing to optimized components (like React.memo) or as an effect dependency."
+        },
+        {
+            "question_text": "What are 'Custom Hooks'?",
+            "options": [
+                "Hooks provided by 3rd party libraries only",
+                "Functions that you write that start with 'use' and can call other Hooks",
+                "A way to change React's internal code",
+                "Hooks for CSS only"
+            ],
+            "correct_answer": 1,
+            "explanation": "Custom hooks allow you to extract and reuse component logic across your app."
+        },
+        {
+            "question_text": "What is the primary rule for using Hooks?",
+            "options": [
+                "They must be called at the top level (not inside loops or conditions)",
+                "They must be called inside event handlers",
+                "They must be called in class components",
+                "They must be written in capital letters"
+            ],
+            "correct_answer": 0,
+            "explanation": "This ensures React can maintain the correct order of hooks between renders."
+        },
+        {
+            "question_text": "What does a Reducer function take as arguments?",
+            "options": [
+                "state and action",
+                "prev and next",
+                "value and setter",
+                "context and props"
+            ],
+            "correct_answer": 0,
+            "explanation": "It returns the NEW state based on the current state and the action dispatched."
+        },
+        {
+            "question_text": "Which hook should be used to interact with browser APIs that don't trigger renders?",
+            "options": [
+                "useState",
+                "useRef",
+                "useContext",
+                "useMemo"
+            ],
+            "correct_answer": 1,
+            "explanation": "Refs are 'escape hatches' for imperative code."
+        },
+        {
+            "question_text": "What happens if you change a value inside useMemo without adding it to the dependency array?",
+            "options": [
+                "The value updates immediately",
+                "React won't know the value needs to be re-calculated, leading to a 'stale' value",
+                "Error",
+                "The app crashes"
+            ],
+            "correct_answer": 1,
+            "explanation": "Dependencies are critical for correctness in memoization."
+        },
+        {
+            "question_text": "What is 'Prop Drilling'?",
+            "options": [
+                "Fixing bugs in props",
+                "Passing props down through multiple layers of components that don't need them, just to reach a deep child",
+                "Creating props manually",
+                "Deleting props"
+            ],
+            "correct_answer": 1,
+            "explanation": "Context and state management libraries solve this problem."
+        },
+        {
+            "question_text": "In useReducer, how do you trigger a state change?",
+            "options": [
+                "By calling state = ...",
+                "By calling the 'dispatch' function with an action object",
+                "By calling 'update'",
+                "By refreshing the page"
+            ],
+            "correct_answer": 1,
+            "explanation": "Dispatch sends an action (e.g., `{ type: 'INCREMENT' }`) to the reducer."
+        },
+        {
+            "question_text": "Can Custom Hooks return anything?",
+            "options": [
+                "No, only state",
+                "Yes, they can return arrays, objects, values, or even other functions",
+                "Only JSX",
+                "Only promises"
+            ],
+            "correct_answer": 1,
+            "explanation": "Custom hooks are just functions that can hold stateful logic."
+        }
+    ]
+}

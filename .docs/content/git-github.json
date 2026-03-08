@@ -1,0 +1,118 @@
+{
+    "title": "Git & GitHub",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/shorts/AaEw4rpKh4Y",
+    "content": "## 🤔 Have You Ever…\n\n* Lost work after hours of effort?\n* Overwritten the wrong file version?\n* Had files like:\n  `project-final.html`\n  `project-final-final.html`\n  `project-final-FINAL2.html` 😩\n\n👉 These problems happen because there is **no version control**.\n\n---\n\n## 🧠 What Problem Does Git Solve?\n\nImagine writing a book.\n\nWithout Git:\n\n* You only have the **latest copy**\n* Mistakes can’t easily be undone\n* Working with others causes confusion\n\nWith Git:\n\n* Every change is **saved in history**\n* You can return to **any previous version**\n* Multiple people can work **without breaking each other's work**\n\n📌 **Git is like a time machine + backup system for your files.**\n\n---\n\n## 🗂 Real-Life Analogy\n\n| Real Life                              | With Git     |\n| -------------------------------------- | ------------ |\n| Saving multiple versions of a document | Commits      |\n| Undo history                           | Git log      |\n| Google Docs version history            | Git timeline |\n| Cloud backup                           | GitHub       |\n\n---\n\n## 🔍 Git vs GitHub\n\n| Git                             | GitHub                 |\n| ------------------------------- | ---------------------- |\n| Tool installed on your computer | Website                |\n| Tracks file changes             | Stores projects online |\n| Works offline                   | Requires internet      |\n| Saves versions                  | Shares versions        |\n\n📌 **Git = Version control tool**\n📌 **GitHub = Cloud storage for Git projects**\n\n---\n\n# 🛠 Core Git Commands\n\n---\n\n## 1️⃣ `git init` — Start Tracking a Project\n\n```bash\ngit init\n```\n\nBegins version control in your folder.\n\n---\n\n## 2️⃣ `git add` — Prepare Files to Save\n\n```bash\ngit add .\n```\n\nMoves changes to the **staging area**.\n\n🧠 Like selecting photos before uploading.\n\n---\n\n## 3️⃣ `git commit` — Save a Version\n\n```bash\ngit commit -m \"Created initial files\"\n```\n\nA **commit** is a saved snapshot of your project.\n\n---\n\n## 4️⃣ `git log` — View History\n\n```bash\ngit log\n```\n\nShows all previous saved versions.\n\n---\n\n## ☁️ 5️⃣ `git push` — Upload to GitHub\n\n```bash\ngit push origin main\n```\n\nUploads your saved versions to GitHub.\n\n### Why `origin main` Matters\n\n| Part     | Meaning                     |\n| -------- | --------------------------- |\n| `origin` | Your GitHub repository      |\n| `main`   | The branch you are updating |\n\n---\n\n## 🔄 6️⃣ `git pull` — Download Updates\n\n```bash\ngit pull origin main\n```\n\nGets the latest changes from GitHub.\n\n🧠 Like refreshing a shared document before editing.\n\n---\n\n# 🧪 Practice Project: File Versioning\n\nThis project helps you practice Git **without needing HTML yet**.\n\n---\n\n## 📂 Step 1: Create Project Folder\n\n```bash\nmkdir my-project\ncd my-project\ngit init\n```\n\n---\n\n## 🔗 Step 2: Connect to GitHub\n\nCreate an empty repository on GitHub named **my-project**, then run:\n\n```bash\ngit remote add origin https://github.com/yourusername/my-project.git\ngit branch -M main\ngit push -u origin main\n```\n\n---\n\n## 📝 Step 3: Create Files\n\n```bash\ntouch notes.txt tasks.txt ideas.txt\n```\n\nAdd content:\n\n```bash\necho \"First note\" > notes.txt\necho \"Task 1: Learn Git\" >> tasks.txt\ncat > ideas.txt\n```\n\nPress **CTRL + D** after typing inside `ideas.txt`.\n\n---\n\n## 💾 Step 4: Save Your Work\n\n```bash\ngit add .\ngit commit -m \"Created initial text files\"\ngit push origin main\n```\n\n---\n\n## 🔄 Step 5: Simulate Remote Update (git pull)\n\n1. Open your repository on GitHub\n2. Edit **tasks.txt** online and add another task\n3. On your computer, run:\n\n```bash\ngit pull origin main\n```\n\nYour local file now updates with the online change.\n\n---\n\n## ✏️ Step 6: Make More Local Changes\n\n```bash\necho \"Second note added locally\" >> notes.txt\ngit add .\ngit commit -m \"Added second note\"\ngit push origin main\n```\n\n---\n\n## 📁 Optional Step 7: Organize Files\n\n```bash\nmkdir archive\nmv notes.txt ideas.txt archive/\ngit add .\ngit commit -m \"Moved files into archive folder\"\ngit push origin main\n```\n\n---\n\n# ✅ Submission\n\nLearners should submit:\n\n* Screenshot of project folder structure\n* Screenshot of terminal showing:\n\n  * `git log`\n  * `git status`\n* A short reflection explaining:\n\n  * How Git helped track versions\n  * How `git pull` synced online updates\n",
+    "questions": [
+        {
+            "question_text": "What is the main purpose of Git?",
+            "options": [
+                "To design websites",
+                "To track file changes and manage versions",
+                "To host websites online",
+                "To write programming code automatically"
+            ],
+            "correct_answer": 1,
+            "explanation": "Git is a version control system that tracks changes and allows you to manage different versions of your project."
+        },
+        {
+            "question_text": "What is GitHub mainly used for?",
+            "options": [
+                "Editing code offline",
+                "Designing user interfaces",
+                "Storing Git repositories online",
+                "Replacing Git on your computer"
+            ],
+            "correct_answer": 2,
+            "explanation": "GitHub is a cloud platform that hosts Git repositories so they can be backed up and shared."
+        },
+        {
+            "question_text": "Which command starts Git tracking in a project folder?",
+            "options": [
+                "git start",
+                "git init",
+                "git begin",
+                "git track"
+            ],
+            "correct_answer": 1,
+            "explanation": "'git init' initializes a new Git repository in your project folder."
+        },
+        {
+            "question_text": "What does 'git add .' do?",
+            "options": [
+                "Uploads files to GitHub",
+                "Deletes untracked files",
+                "Stages all changed files for the next commit",
+                "Shows the project history"
+            ],
+            "correct_answer": 2,
+            "explanation": "'git add .' moves all modified files into the staging area so they can be committed."
+        },
+        {
+            "question_text": "What is a Git commit?",
+            "options": [
+                "A backup stored only on GitHub",
+                "A saved snapshot of your project at a specific time",
+                "A deleted file",
+                "A branch of the project"
+            ],
+            "correct_answer": 1,
+            "explanation": "A commit records a snapshot of your project along with a message describing the changes."
+        },
+        {
+            "question_text": "Which command shows the history of saved versions?",
+            "options": [
+                "git status",
+                "git history",
+                "git log",
+                "git show"
+            ],
+            "correct_answer": 2,
+            "explanation": "'git log' displays the commit history of the repository."
+        },
+        {
+            "question_text": "What does 'git push origin main' do?",
+            "options": [
+                "Downloads changes from GitHub",
+                "Uploads your committed changes to the main branch on GitHub",
+                "Creates a new folder",
+                "Deletes old commits"
+            ],
+            "correct_answer": 1,
+            "explanation": "'git push origin main' sends your local commits to the 'main' branch of the remote repository."
+        },
+        {
+            "question_text": "Why is 'origin' included in 'git push origin main'?",
+            "options": [
+                "It is the name of your computer",
+                "It tells Git which remote repository to send changes to",
+                "It specifies the file being uploaded",
+                "It creates a new branch"
+            ],
+            "correct_answer": 1,
+            "explanation": "'origin' is the default name for the remote repository (usually GitHub)."
+        },
+        {
+            "question_text": "What does 'git pull origin main' do?",
+            "options": [
+                "Uploads your local files",
+                "Deletes remote files",
+                "Downloads and updates your local project with changes from GitHub",
+                "Shows the current branch"
+            ],
+            "correct_answer": 2,
+            "explanation": "'git pull' fetches changes from the remote repository and merges them into your local branch."
+        },
+        {
+            "question_text": "Which real-life example best describes Git?",
+            "options": [
+                "A calculator",
+                "A photo editor",
+                "A time machine that lets you go back to earlier versions of your work",
+                "A search engine"
+            ],
+            "correct_answer": 2,
+            "explanation": "Git allows you to return to previous versions of your project, similar to a time machine."
+        }
+    ]
+}

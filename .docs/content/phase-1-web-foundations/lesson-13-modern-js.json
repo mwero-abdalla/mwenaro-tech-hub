@@ -1,0 +1,184 @@
+{
+    "title": "Modern JS (ES6-ES11)",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=nZ1DMMsyVyI",
+    "content": "## 🚀 Modern JavaScript: Writing Clean Code\n\nJavaScript has evolved rapidly since 2015. These features are standard in professional React development.\n\n---\n\n## 1️⃣ Destructuring\n\nExtracting values from arrays/objects with less code.\n\n```javascript\nconst user = { name: \"Mwero\", role: \"Mentor\" };\nconst { name, role } = user;\n// instead of user.name, user.role\n```\n\n---\n\n## 2️⃣ Spread & Rest Operators (`...`)\n\n*   **Spread**: Copy an object/array into a new one. (Essential for immutable state!).\n*   **Rest**: Collect multiple arguments into an array.\n\n---\n\n## 3️⃣ ES Modules (Import/Export)\n\nBringing sanity to large codebases by splitting code into files.\n\n```javascript\nexport const add = (a, b) => a + b;\nimport { add } from './math.js';\n```\n\n---\n\n## 4️⃣ Optional Chaining & Nullish Coalescing\n\n*   `user?.address?.city` - Don't crash if address is missing.\n*   `const name = user.name ?? \"Guest\";` - Default value if name is null/undefined.",
+    "questions": [
+        {
+            "question_text": "What does the spread operator (...) do for an array?",
+            "options": [
+                "Deletes the array",
+                "Creates a deep copy of the array",
+                "Spreads the elements of the array into a new context",
+                "Compares two arrays"
+            ],
+            "correct_answer": 2,
+            "explanation": "The spread operator expands the elements of an array (or object) into a new array or object."
+        },
+        {
+            "question_text": "What is 'Template Literals' in ES6?",
+            "options": [
+                "A way to write HTML in JS",
+                "Using backticks (`) to allow multi-line strings and variable interpolation with ${}",
+                "A library for templates",
+                "A new way to write comments"
+            ],
+            "correct_answer": 1,
+            "explanation": "Template literals make string concatenation much cleaner and easier to read."
+        },
+        {
+            "question_text": "What is the benefit of 'Arrow Functions'?",
+            "options": [
+                "They are always faster",
+                "They provide a shorter syntax and have lexical 'this' binding",
+                "They automatically return values without the 'return' keyword",
+                "They only work in React"
+            ],
+            "correct_answer": 1,
+            "explanation": "Arrow functions are great for callbacks and don't rebind 'this' incorrectly."
+        },
+        {
+            "question_text": "What does 'Destructuring' do?",
+            "options": [
+                "Deletes an object",
+                "Extracts values from arrays or properties from objects into distinct variables in one line",
+                "Changes the structure of the DOM",
+                "Breaks the code into smaller files"
+            ],
+            "correct_answer": 1,
+            "explanation": "obj = {x:1}; const {x} = obj; is much cleaner than const x = obj.x;."
+        },
+        {
+            "question_text": "What is the 'Spread Operator' (...)?",
+            "options": [
+                "It adds three dots to a string",
+                "It allows an iterable to be expanded in places where multiple arguments/elements are expected",
+                "It spreads the code across multiple files",
+                "It is a way to handle errors"
+            ],
+            "correct_answer": 1,
+            "explanation": "Use it to copy arrays, merge objects, or pass arrays as arguments."
+        },
+        {
+            "question_text": "What is the purpose of the 'Rest Parameter' (...args)?",
+            "options": [
+                "To let the CPU rest",
+                "To collect multiple arguments into a single array inside a function",
+                "To stop a function from running",
+                "To copy an object"
+            ],
+            "correct_answer": 1,
+            "explanation": "It replaces the old 'arguments' object with a real array."
+        },
+        {
+            "question_text": "Which array method creates a NEW array with the results of calling a function on every element?",
+            "options": [
+                "forEach()",
+                "filter()",
+                "map()",
+                "reduce()"
+            ],
+            "correct_answer": 2,
+            "explanation": "map() is fundamental for transforming data in modern frontend frameworks."
+        },
+        {
+            "question_text": "Which array method returns only the elements that pass a specific condition?",
+            "options": [
+                "find()",
+                "filter()",
+                "every()",
+                "some()"
+            ],
+            "correct_answer": 1,
+            "explanation": "filter() always returns an array, even if only one item matches."
+        },
+        {
+            "question_text": "What does the 'Modules' (import/export) system allow?",
+            "options": [
+                "Connecting to a database",
+                "Breaking code into reusable files and managing dependencies",
+                "Running code in the terminal",
+                "Hiding variables from other developers"
+            ],
+            "correct_answer": 1,
+            "explanation": "Modern JS development uses ES Modules to keep codebases organized."
+        },
+        {
+            "question_text": "What is 'Classes' in JS (introduced in ES6)?",
+            "options": [
+                "A way to organize students",
+                "Syntactic sugar over JS's existing prototype-based inheritance",
+                "A replacement for functions",
+                "A library for CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Classes make object-oriented programming in JS look more familiar to developers of other languages."
+        },
+        {
+            "question_text": "Which ES6 feature allows you to set a value if an argument is missing?",
+            "options": [
+                "Optional chaining",
+                "Nullish coalescing",
+                "Default Parameters",
+                "Logical OR"
+            ],
+            "correct_answer": 2,
+            "explanation": "Example: function greet(name = 'Guest') { ... }."
+        },
+        {
+            "question_text": "What does the 'Optional Chaining' operator (?.) do?",
+            "options": [
+                "Makes the code run faster",
+                "Safely accesses nested object properties even if an intermediate property is null or undefined",
+                "Lets you skip code",
+                "Asks the user for permission"
+            ],
+            "correct_answer": 1,
+            "explanation": "It prevents 'Cannot read property X of undefined' errors."
+        },
+        {
+            "question_text": "What is the 'Nullish Coalescing' operator (??)?",
+            "options": [
+                "Checks if a value is false",
+                "Returns the right-hand side if the left-hand side is null or undefined (but NOT if it's 0 or '')",
+                "Merges two objects",
+                "Deletes null variables"
+            ],
+            "correct_answer": 1,
+            "explanation": "It's safer than using || when you want to allow 0 or empty strings as valid values."
+        },
+        {
+            "question_text": "What is the 'const' keyword used for?",
+            "options": [
+                "Declaring a variable that can never be changed",
+                "Declaring a variable that cannot be reassigned (but its contents, like an object, can still be modified)",
+                "Making the code run on a server",
+                "Declaring a global variable"
+            ],
+            "correct_answer": 1,
+            "explanation": "90% of your variables in modern JS should be const."
+        },
+        {
+            "question_text": "Which array method checks if at least ONE element in an array passes a test?",
+            "options": [
+                "every()",
+                "some()",
+                "includes()",
+                "find()"
+            ],
+            "correct_answer": 1,
+            "explanation": "some() returns a boolean."
+        },
+        {
+            "question_text": "What is an 'Async Function' (ES2017)?",
+            "options": [
+                "A function that runs instantly",
+                "A function that returns a Promise and allows the use of 'await'",
+                "A function that doesn't have a name",
+                "A function used only for CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Async/await is the modern way to handle asynchronous code in a linear, readable style."
+        }
+    ]
+}

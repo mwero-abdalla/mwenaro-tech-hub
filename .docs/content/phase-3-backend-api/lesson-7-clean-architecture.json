@@ -1,0 +1,184 @@
+{
+    "title": "Clean Architecture",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=C7D_6G16T70",
+    "content": "## 🏗️ Building for Scalability\n\nWhen your app gets big, putting all your code in `app.js` becomes a nightmare. Professional engineers use **Clean Architecture** to split concerns.\n\n---\n\n## 1️⃣ The Three Pillars\n\n1.  **Controllers**: Handle the Request/Response (What goes in/out).\n2.  **Services**: Handle the **Business Logic** (Calculations, complex rules). \n3.  **Repositories/Models**: Handle the Data (Talking to the DB).\n\n---\n\n## 2️⃣ Why separate logic from routes?\n\nIf you want to change your database from MongoDB to Postgres, you shouldn't have to rewrite your entire application logic. In a clean architecture, you only change the **Repository** layer.\n\n---\n\n## 3️⃣ The Folder Structure\n\n```bash\n/src\n  /controllers\n  /services\n  /models\n  /middlewares\n  /routes\n```\n\n---\n\n## ✅ Deliverable: Phase 3 Final Project\nBuild a REST API for a \"LMS System\" (Courses/Lessons) using Node.js, Express, and MongoDB. It must implement JWT Authentication, Role-Based Access Control, and follow the Controller-Service-Repository pattern.",
+    "questions": [
+        {
+            "question_text": "In a Controller-Service-Repository pattern, where does the 'Business Logic' (e.g., calculating a user's discount) belong?",
+            "options": [
+                "Controller",
+                "Service",
+                "Model",
+                "Router"
+            ],
+            "correct_answer": 1,
+            "explanation": "Services contain the core logic of your application, keeping Controllers lean and Models focused purely on data storage."
+        },
+        {
+            "question_text": "What is 'Clean Architecture'?",
+            "options": [
+                "A design pattern to organize code into layers so it is easy to test and maintain",
+                "Coding without making mistakes",
+                "Deleting old files",
+                "Using a specific folder name"
+            ],
+            "correct_answer": 0,
+            "explanation": "The core goal is 'Independence of Tools' (you can swap DBs or Frameworks without breaking the core logic)."
+        },
+        {
+            "question_text": "What is an 'Entity' in Clean Architecture?",
+            "options": [
+                "A database table",
+                "The core business logic/rules that are independent of the UI or DB",
+                "A user interface component",
+                "The server itself"
+            ],
+            "correct_answer": 1,
+            "explanation": "Entities represent the 'Heart' of your system."
+        },
+        {
+            "question_text": "What is a 'Use Case'?",
+            "options": [
+                "A description of how a user uses the site",
+                "Application-specific business rules that orchestrate the flow of data",
+                "A test script",
+                "A CSS file"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: 'Register User' or 'Create Order'."
+        },
+        {
+            "question_text": "What is 'Separation of Concerns'?",
+            "options": [
+                "Talking about problems separately",
+                "The idea that different parts of a program should handle different responsibilities (e.g., data fetching vs. data display)",
+                "Splitting the team",
+                "Using multiple servers"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes code more readable and debuggable."
+        },
+        {
+            "question_text": "What is the 'MVC' pattern?",
+            "options": [
+                "Most Valuable Code",
+                "Model-View-Controller; a pattern for separating data, UI, and logic",
+                "Modern Version Control",
+                "Multiple Variable Calculation"
+            ],
+            "correct_answer": 1,
+            "explanation": "MVC is the most popular architectural pattern for web apps."
+        },
+        {
+            "question_text": "What is the 'Dependency Injection' (DI)?",
+            "options": [
+                "A security hack",
+                "A technique where an object receives its dependencies from outside rather than creating them itself",
+                "Installing packages",
+                "Deleting global variables"
+            ],
+            "correct_answer": 1,
+            "explanation": "DI makes code much easier to test using 'Mocks'."
+        },
+        {
+            "question_text": "What is 'DRY'?",
+            "options": [
+                "Do Repeat Yourself",
+                "Don't Repeat Yourself - avoiding code duplication",
+                "Data Ready Yesterday",
+                "Deploy Rapidly Yearly"
+            ],
+            "correct_answer": 1,
+            "explanation": "If you write the same code twice, turn it into a function/component."
+        },
+        {
+            "question_text": "What is 'KISS'?",
+            "options": [
+                "Keep It Simple, Stupid - avoiding over-engineering",
+                "Keep It Safe and Secure",
+                "Kindness in Software Systems",
+                "Knowledge is Super Small"
+            ],
+            "correct_answer": 0,
+            "explanation": "Write simple code first; only add complexity if absolutely needed."
+        },
+        {
+            "question_text": "What is a 'Monolith' architecture?",
+            "options": [
+                "A very heavy server",
+                "An application where all code (UI, API, DB) is in a single unit/deployment",
+                "A type of database",
+                "A physical rock"
+            ],
+            "correct_answer": 1,
+            "explanation": "Monoliths are easier to start with but harder to scale as the team grows."
+        },
+        {
+            "question_text": "What is 'Microservices' architecture?",
+            "options": [
+                "Small pieces of code",
+                "Breaking an application into small, independent services that communicate over the network",
+                "Using many small databases",
+                "A tiny computer"
+            ],
+            "correct_answer": 1,
+            "explanation": "Microservices allow different teams to work on different parts of an app independently."
+        },
+        {
+            "question_text": "What is the 'Controller's' job in an API?",
+            "options": [
+                "Saving data to the DB",
+                "Handling the incoming HTTP request, talking to the Service layer, and sending the response",
+                "Writing CSS",
+                "Calculating math"
+            ],
+            "correct_answer": 1,
+            "explanation": "Controllers should be 'thin' and only handle the 'web' part of the request."
+        },
+        {
+            "question_text": "What is 'Layered Architecture'?",
+            "options": [
+                "A cake made of code",
+                "Organizing code into horizontal layers (e.g., Presentation, Business, Data)",
+                "Using multiple versions of Node",
+                "A type of cloud hosting"
+            ],
+            "correct_answer": 1,
+            "explanation": "Each layer only talks to the layer directly below it."
+        },
+        {
+            "question_text": "What is 'Coupling'?",
+            "options": [
+                "A romantic relationship",
+                "How dependent different modules are on each other (Low coupling is better)",
+                "Merging two databases",
+                "Using two servers"
+            ],
+            "correct_answer": 1,
+            "explanation": "Low coupling means you can change one file without breaking 50 others."
+        },
+        {
+            "question_text": "What is 'Cohesion'?",
+            "options": [
+                "Sticking together",
+                "How related the functions within a single module are (High cohesion is better)",
+                "Deleting unused code",
+                "An external library"
+            ],
+            "correct_answer": 1,
+            "explanation": "High cohesion means a file does ONE thing and does it well."
+        },
+        {
+            "question_text": "What is 'Test-Driven Development' (TDD)?",
+            "options": [
+                "Testing after deployment",
+                "A process where you write the test BEFORE you write the actual code",
+                "A specialized test server",
+                "Deleting buggy code"
+            ],
+            "correct_answer": 1,
+            "explanation": "TDD leads to better architecture and fewer bugs."
+        }
+    ]
+}

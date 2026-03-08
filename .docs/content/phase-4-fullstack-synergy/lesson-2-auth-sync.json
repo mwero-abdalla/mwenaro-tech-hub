@@ -1,0 +1,182 @@
+{
+    "title": "Auth Sync & Silent Re-auth",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=jo_B4LTHi3I",
+    "content": "## 🔐 Stay Logged In\n\nUsers hate logging in every time they refresh the page. We need to synchronize the authentication state between the browser and the server seamlessly.\n\n---\n\n## 1️⃣ Auth Persistence\n\nWhen the app starts, we check for a stored token (usually in a secure cookie). We then call a `/me` or `/profile` endpoint to verify if the token is still valid and populate the global React state (e.g., Context or Redux).\n\n---\n\n## 2️⃣ Route Guards\n\nWe wrap our private components in a **Protected Route**. If the user isn't logged in, they are redirected. \n\n```javascript\nif (!user) return <Navigate to=\"/login\" />;\nreturn <Outlet />; // Render the child components\n```\n\n---\n\n## 3️⃣ Silent Re-auth (The Refresh Loop)\n\nWhen an Access Token expires, the user shouldn't be kicked out. \n1.  Axios interceptor detects a `401` error.\n2.  App automatically calls `/refresh-token` in the background.\n3.  Server sends a new Access Token.\n4.  App **retries** the original failed request.\n\nThe user sees zero interruptions!",
+    "questions": [
+        {
+            "question_text": "What happens in a 'Silent Re-auth' flow when an Access Token expires?",
+            "options": [
+                "The user is immediately logged out",
+                "A popup appears asking for the password again",
+                "The app fetches a new token in the background and retries the request",
+                "The browser refreshes the entire page"
+            ],
+            "correct_answer": 2,
+            "explanation": "Silent Re-auth uses a Refresh Token to get a new Access Token without user intervention, providing a seamless experience."
+        },
+        {
+            "question_text": "How does React 'remember' that a user is logged in after a page refresh?",
+            "options": [
+                "It doesn't; you have to log in every time",
+                "By checking for a valid JWT in LocalStorage or Cookies on app load",
+                "The browser remembers automatically",
+                "The server sends a notification"
+            ],
+            "correct_answer": 1,
+            "explanation": "Apps typically run a 'Check Auth' request or verify a token in useEffect when the app first starts."
+        },
+        {
+            "question_text": "Where should you store the 'User Object' (name, email, role) in React for access across multiple pages?",
+            "options": [
+                "In a text file",
+                "In a Context Provider or a state management store (like Redux/Zustand)",
+                "On the server only",
+                "In the CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Context allows you to 'broadcast' user data to every component."
+        },
+        {
+            "question_text": "What is an 'Authenticated Route' (or Protected Route)?",
+            "options": [
+                "A route that is secret",
+                "A React component that redirects users to the login page if they aren't authenticated",
+                "A route with a password",
+                "A high-speed route"
+            ],
+            "correct_answer": 1,
+            "explanation": "Protecting routes prevents guests from seeing dashboard or settings pages."
+        },
+        {
+            "question_text": "What is an 'Auth Interceptor' in Axios?",
+            "options": [
+                "A security hacker",
+                "A function that runs before every request to automatically add the Authorization header (token)",
+                "A type of firewall",
+                "A React Hook"
+            ],
+            "correct_answer": 1,
+            "explanation": "Interceptors save you from manually adding tokens to every single fetch call."
+        },
+        {
+            "question_text": "What happens when a JWT expires while a user is using the app?",
+            "options": [
+                "The app crashes",
+                "API requests start returning 401 errors, and the app should logout the user or use a refresh token",
+                "The user is charged money",
+                "Nothing happens"
+            ],
+            "correct_answer": 1,
+            "explanation": "Proper error handling should redirect users back to login when they 'time out'."
+        },
+        {
+            "question_text": "What is 'Persistent Login'?",
+            "options": [
+                "A login that never ends",
+                "Staying logged in even after closing the browser (using long-lived tokens or cookies)",
+                "Logging in with a finger print",
+                "A security risk"
+            ],
+            "correct_answer": 1,
+            "explanation": "This improves UX by not annoying the user with frequent logins."
+        },
+        {
+            "question_text": "Which vulnerability does 'HttpOnly' cookies protect against?",
+            "options": [
+                "SQL Injection",
+                "XSS (Cross-Site Scripting) - malicious JS can't read the cookie",
+                "DDoS",
+                "Broken images"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tokens stored in LocalStorage ARE readable by JS, making them slightly less secure than cookies."
+        },
+        {
+            "question_text": "What is a 'Private Component'?",
+            "options": [
+                "A component that is hidden in the code",
+                "A component that only renders its children if the user has a specific role (e.g., <AdminOnly>)",
+                "A paid component",
+                "A component with no logic"
+            ],
+            "correct_answer": 1,
+            "explanation": "Useful for hiding buttons or tabs that users don't have permission to see."
+        },
+        {
+            "question_text": "What is 'Login Redirect' logic?",
+            "options": [
+                "Sending a user to the login page",
+                "Sending a user back to the page they were trying to visit AFTER they successfully log in",
+                "Changing the site URL",
+                "Deleting the account"
+            ],
+            "correct_answer": 1,
+            "explanation": "This provides a seamless experience for visitors who clicked a direct link to a private page."
+        },
+        {
+            "question_text": "How do you handle 'Logout' in a MERN app?",
+            "options": [
+                "Deleting the JWT from client storage and clearing the user state in Context/Redux",
+                "Deleting the user from the database",
+                "Closing the browser",
+                "Changing the password"
+            ],
+            "correct_answer": 0,
+            "explanation": "Since JWT is stateless, 'logging out' is primarily a client-side action."
+        },
+        {
+            "question_text": "What is 'Token Refreshing'?",
+            "options": [
+                "Buying a new token",
+                "Transparently getting a new Access Token in the background using a Refresh Token without interrupting the user",
+                "Reloading the page",
+                "Deleting the old token"
+            ],
+            "correct_answer": 1,
+            "explanation": "Essential for keeping users logged in for a long time securely."
+        },
+        {
+            "question_text": "What is a 'Sign-up Flow' compared to a 'Login Flow'?",
+            "options": [
+                "There is no difference",
+                "Sign-up creates a new user record in the DB; Login verifies an existing one",
+                "Sign-up is more expensive",
+                "Login is only for admins"
+            ],
+            "correct_answer": 1,
+            "explanation": "Both usually end by sending a JWT to the client."
+        },
+        {
+            "question_text": "Why should you NOT store sensitivity data like User Passwords in the Auth Context?",
+            "options": [
+                "It's too much text",
+                "Security; anyone with access to React DevTools can see the entire Context state",
+                "It makes the site slow",
+                "React doesn't allow it"
+            ],
+            "correct_answer": 1,
+            "explanation": "Only store non-sensitive data needed for the UI (e.g., name, avatar, role)."
+        },
+        {
+            "question_text": "What is 'Loading Splash Screen'?",
+            "options": [
+                "An animation shown while the app checks if the user is already logged in",
+                "A type of bug",
+                "A specialized login page",
+                "A marketing tool"
+            ],
+            "correct_answer": 0,
+            "explanation": "This prevents 'flickering' where the login page shows for a split second before the dashboard."
+        },
+        {
+            "question_text": "True or False: Using 'Redux' for auth is mandatory in React.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "React Context is usually enough for auth state in most projects."
+        }
+    ]
+}

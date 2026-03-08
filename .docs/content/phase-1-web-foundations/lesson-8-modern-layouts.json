@@ -1,0 +1,173 @@
+{
+    "title": "Modern Layouts: Flexbox & Grid",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=kUMe1FH4CHE",
+    "content": "## 🏗️ Breaking the Flow\n\nBy default, HTML elements stack vertically (block) or horizontally (inline). Modern layout systems give you total control.\n\n---\n\n## 1️⃣ Flexbox: The One-Dimensional Power\n\nFlexbox is perfect for rows OR columns. \n\n*   `display: flex;` - Enables flex context.\n*   `justify-content`: Aligns items along the **Main Axis** (Horizontal by default).\n*   `align-items`: Aligns items along the **Cross Axis** (Vertical by default).\n\n---\n\n## 2️⃣ CSS Grid: Two-Dimensional Control\n\nGrid is for complex layouts where you need rows AND columns at the same time.\n\n*   `display: grid;` - Enables grid context.\n*   `grid-template-columns`: Defines the column widths (e.g., `1fr 1fr 1fr`).\n*   `gap`: Sets the space between grid items.\n\n---\n\n## 🧠 When to use which?\nUse Flexbox for small components (navbars, buttons, lists). Use Grid for the **main page structure** (header, sidebar, main content, footer).",
+    "questions": [
+        {
+            "question_text": "Which property is used to turn an element into a Flex Container?",
+            "options": [
+                "display: block",
+                "display: flex",
+                "flex-direction: row",
+                "align-items: center"
+            ],
+            "correct_answer": 1,
+            "explanation": "Setting 'display: flex' enables the Flexbox model on equal child elements."
+        },
+        {
+            "question_text": "In Flexbox, which property aligns items along the MAIN axis?",
+            "options": [
+                "align-items",
+                "justify-content",
+                "flex-start",
+                "align-content"
+            ],
+            "correct_answer": 1,
+            "explanation": "By default, the main axis is horizontal (row)."
+        },
+        {
+            "question_text": "In Flexbox, which property aligns items along the CROSS axis?",
+            "options": [
+                "justify-content",
+                "align-items",
+                "flex-wrap",
+                "cross-axis: center"
+            ],
+            "correct_answer": 1,
+            "explanation": "Align-items controls centering or stretching along the secondary axis."
+        },
+        {
+            "question_text": "How do you change the main axis from horizontal to vertical in Flexbox?",
+            "options": [
+                "flex-direction: column",
+                "orientation: vertical",
+                "display: block",
+                "flex-wrap: wrap"
+            ],
+            "correct_answer": 0,
+            "explanation": "Using 'column' swaps the main and cross axes."
+        },
+        {
+            "question_text": "What does the 'flex-grow' property do?",
+            "options": [
+                "Increases the font size",
+                "Allows a flex item to grow and take up remaining space",
+                "Determines the width of the border",
+                "Adds padding to the container"
+            ],
+            "correct_answer": 1,
+            "explanation": "Higher values of flex-grow make items take up more space relative to their siblings."
+        },
+        {
+            "question_text": "Which CSS Grid property is used to define the number of columns?",
+            "options": [
+                "grid-template-columns",
+                "grid-cols",
+                "columns: 3",
+                "grid-layout: horizontal"
+            ],
+            "correct_answer": 0,
+            "explanation": "You can define sizes like 'repeat(3, 1fr)' for three equal columns."
+        },
+        {
+            "question_text": "What is the 'fr' unit in CSS Grid?",
+            "options": [
+                "Fixed Radius",
+                "Fraction of the available space",
+                "Font Ratio",
+                "Frame Rate"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'fr' unit is flexible and splits remaining space into parts."
+        },
+        {
+            "question_text": "How do you add space between rows and columns in CSS Grid?",
+            "options": [
+                "margin",
+                "padding",
+                "gap",
+                "spacing"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'gap' (or 'grid-gap') property handles gutters between grid items."
+        },
+        {
+            "question_text": "In a 3-column grid, how do you make an item span across 2 columns?",
+            "options": [
+                "grid-column: span 2",
+                "width: 66%",
+                "grid-span: 2",
+                "column-count: 2"
+            ],
+            "correct_answer": 0,
+            "explanation": "You can also use 'grid-column: 1 / 3' to specify start and end lines."
+        },
+        {
+            "question_text": "What is the main difference between Flexbox and Grid?",
+            "options": [
+                "Flexbox is 1D (rows OR columns); Grid is 2D (rows AND columns)",
+                "Flexbox is only for mobile; Grid is for desktop",
+                "Flexbox is older and should not be used",
+                "Grid is slower to render"
+            ],
+            "correct_answer": 0,
+            "explanation": "Use Flexbox for alignment in a single direction; use Grid for complex page layouts."
+        },
+        {
+            "question_text": "Which property allows flex items to wrap onto multiple lines?",
+            "options": [
+                "flex-linebreak: yes",
+                "display: multi-line",
+                "flex-wrap: wrap",
+                "overflow: auto"
+            ],
+            "correct_answer": 2,
+            "explanation": "By default, flex items try to fit onto one line (nowrap)."
+        },
+        {
+            "question_text": "What does 'justify-content: space-between' do?",
+            "options": [
+                "Stacks items in the center",
+                "Adds space inside each item",
+                "Distributes items evenly, placing the first item at the start and the last at the end",
+                "Puts a gap of 10px between everyone"
+            ],
+            "correct_answer": 2,
+            "explanation": "This is a common way to create headers with a logo on the left and nav on the right."
+        },
+        {
+            "question_text": "How do you center an item both vertically and horizontally using Flexbox on the container?",
+            "options": [
+                "text-align: center; vertical-align: middle",
+                "justify-content: center; align-items: center",
+                "margin: auto",
+                "display: center"
+            ],
+            "correct_answer": 1,
+            "explanation": "This 2-line combination is the modern standard for perfect centering."
+        },
+        {
+            "question_text": "Which grid property is a shortcut for 'grid-row' and 'grid-column'?",
+            "options": [
+                "grid-item",
+                "grid-placement",
+                "grid-area",
+                "grid-pos"
+            ],
+            "correct_answer": 2,
+            "explanation": "Grid-area can also be used with 'grid-template-areas' for logical naming."
+        },
+        {
+            "question_text": "What happens if you set 'display: grid' but don't define any template columns?",
+            "options": [
+                "The grid doesn't work",
+                "All items are stacked in one column by default",
+                "All items are in one row",
+                "The page goes blank"
+            ],
+            "correct_answer": 1,
+            "explanation": "Grid initializes with a single-column explicit grid by default."
+        }
+    ]
+}

@@ -1,0 +1,173 @@
+{
+    "title": "Linux & Terminal",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=J3mC0t_G7qQ",
+    "content": "## ⌨️ Commanding Your Machine\n\nFull-stack engineers live in the terminal. It is faster and more powerful than any mouse-click interface.\n\n---\n\n## 📂 File System Navigation\n\n| Command | Meaning               | Example          |\n| ------- | --------------------- | ---------------- |\n| `pwd`   | Print Working Directory | \"Where am I?\"    |\n| `ls`    | List files            | `ls -a` (all)    |\n| `cd`    | Change Directory      | `cd documents`   |\n| `mkdir` | Make Directory        | `mkdir projects` |\n\n---\n\n## 📝 File Operations\n\n*   `touch filename.ext`: Creates an empty file.\n*   `cp`: Copy files.\n*   `mv`: Move or **Rename** files.\n*   `rm`: Remove files (**Warning**: This is permanent!).\n\n---\n\n## 🛡️ Permissions & sudo\n\nLinux is built on permissions. Sometimes you need `sudo` (SuperUser Do) to perform tasks that require administrative access.\n\n---\n\n## 🚀 Why do we use it?\nServers practically all run on Linux. If you want to deploy a website, you MUST know how to navigate a server using only text.",
+    "questions": [
+        {
+            "question_text": "Which command is used to see the path of the current directory you are in?",
+            "options": [
+                "ls",
+                "cd",
+                "pwd",
+                "whoami"
+            ],
+            "correct_answer": 2,
+            "explanation": "pwd stands for 'Print Working Directory'."
+        },
+        {
+            "question_text": "How do you create a new directory named 'projects'?",
+            "options": [
+                "touch projects",
+                "mkdir projects",
+                "new folder projects",
+                "cd projects"
+            ],
+            "correct_answer": 1,
+            "explanation": "mkdir is the standard command to create directories in Linux."
+        },
+        {
+            "question_text": "What does the 'sudo' command allow you to do?",
+            "options": [
+                "Speed up the computer",
+                "Execute a command with administrative (root) privileges",
+                "Delete the entire hard drive",
+                "Restart the terminal"
+            ],
+            "correct_answer": 1,
+            "explanation": "'sudo' stands for 'SuperUser DO'."
+        },
+        {
+            "question_text": "Which flag is used with 'ls' to see hidden files (files starting with a dot)?",
+            "options": [
+                "-h",
+                "-a",
+                "-l",
+                "-x"
+            ],
+            "correct_answer": 1,
+            "explanation": "'-a' stands for 'all', including hidden entries."
+        },
+        {
+            "question_text": "How do you delete a non-empty directory?",
+            "options": [
+                "rm folder",
+                "rmdir folder",
+                "rm -rf folder",
+                "delete folder"
+            ],
+            "correct_answer": 2,
+            "explanation": "'-r' is recursive and '-f' is force. Use with caution!"
+        },
+        {
+            "question_text": "Which shortcut stops a currently running process in the terminal?",
+            "options": [
+                "Ctrl + C",
+                "Ctrl + Z",
+                "Ctrl + X",
+                "Ctrl + S"
+            ],
+            "correct_answer": 0,
+            "explanation": "Ctrl + C sends a SIGINT signal to terminate the process."
+        },
+        {
+            "question_text": "What command reveals the manual/documentation for a specific command?",
+            "options": [
+                "help",
+                "info",
+                "man",
+                "docs"
+            ],
+            "correct_answer": 2,
+            "explanation": "'man' stands for manual."
+        },
+        {
+            "question_text": "How do you change file permissions in Linux?",
+            "options": [
+                "chown",
+                "chmod",
+                "chperm",
+                "chfile"
+            ],
+            "correct_answer": 1,
+            "explanation": "'chmod' (Change Mode) is used to set read/write/execute permissions."
+        },
+        {
+            "question_text": "Which character represents the 'Home' directory in a file path?",
+            "options": [
+                "/",
+                ".",
+                "~",
+                ".."
+            ],
+            "correct_answer": 2,
+            "explanation": "The tilde (~) is a shortcut for /home/username."
+        },
+        {
+            "question_text": "How do you search for a specific string within a file from the terminal?",
+            "options": [
+                "find",
+                "search",
+                "grep",
+                "look"
+            ],
+            "correct_answer": 2,
+            "explanation": "grep searches for patterns in text files."
+        },
+        {
+            "question_text": "What does the command 'cd ..' do?",
+            "options": [
+                "Goes to the root directory",
+                "Goes up one level to the parent directory",
+                "Goes to the home directory",
+                "Deletes the current directory"
+            ],
+            "correct_answer": 1,
+            "explanation": "'..' refers to the parent of the current directory."
+        },
+        {
+            "question_text": "Which command is used to create an empty file?",
+            "options": [
+                "create",
+                "new",
+                "touch",
+                "make"
+            ],
+            "correct_answer": 2,
+            "explanation": "touch creates a file if it doesn't exist or updates its timestamp."
+        },
+        {
+            "question_text": "How do you see the last 10 lines of a file?",
+            "options": [
+                "head",
+                "end",
+                "tail",
+                "bottom"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'tail' command shows the end of a file."
+        },
+        {
+            "question_text": "What is the purpose of the 'apt' or 'brew' commands?",
+            "options": [
+                "To play music",
+                "To manage and install software packages",
+                "To clear the screen",
+                "To check internet speed"
+            ],
+            "correct_answer": 1,
+            "explanation": "These are package managers for Linux and macOS."
+        },
+        {
+            "question_text": "Which command clears the terminal screen scrollback?",
+            "options": [
+                "clean",
+                "clear",
+                "reset",
+                "cls"
+            ],
+            "correct_answer": 1,
+            "explanation": "'clear' refreshes the view by pushing old content out of view."
+        }
+    ]
+}

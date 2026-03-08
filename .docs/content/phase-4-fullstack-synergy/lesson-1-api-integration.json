@@ -1,0 +1,182 @@
+{
+    "title": "API Integration & Axios Interceptors",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=jo_B4LTHi3I",
+    "content": "## 🔗 Bridging the Gap\n\nYour frontend and backend are two separate worlds. We need a reliable way to communicate between them. Professional engineers use **Axios** with **Interceptors**.\n\n---\n\n## 1️⃣ Why Axios Interceptors?\n\nImagine you have 50 different API calls. If you need to add an Authentication token to *every* call, you don't want to write it 50 times. \n\n**Interceptors** allow you to \"intercept\" a request or response before it is handled by `.then()` or `.catch()`.\n\n```javascript\naxios.interceptors.request.use(config => {\n  config.headers.Authorization = `Bearer ${token}`;\n  return config;\n});\n```\n\n---\n\n## 2️⃣ Global Error Handling\n\nWhen a server returns a `401 Unauthorized` or `500 Server Error`, you can catch it globally in a response interceptor to show a toast notification or redirect the user to login.\n\n---\n\n## 3️⃣ Clean API Modules\n\nDon't call `axios` directly inside your components. Create an `api.js` file where you define your base URL and interceptors. Then, create specific functions for each feature (e.g., `userService.js`, `courseService.js`).\n\n---\n\n## 💡 Pro Tip\nUse environmental variables (`.env`) for your API Base URL (`VITE_API_URL`) so you can easily switch between development and production servers.",
+    "questions": [
+        {
+            "question_text": "What is the main advantage of using an Axios Request Interceptor?",
+            "options": [
+                "It makes the API call faster",
+                "It allows you to automatically attach headers (like Auth tokens) to every request",
+                "It replaces the need for a backend",
+                "It encrypts the entire request body"
+            ],
+            "correct_answer": 1,
+            "explanation": "Interceptors allow you to centralize common logic like authentication headers or logging for every outgoing request."
+        },
+        {
+            "question_text": "What is the primary way a React frontend communicates with an Express backend?",
+            "options": [
+                "Using CSS imports",
+                "HTTP requests (fetch or axios)",
+                "Directly importing JS files from the server",
+                "Using a USB cable"
+            ],
+            "correct_answer": 1,
+            "explanation": "Modern fullstack apps use APIs to exchange data between the frontend and backend."
+        },
+        {
+            "question_text": "What does CORS stand for?",
+            "options": [
+                "Cross-Origin Resource Sharing",
+                "Core Object Rendering System",
+                "Client Only Response Standard",
+                "Common Optimized Route Server"
+            ],
+            "correct_answer": 0,
+            "explanation": "CORS is a security feature that controls which domains can access your API."
+        },
+        {
+            "question_text": "Why do you usually need the `cors` package in Express?",
+            "options": [
+                "To make the server faster",
+                "To allow the React dev server (e.g., port 5173) to request data from the Express server (e.g., port 5000)",
+                "To encrypt data",
+                "To connect to the database"
+            ],
+            "correct_answer": 1,
+            "explanation": "By default, browsers block requests to a different port/domain for security."
+        },
+        {
+            "question_text": "What is a 'Proxy' in development (Vite/Webpack)?",
+            "options": [
+                "A type of user",
+                "A configuration that redirects API calls to the backend server so you don't have to write the full URL every time",
+                "A high-speed internet connection",
+                "A security firewall"
+            ],
+            "correct_answer": 1,
+            "explanation": "Proxying also helps avoid CORS issues during development."
+        },
+        {
+            "question_text": "Which React Hook is most commonly used to fetch data on component load?",
+            "options": [
+                "useState",
+                "useEffect",
+                "useContext",
+                "useRef"
+            ],
+            "correct_answer": 1,
+            "explanation": "useEffect triggers the fetch call when the component mounts."
+        },
+        {
+            "question_text": "What is 'Axios'?",
+            "options": [
+                "A type of CSS engine",
+                "A popular promise-based HTTP client for the browser and Node.js",
+                "A React framework",
+                "A database"
+            ],
+            "correct_answer": 1,
+            "explanation": "Axios simplifies data fetching compared to the native `fetch()` API."
+        },
+        {
+            "question_text": "How do you handle 'Loading States' in the frontend?",
+            "options": [
+                "By stopping the server",
+                "Using a boolean state (e.g., isLoading) that shows a spinner while data is being fetched",
+                "Asking the user to wait",
+                "Using heavy CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Good UX requires showing the user that work is happening."
+        },
+        {
+            "question_text": "What is the benefit of keeping Your API base URL in an environment variable?",
+            "options": [
+                "It makes it easier to switch between 'localhost' (dev) and 'https://api.myapp.com' (prod)",
+                "It hides the URL from hackers",
+                "It makes the code shorter",
+                "It's required by React"
+            ],
+            "correct_answer": 0,
+            "explanation": "Hardcoding URLs makes deployment very difficult."
+        },
+        {
+            "question_text": "What is 'JSON Serialization'?",
+            "options": [
+                "Deleting data",
+                "The process of converting a JavaScript object into a JSON string for transmission over the network",
+                "Making a list of numbers",
+                "A security protocol"
+            ],
+            "correct_answer": 1,
+            "explanation": "The client serializes data to send, and the server deserializes it to read."
+        },
+        {
+            "question_text": "Which HTTP method is used to send NEW data from a React form to the Express server?",
+            "options": [
+                "GET",
+                "POST",
+                "DELETE",
+                "PATCH"
+            ],
+            "correct_answer": 1,
+            "explanation": "POST is used for creating new resources."
+        },
+        {
+            "question_text": "How do you handle server errors (like 500) in React?",
+            "options": [
+                "The browser handles it",
+                "Using a try/catch block around the fetch call and setting an 'error' state for the UI",
+                "Ignoring them",
+                "Restarting the computer"
+            ],
+            "correct_answer": 1,
+            "explanation": "You should show a friendly error message to the user."
+        },
+        {
+            "question_text": "What is a 'Slug' in a URL?",
+            "options": [
+                "A slow animal",
+                "A human-readable string used in the URL to identify a specific resource (e.g., /blog/how-to-code)",
+                "A type of bug",
+                "An encrypted ID"
+            ],
+            "correct_answer": 1,
+            "explanation": "Slugs are better for SEO and readability than numeric IDs."
+        },
+        {
+            "question_text": "What is 'Pagination' in a Fullstack app?",
+            "options": [
+                "Breaking data into pages so you don't load 10,000 items at once",
+                "Printing the code",
+                "Writing in a book",
+                "A type of animation"
+            ],
+            "correct_answer": 0,
+            "explanation": "Essential for performance on lists with many items."
+        },
+        {
+            "question_text": "What is the 'Network' tab in Chrome DevTools used for?",
+            "options": [
+                "Browsing the web",
+                "Inspecting API requests, viewing response bodies, and checking status codes",
+                "Building websites",
+                "Checking wifi speed"
+            ],
+            "correct_answer": 1,
+            "explanation": "It's the most important tool for debugging fullstack integration."
+        },
+        {
+            "question_text": "True or False: The frontend should trust ALL data sent to the API is valid.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "Never trust the client. Always validate data on the backend (server-side) too."
+        }
+    ]
+}

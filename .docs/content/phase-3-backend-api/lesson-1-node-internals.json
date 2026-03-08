@@ -1,0 +1,173 @@
+{
+    "title": "Node.js Internals",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=jo_B4LTHi3I",
+    "content": "## 🚀 Beyond the Browser\n\nNode.js allows JavaScript to run on servers. Its power comes from how it handles data without waiting.\n\n---\n\n## 1️⃣ Non-Blocking I/O\n\nUnlike traditional server languages (like PHP or Java) that wait for a file to read or a database to respond, Node.js moves to the next task immediately. When the data is ready, it calls a **Callback** to handle it.\n\n---\n\n## 2️⃣ The Event Loop\n\nThis is the heart of Node.js. It manage all asynchronous operations.\n*   **Stack**: Processes synchronous code.\n*   **Queues**: Holds tasks like file reading or network requests.\n*   **The Loop**: Checks if the stack is empty, then pushes the next task from the queue to the stack.\n\n---\n\n## 3️⃣ Streams & Buffers\n\nImagine watching a movie on Netflix. You don't download the whole 2GB file before watching; you watch small \"chunks\". Node.js uses **Streams** to handle large data efficiently without using up all your RAM.\n\n---\n\n## 🧠 Performance Tip\nBecause Node.js is single-threaded, never perform \"Heavy Math\" (like video encoding) on the main thread, or you will freeze the server for everyone!",
+    "questions": [
+        {
+            "question_text": "What is Node.js built on?",
+            "options": [
+                "Python's engine",
+                "Chrome's V8 JavaScript engine",
+                "Mozilla's SpiderMonkey",
+                "Apple's Nitro"
+            ],
+            "correct_answer": 1,
+            "explanation": "Node.js uses the V8 engine to execute JavaScript on the server."
+        },
+        {
+            "question_text": "What does it mean that Node.js is 'Non-blocking I/O'?",
+            "options": [
+                "It can only do one thing at a time",
+                "It doesn't wait for data to be read from disk or network; it continues executing and handles the result via a callback",
+                "It blocks all other users",
+                "It is faster because it skip tasks"
+            ],
+            "correct_answer": 1,
+            "explanation": "This allows Node to handle thousands of concurrent connections on a single thread."
+        },
+        {
+            "question_text": "What is the 'Event Loop'?",
+            "options": [
+                "A circular piece of code",
+                "The mechanism that allows Node to perform non-blocking I/O operations by offloading tasks to the system kernel",
+                "A feature for creating animations",
+                "A type of database"
+            ],
+            "correct_answer": 1,
+            "explanation": "The Event Loop is the heart of Node's concurrency model."
+        },
+        {
+            "question_text": "Which core module is used to work with file paths?",
+            "options": [
+                "fs",
+                "path",
+                "url",
+                "os"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'path' module provides utilities for joining and resolving file system paths."
+        },
+        {
+            "question_text": "What is 'libuv'?",
+            "options": [
+                "A library for ultraviolet light",
+                "A multi-platform support library with a focus on asynchronous I/O that Node uses under the hood",
+                "A new version of JS",
+                "A CSS framework"
+            ],
+            "correct_answer": 1,
+            "explanation": "libuv handles the thread pool and event loop logic in C++."
+        },
+        {
+            "question_text": "What does NPM stand for?",
+            "options": [
+                "Node Package Manager",
+                "New Program Module",
+                "Network Protocol Map",
+                "Node Process Monitor"
+            ],
+            "correct_answer": 0,
+            "explanation": "NPM is the world's largest software registry."
+        },
+        {
+            "question_text": "What is the purpose of 'package.json'?",
+            "options": [
+                "To store image files",
+                "To manage project metadata and dependencies",
+                "To write CSS",
+                "To connect to the database"
+            ],
+            "correct_answer": 1,
+            "explanation": "It lists your project's version, scripts, and libraries."
+        },
+        {
+            "question_text": "What is the difference between `require()` and `import`?",
+            "options": [
+                "There is no difference",
+                "`require()` is CommonJS (older/standard) and `import` is ES Modules (modern standard)",
+                "`import` is faster",
+                "`require()` only works in the browser"
+            ],
+            "correct_answer": 1,
+            "explanation": "Node now supports both, but ES Modules are the future."
+        },
+        {
+            "question_text": "What does the `fs.readFile()` method do?",
+            "options": [
+                "Deletes a file",
+                "Asynchronously reads the entire contents of a file",
+                "Writes text to a file",
+                "Renames a directory"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'fs' (File System) module is core to server-side tasks."
+        },
+        {
+            "question_text": "What is a 'Buffer' in Node.js?",
+            "options": [
+                "A slow internet connection",
+                "A class used to handle raw binary data",
+                "A type of error",
+                "A security feature"
+            ],
+            "correct_answer": 1,
+            "explanation": "Buffers are used to represent sequences of bytes."
+        },
+        {
+            "question_text": "What is the 'Global' object in Node.js (equivalent to 'window' in browsers)?",
+            "options": [
+                "window",
+                "document",
+                "global",
+                "root"
+            ],
+            "correct_answer": 2,
+            "explanation": "The `global` object provides variables that are available everywhere."
+        },
+        {
+            "question_text": "What is the 'process' object?",
+            "options": [
+                "A way to process images",
+                "A global object that provides information about the current Node.js process",
+                "A tool for CPU monitoring",
+                "A hidden file"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `process.env` is used to access environment variables."
+        },
+        {
+            "question_text": "How do you install a dependency as a development tool only (e.g., nodemon)?",
+            "options": [
+                "npm install nodemon",
+                "npm install --save-dev nodemon (or -D)",
+                "npm add nodemon",
+                "npm install -g nodemon"
+            ],
+            "correct_answer": 1,
+            "explanation": "DevDependencies are not installed in production environments."
+        },
+        {
+            "question_text": "What does 'Single Threaded' mean for Node users?",
+            "options": [
+                "Only one person can use the site at a time",
+                "JavaScript execution happens on one main thread, so you should avoid heavy computation (blocking) on it",
+                "It is very slow",
+                "It doesn't use the CPU"
+            ],
+            "correct_answer": 1,
+            "explanation": "If the main thread is blocked, the server becomes unresponsive."
+        },
+        {
+            "question_text": "What is a 'Stream' in Node.js?",
+            "options": [
+                "A video file",
+                "An interface for reading or writing data continuously (in pieces) rather than all at once",
+                "A large array",
+                "A type of database connection"
+            ],
+            "correct_answer": 1,
+            "explanation": "Streams allow you to handle files larger than available RAM."
+        }
+    ]
+}

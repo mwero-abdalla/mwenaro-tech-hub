@@ -1,0 +1,182 @@
+{
+    "title": "Optimistic UI Patterns",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=jo_B4LTHi3I",
+    "content": "## ⚡ The Illusion of Speed\n\nUsers expect instant feedback. Waiting for a database to save before showing a \"Success\" message feels slow. **Optimistic UI** solves this by assuming the request will succeed.\n\n---\n\n## 1️⃣ How it Works\n\n1.  User clicks \"Like\".\n2.  UI **immediately** updates to show the Liked state.\n3.  The request is sent to the server in the background.\n4.  **If it succeeds**: Great! No further change needed.\n5.  **If it fails**: The UI \"rolls back\" to the previous state and shows an error message.\n\n---\n\n## 2️⃣ State Sync & Stale Data\n\nCaching libraries like **TanStack Query (React Query)** handle this automatically. They manage the \"Server State\" and ensure your UI always matches what's in the database without unnecessary loading spinners.\n\n---\n\n## 3️⃣ Retry Strategies\n\nIf a network glitch happens, don't just give up. Implement **Exponential Backoff**: retry the request after 1 second, then after 2 seconds, then 4. This makes your app feel robust even on poor hotel Wi-Fi.",
+    "questions": [
+        {
+            "question_text": "What is the main goal of an Optimistic UI update?",
+            "options": [
+                "To save database space",
+                "To provide instant feedback to the user before the server responds",
+                "To encrypt user data",
+                "To prevent hackers from changing state"
+            ],
+            "correct_answer": 1,
+            "explanation": "By updating the UI immediately, the app feels significantly faster and more responsive to the user."
+        },
+        {
+            "question_text": "What is 'Optimistic UI'?",
+            "options": [
+                "A UI that is always happy",
+                "Updating the UI immediately as if an action succeeded, before the server confirms it",
+                "A fast-loading website",
+                "A UI with bright colors"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes applications feel instantaneous to the user (e.g., liking a post on Instagram)."
+        },
+        {
+            "question_text": "What is the biggest challenge with Optimistic UI?",
+            "options": [
+                "It is hard to write CSS for",
+                "Handling errors; if the server request fails, you must 'roll back' the UI state",
+                "It uses too much memory",
+                "Users don't like it"
+            ],
+            "correct_answer": 1,
+            "explanation": "You must gracefully undo the change if the backend returns an error."
+        },
+        {
+            "question_text": "What is 'Race Condition' in data fetching?",
+            "options": [
+                "A competition between developers",
+                "When multiple requests are made and the older one finishes after the newer one, overwriting the data",
+                "A fast server",
+                "A loop that won't stop"
+            ],
+            "correct_answer": 1,
+            "explanation": "This can lead to 'flickering' or incorrect data being displayed."
+        },
+        {
+            "question_text": "What is 'Skeleton Screen'?",
+            "options": [
+                "A scary design",
+                "A placeholder version of the UI (usually gray boxes) shown while content is loading",
+                "The basic HTML structure",
+                "A debugging tool"
+            ],
+            "correct_answer": 1,
+            "explanation": "Skeletons feel better than spinners because they map to the final layout."
+        },
+        {
+            "question_text": "How do you 'Rollback' an optimistic update in React?",
+            "options": [
+                "Refreshing the page",
+                "Saving the 'previous state' before the change and restoring it in the .catch() block of the API call",
+                "Asking the user to click undo",
+                "Deleting the code"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `setCount(prev => prev + 1); ... .catch(() => setCount(prev => prev - 1));`."
+        },
+        {
+            "question_text": "What is 'Polling'?",
+            "options": [
+                "A type of voting",
+                "Automatically refetching data from the server at set intervals (e.g., every 5 seconds)",
+                "Asking the user for input",
+                "A slow request"
+            ],
+            "correct_answer": 1,
+            "explanation": "Useful for simple real-time updates without using WebSockets."
+        },
+        {
+            "question_text": "What is 'SWR' or 'React Query' used for?",
+            "options": [
+                "Styling buttons",
+                "Managing server state (caching, refetching, optimistic updates) in React apps",
+                "Building databases",
+                "Handling animations"
+            ],
+            "correct_answer": 1,
+            "explanation": "These libraries handle the complex logic of data synchronization for you."
+        },
+        {
+            "question_text": "What is a 'Stale' state?",
+            "options": [
+                "Old bread",
+                "Data that is shown on the UI but might be different from what's currently on the server",
+                "A bug",
+                "A secure state"
+            ],
+            "correct_answer": 1,
+            "explanation": "Great apps show 'stale' data initially while fetching 'fresh' data in the background."
+        },
+        {
+            "question_text": "What is 'Error Boundary' in React?",
+            "options": [
+                "A wall for code",
+                "A special component that catches JavaScript errors anywhere in their child component tree",
+                "A security firewall",
+                "A type of input validation"
+            ],
+            "correct_answer": 1,
+            "explanation": "Error boundaries prevent the whole app from crashing if one component fails."
+        },
+        {
+            "question_text": "What is the difference between 'Data Persistence' and 'State Persistence'?",
+            "options": [
+                "They are the same",
+                "Data persistence is saving to the DB; state persistence is keeping UI state (filter, scroll pos) during session",
+                "State is for backend",
+                "Data is for front-end"
+            ],
+            "correct_answer": 1,
+            "explanation": "Users appreciate when an app 'remembers' their current tab or filter after a refresh."
+        },
+        {
+            "question_text": "Which HTTP status code signifies a request was accepted but is still processing (useful for optimistic UI)?",
+            "options": [
+                "200 OK",
+                "201 Created",
+                "202 Accepted",
+                "204 No Content"
+            ],
+            "correct_answer": 2,
+            "explanation": "202 is the 'Optimistic' response from a server."
+        },
+        {
+            "question_text": "Why do we avoid 'Prop Drilling' for global data like 'Theming'?",
+            "options": [
+                "It's too fast",
+                "It makes the code messy and components hard to reuse since every middleman must pass the prop",
+                "It uses too much CSS",
+                "It's against the rules"
+            ],
+            "correct_answer": 1,
+            "explanation": "Use Context instead."
+        },
+        {
+            "question_text": "What is 'Throttling' in the context of UI interactions?",
+            "options": [
+                "Adding more power",
+                "Ensuring a function only runs once in a certain time period (e.g., clicking a 'Submit' button)",
+                "Deleting data",
+                "A slow internet speed"
+            ],
+            "correct_answer": 1,
+            "explanation": "Prevents accidental double-clicks or heavy re-renders during window resizing."
+        },
+        {
+            "question_text": "What is the 'React DevTools Profiler' used for?",
+            "options": [
+                "Editing code",
+                "Monitoring component performance and identifying why a component re-rendered",
+                "Writing tests",
+                "Checking network speed"
+            ],
+            "correct_answer": 1,
+            "explanation": "Essential for fixing 'Laggy' UIs."
+        },
+        {
+            "question_text": "True or False: Most users prefer a slow app that is never wrong over a 'buggy-feeling' fast app.",
+            "options": [
+                "False (Perceived performance is king)",
+                "True"
+            ],
+            "correct_answer": 0,
+            "explanation": "Users perceive 'fast' as 'good'. Optimistic UI provides that 'fast' feeling even on slow networks."
+        }
+    ]
+}

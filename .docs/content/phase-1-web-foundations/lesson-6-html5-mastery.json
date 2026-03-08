@@ -1,0 +1,63 @@
+{
+    "title": "HTML5 Mastery",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=kUMe1FH4CHE",
+    "content": "## 🏗️ The Skeleton of the Web\n\nHTML provides structure. Modern HTML (HTML5) focuses on **Semantics**—meaning over appearance.\n\n---\n\n## 1️⃣ Semantic Tags: Why they matter\n\n*   `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>`\n*   **SEO**: Search engines use these to rank your page.\n*   **Accessibility**: Screen readers for visually impaired users rely on correct tagging.\n\n---\n\n## 2️⃣ Forms & Data Input\n\n`<form>`, `<input>`, `<label>`, `<select>`, `<textarea>`.\n\n*   **Attributes**: `placeholder`, `type=\"email\"`, `required`, `pattern`, `value`.\n*   **Validation**: Don't rely solely on appearance; use the right `type` to ensure the browser handles input correctly.\n\n---\n\n## 3️⃣ Media & Embeds\n\n*   `<img>`: For images (Always include `alt=\"...\"`!).\n*   `<video>`, `<audio>`: Native media players.\n*   `<iframe>`: Embedding content from other sites (like YouTube).\n\n---\n\n## 💡 Key Rule\nNever use `div` and `span` for everything. Use semantic tags wherever possible to make your code professional.",
+    "questions": [
+        {
+            "question_text": "Which HTML5 element is used to specify a footer for a document or section?",
+            "options": [
+                "<bottom>",
+                "<section-footer>",
+                "<footer>",
+                "<end>"
+            ],
+            "correct_answer": 2,
+            "explanation": "The <footer> element is a semantic tag used to define a footer for its nearest sectioning content."
+        },
+        {
+            "question_text": "What does the <main> tag represent in an HTML document?",
+            "options": [
+                "The navigation menu",
+                "The sidebar",
+                "The dominant content of the <body>",
+                "The header of the page"
+            ],
+            "correct_answer": 2,
+            "explanation": "The <main> element should contain content that is unique to that document and not repeated across pages."
+        },
+        {
+            "question_text": "Which attribute is used to provide alternative text for an image if it cannot be displayed?",
+            "options": [
+                "title",
+                "src",
+                "alt",
+                "link"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'alt' attribute is crucial for accessibility (screen readers) and SEO."
+        },
+        {
+            "question_text": "What is the purpose of the <nav> element?",
+            "options": [
+                "To create a dropdown menu",
+                "To define a set of navigation links",
+                "To link to external websites only",
+                "To display a progress bar"
+            ],
+            "correct_answer": 1,
+            "explanation": "The <nav> element is intended for major blocks of navigation links."
+        },
+        {
+            "question_text": "Which tag is used to define an unordered list in HTML5?",
+            "options": [
+                "<ol>",
+                "<li>",
+                "<ul>",
+                "<list>"
+            ],
+            "correct_answer": 2,
+            "explanation": "<ul> stands for Unordered List, typically displayed with bullet points."
+        }
+    ]
+}

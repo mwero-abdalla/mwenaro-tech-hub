@@ -1,0 +1,173 @@
+{
+    "title": "Forms & Validation",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=ey7EezsLMS8",
+    "content": "## 📝 Handling User Input\n\nForms are the bridge between your content and your database. In React, we prefer **Controlled Components**.\n\n---\n\n## 1️⃣ Controlled Components\n\nA form element whose value is controlled by React state. \n\n```javascript\nconst [email, setEmail] = useState(\"\");\n\n<input \n  value={email} \n  onChange={(e) => setEmail(e.target.value)} \n/>\n```\n\n---\n\n## 2️⃣ Schema Validation with Zod\n\nInstead of writing 20 `if` statements for validation, we use a Schema validation library like **Zod**.\n\n```javascript\nconst userSchema = z.object({\n  email: z.string().email(\"Invalid email\"),\n  password: z.string().min(8, \"Too short\")\n});\n```\n\n---\n\n## 3️⃣ Form Libraries: Why use them?\n\nSetting up complex forms (validation, submission state, error display) is tedious. Professional engineers often use **React Hook Form** to simplify the process and improve performance.\n\n---\n\n## 🛡️ Always Validate Twice\nRemember: Frontend validation is for **User Experience** (showing errors fast). Backend validation is for **Security**.",
+    "questions": [
+        {
+            "question_text": "What is a 'Controlled Component' in React forms?",
+            "options": [
+                "A form that is protected by a password",
+                "An input whose value is synchronized with the React state",
+                "A form that cannot be edited",
+                "A component that uses external libraries only"
+            ],
+            "correct_answer": 1,
+            "explanation": "In controlled components, the React state is the 'single source of truth' for the input value."
+        },
+        {
+            "question_text": "What is an 'Uncontrolled Component'?",
+            "options": [
+                "A component that is broken",
+                "An input that maintains its own internal state in the DOM, accessed via 'ref'",
+                "A component with no logic",
+                "A component that re-renders too much"
+            ],
+            "correct_answer": 1,
+            "explanation": "Uncontrolled components are often used for file inputs or when integrating with non-React libraries."
+        },
+        {
+            "question_text": "Which attribute do you use to bind a state variable to an <input>?",
+            "options": [
+                "text",
+                "content",
+                "value",
+                "placeholder"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'value' prop ensures the UI always shows what's in the state."
+        },
+        {
+            "question_text": "Which event is used to capture user typing in an input field?",
+            "options": [
+                "onClick",
+                "onBlur",
+                "onChange",
+                "onFocus"
+            ],
+            "correct_answer": 2,
+            "explanation": "onChange fires on every keystroke, allowing state to update in real-time."
+        },
+        {
+            "question_text": "How do you handle multiple form fields with a single handler function?",
+            "options": [
+                "You can't; you need one function per input",
+                "By using the 'name' attribute on inputs and accessing `e.target.name`",
+                "By using unique IDs",
+                "By using different hooks"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `setFormData({ ...formData, [e.target.name]: e.target.value })`."
+        },
+        {
+            "question_text": "What is the primary library used for complex form management in the React ecosystem?",
+            "options": [
+                "React Redux",
+                "React Hook Form",
+                "Formik",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "React Hook Form and Formik are the two most popular choices for handling validation and submission."
+        },
+        {
+            "question_text": "What is 'Client-Side Validation'?",
+            "options": [
+                "Validation that happens in the database",
+                "Instant feedback given to the user in the browser before data is sent to the server",
+                "Validation performed by the customer service",
+		"Hashing passwords"
+            ],
+            "correct_answer": 1,
+            "explanation": "This improves UX by preventing unnecessary server requests for invalid data."
+        },
+        {
+            "question_text": "Which library is commonly used for schema-based validation in React?",
+            "options": [
+                "Zod",
+                "Yup",
+                "Joi",
+                "All of the above"
+            ],
+            "correct_answer": 3,
+            "explanation": "These libraries allow you to define rules (e.g., email format, min length) outside the component."
+        },
+        {
+            "question_text": "How do you prevent the page from reloading when a form is submitted?",
+            "options": [
+                "return false",
+                "e.stopPropagation()",
+                "e.preventDefault()",
+                "form.noReload()"
+            ],
+            "correct_answer": 2,
+            "explanation": "This is the first step in handling form submission with JavaScript."
+        },
+        {
+            "question_text": "What is a 'Debounced' input?",
+            "options": [
+                "An input that is disabled",
+                "An input that waits for a user to stop typing for a set time before triggering an action (like a search)",
+                "An input with a bounce animation",
+                "A secure input"
+            ],
+            "correct_answer": 1,
+            "explanation": "Debouncing prevents performance issues when running expensive tasks on every keystroke."
+        },
+        {
+            "question_text": "Which attribute provides the text for accessibility readers on a form input?",
+            "options": [
+                "help",
+                "title",
+                "aria-label",
+                "label-tag"
+            ],
+            "correct_answer": 2,
+            "explanation": "ARIA attributes make forms usable for everyone."
+        },
+        {
+            "question_text": "In React Hook Form, what does the 'register' function do?",
+            "options": [
+                "Signs the user up for a newsletter",
+                "Connects the input to the form state and validation rules",
+                "Clears the form",
+                "Saves data to a file"
+            ],
+            "correct_answer": 1,
+            "explanation": "It's the primary way to track inputs in that library."
+        },
+        {
+            "question_text": "What is the purpose of 'Form Submission State' (e.g., isSubmitting)?",
+            "options": [
+                "To show a loading spinner and disable the submit button during the API call",
+                "To tell the user their internet is slow",
+                "To encrypt the data",
+                "To clear the input"
+            ],
+            "correct_answer": 0,
+            "explanation": "This prevents 'Double Submission' bugs."
+        },
+        {
+            "question_text": "How do you reset a controlled form?",
+            "options": [
+                "form.reset()",
+                "Setting the state object back to its initial values",
+                "Refreshing the page",
+                "Deleting the component"
+            ],
+            "correct_answer": 1,
+            "explanation": "Because state is the source of truth, resetting it clears the UI."
+        },
+        {
+            "question_text": "What is 'Sanitization' in forms?",
+            "options": [
+                "Washing the keyboard",
+                "Cleaning user input to remove harmful scripts or characters before processing",
+                "Deleting old data",
+                "Applying CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Crucial for preventing XSS attacks."
+        }
+    ]
+}

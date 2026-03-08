@@ -1,0 +1,182 @@
+{
+    "title": "React with TypeScript",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=BCg4U1Fz48&t=1s",
+    "content": "## ⚛️ The Type-Safe Component\n\nNow that you know TypeScript, let's use it to make our React components indestructible. This is the industry standard for modern frontend engineering.\n\n---\n\n## 1️⃣ Typing Props\n\nInstead of guessing what props a component needs, we define an `interface` right above the component.\n\n```typescript\ninterface ButtonProps {\n  label: string;\n  primary?: boolean; // Optional\n}\n\nconst MyButton = ({ label, primary }: ButtonProps) => { ... }\n```\n\n---\n\n## 2️⃣ Typing Hooks\n\n*   **useState**: Usually inferred, but sometimes needed: `useState<User | null>(null)`.\n*   **useRef**: Very important for DOM elements: `useRef<HTMLInputElement>(null)`.\n\n---\n\n## 3️⃣ Event Typing\n\nWhen handling a form submission or a mouse click, you must tell TS what kind of event it is (e.g., `React.ChangeEvent<HTMLInputElement>`). This gives you full autocomplete for properties like `e.target.value`.\n\n---\n\n## 🧠 Why This Matters\nIn large teams, you will often use components written by others. TypeScript acts as **Self-Documenting Code**—you know exactly what data a component expects just by looking at it.",
+    "questions": [
+        {
+            "question_text": "What is the best way to define the shape of props for a React component in TS?",
+            "options": [
+                "Using console.log",
+                "Using an Interface or Type",
+                "Using PropTypes library",
+                "The browser handles it automatically"
+            ],
+            "correct_answer": 1,
+            "explanation": "Interfaces provide a clear contract for what data the component needs, and the editor will highlight errors if you forget a prop."
+        },
+        {
+            "question_text": "What is the recommended type for a React Functional Component?",
+            "options": [
+                "Component",
+                "React.FC (or React.FunctionComponent)",
+                "function",
+                "JSX.Element"
+            ],
+            "correct_answer": 1,
+            "explanation": "While optional, React.FC provides automatic typing for 'children' and return types."
+        },
+        {
+            "question_text": "How do you type the Props of a component in TypeScript?",
+            "options": [
+                "By using an interface or type and passing it to the component generic",
+                "By using comments",
+                "It's automatic, no work needed",
+                "Using the 'props' keyword"
+            ],
+            "correct_answer": 0,
+            "explanation": "Example: `const MyComp: React.FC<MyProps> = (...) => ...`."
+        },
+        {
+            "question_text": "What is the correct type for a click event handler on a button?",
+            "options": [
+                "onClick: Function",
+                "onClick: React.MouseEvent<HTMLButtonElement>",
+                "onClick: click",
+                "onClick: Event"
+            ],
+            "correct_answer": 1,
+            "explanation": "TS provides specific event types for different DOM elements."
+        },
+        {
+            "question_text": "What type should you use for the `onChange` event of a text input?",
+            "options": [
+                "React.ChangeEvent<HTMLInputElement>",
+                "React.InputEvent",
+                "string",
+                "Event"
+            ],
+            "correct_answer": 0,
+            "explanation": "This allows you to safely access `e.target.value`."
+        },
+        {
+            "question_text": "How do you type `useState` for an array of Users?",
+            "options": [
+                "useState<User>()",
+                "useState<User[]>()",
+                "useState([])",
+                "useState(User)"
+            ],
+            "correct_answer": 1,
+            "explanation": "Generics in useState ensure that you can only push 'User' objects into the array."
+        },
+        {
+            "question_text": "Which type describes children that could be text, elements, or arrays of nodes?",
+            "options": [
+                "JSX.Element",
+                "React.ReactNode",
+                "HTMLElement",
+                "String"
+            ],
+            "correct_answer": 1,
+            "explanation": "ReactNode is the most comprehensive type for anything React can render."
+        },
+        {
+            "question_text": "What type is returned by `useRef<HTMLDivElement>(null)`?",
+            "options": [
+                "HTMLDivElement",
+                "React.RefObject<HTMLDivElement>",
+                "null",
+                "div"
+            ],
+            "correct_answer": 1,
+            "explanation": "This allows you to access `ref.current` with type safety."
+        },
+        {
+            "question_text": "True or False: TypeScript can mostly infer the types for `useEffect` automatically.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 0,
+            "explanation": "Because useEffect doesn't return anything (except cleanup), inference works perfectly."
+        },
+        {
+            "question_text": "What is the benefit of typing your Redux or Context state?",
+            "options": [
+                "Autocomplete for state properties and preventing use of non-existent actions",
+                "Making the code shorter",
+                "Encrypting the store",
+                "It makes it global"
+            ],
+            "correct_answer": 0,
+            "explanation": "This prevents 'forgotten property' bugs in large apps."
+        },
+        {
+            "question_text": "How do you handle 'optional' props in a typed React component?",
+            "options": [
+                "You can't have them",
+                "Using the '?' in the Interface definition",
+                "Setting the value to null",
+                "Asking the parent component"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `interface Props { title: string; subtitle?: string; }`."
+        },
+        {
+            "question_text": "What is the best way to type a Style object passed as a prop?",
+            "options": [
+                "any",
+                "React.CSSProperties",
+                "Style",
+                "css"
+            ],
+            "correct_answer": 1,
+            "explanation": "This provides autocomplete for all valid CSS keys like backgroundColor."
+        },
+        {
+            "question_text": "What happens if you try to pass the wrong prop type to a TS-enabled React component?",
+            "options": [
+                "It works anyway",
+                "VS Code shows a red underline and the build will fail",
+                "The browser shows a warning",
+                "The component is hidden"
+            ],
+            "correct_answer": 1,
+            "explanation": "This is the 'safety net' of TypeScript."
+        },
+        {
+            "question_text": "Which Hook is specifically useful for providing types to a context value?",
+            "options": [
+                "useContext",
+                "createContext<Type | null>(null)",
+                "useProvider",
+                "useTS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Typing the context at creation is key to safe consumption later."
+        },
+        {
+            "question_text": "Is it possible to use TypeScript with React Class Components?",
+            "options": [
+                "Yes, by passing <Props, State> generics to the class",
+                "No, only for functions",
+                "Yes, but only for props",
+                "Only with a separate library"
+            ],
+            "correct_answer": 0,
+            "explanation": "TS has supported classes since the beginning."
+        },
+        {
+            "question_text": "What is the purpose of `.tsx` file extension?",
+            "options": [
+                "To show it's a Turbo file",
+                "To allow JSX syntax inside a TypeScript file",
+                "To compress the code",
+                "To mark it as a test file"
+            ],
+            "correct_answer": 1,
+            "explanation": "Standard .ts files don't allow angle brackets for JSX."
+        }
+    ]
+}

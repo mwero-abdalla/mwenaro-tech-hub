@@ -1,0 +1,173 @@
+{
+    "title": "Database Design (MongoDB)",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=EE8ZT0J9S2M",
+    "content": "## 🏛️ Architecting Your Data\n\nIn the MERN stack, we use **MongoDB**, a NoSQL database. Instead of tables and rows, it uses **Collections** and **Documents** (which look like JSON).\n\n---\n\n## 1️⃣ Mongoose: The ODM\n\nWe use **Mongoose** to give our database \"structure\" (Schemas). It ensures that every document fits a specific format before it is saved.\n\n```javascript\nconst userSchema = new mongoose.Schema({\n  username: { type: String, required: true, unique: true },\n  email: String\n});\n```\n\n---\n\n## 2️⃣ Indexing: Scaling for Speed\n\nIf your database has 1 million users, searching for an email takes time. **Indexing** creates a \"lookup list\" so the database can find data instantly.\n\n---\n\n## 3️⃣ Aggregations: Advanced Math\n\nSometimes you need to do more than just find a document—you need to calculate things (e.g., \"Calculate the average score for all students\"). For this, we use the **Aggregation Pipeline**.\n\n---\n\n## 🧠 Schema Design Rule\nIn MongoDB, \"Data that is used together should be stored together.\" Favor embedding (nesting) over referencing (like SQL joins) when appropriate.",
+    "questions": [
+        {
+            "question_text": "What is the main difference between SQL and NoSQL databases?",
+            "options": [
+                "SQL is for web, NoSQL is for mobile",
+                "SQL is relational (structured, tables); NoSQL is non-relational (document, key-value)",
+                "NoSQL is faster for everything",
+                "SQL only works with Java"
+            ],
+            "correct_answer": 1,
+            "explanation": "Relational databases use predefined schemas; NoSQL is schema-less/flexible."
+        },
+        {
+            "question_text": "What is MongoDB?",
+            "options": [
+                "A relational database",
+                "A document-oriented NoSQL database",
+                "A new coding language",
+                "A search engine"
+            ],
+            "correct_answer": 1,
+            "explanation": "MongoDB stores data in JSON-like documents."
+        },
+        {
+            "question_text": "In relational databases, what is a 'Primary Key'?",
+            "options": [
+                "The password for the DB",
+                "A unique identifier for each record in a table",
+                "A column that stores text",
+                "The first column"
+            ],
+            "correct_answer": 1,
+            "explanation": "IDs are typically primary keys."
+        },
+        {
+            "question_text": "What is a 'Foreign Key'?",
+            "options": [
+                "A key from another country",
+                "A field in one table that links to the Primary Key of another table (creating a relationship)",
+                "A secret key",
+                "A key used for encryption"
+            ],
+            "correct_answer": 1,
+            "explanation": "This establishes relationships like 'User HAS MANY Posts'."
+        },
+        {
+            "question_text": "What does CRUD stand for?",
+            "options": [
+                "Create, Read, Update, Delete",
+                "Calculate, Reset, Use, Debug",
+                "Connect, Run, Upload, Deploy",
+                "Careful, Rapid, Universal, Design"
+            ],
+            "correct_answer": 0,
+            "explanation": "The four basic operations of persistent storage."
+        },
+        {
+            "question_text": "In MongoDB, what is a 'Collection' equivalent to in SQL?",
+            "options": [
+                "A database",
+                "A table",
+                "A row",
+                "A column"
+            ],
+            "correct_answer": 1,
+            "explanation": "Documents live inside collections; rows live inside tables."
+        },
+        {
+            "question_text": "What is 'Normalization' in database design?",
+            "options": [
+                "Making the data look normal",
+                "Optimizing the structure to reduce data redundancy and improve integrity",
+                "Deleting old data",
+                "Enabling search"
+            ],
+            "correct_answer": 1,
+            "explanation": "Normalization helps avoid data duplication across multiple tables."
+        },
+        {
+            "question_text": "What is an 'Index' in a database?",
+            "options": [
+                "A table of contents",
+                "A data structure that improves the speed of data retrieval (at the cost of slower writes)",
+                "A list of all users",
+                "An external backup"
+            ],
+            "correct_answer": 1,
+            "explanation": "Indices are essential for performance on large datasets."
+        },
+        {
+            "question_text": "What is an 'Acid' transaction?",
+            "options": [
+                "A dangerous chemical",
+                "A set of properties (Atomicity, Consistency, Isolation, Durability) that guarantee database reliability",
+                "A fast way to delete data",
+                "A type of encryption"
+            ],
+            "correct_answer": 1,
+            "explanation": "Transactions ensure that either all steps succeed or none do."
+        },
+        {
+            "question_text": "What is an 'ORM' or 'ODM'?",
+            "options": [
+                "Old Data Management",
+                "Object-Relational/Document Mapper; a tool to interact with the DB using your programming language objects instead of raw queries",
+                "A type of computer server",
+                "A security protocol"
+            ],
+            "correct_answer": 1,
+            "explanation": "Mongoose (ODM) and Prisma (ORM) are popular choices."
+        },
+        {
+            "question_text": "What is a 'Schema'?",
+            "options": [
+                "A plan to hack the DB",
+                "The formal definition of the structure of the data (fields, types, constraints)",
+                "The actual data itself",
+                "A backup file"
+            ],
+            "correct_answer": 1,
+            "explanation": "Think of it as a 'blueprint' for your data."
+        },
+        {
+            "question_text": "What is a 'One-to-Many' relationship?",
+            "options": [
+                "One person has many accounts",
+                "Many people have one account",
+                "One person has one account",
+                "Everyone has everything"
+            ],
+            "correct_answer": 0,
+            "explanation": "A common example: One Author has many Books."
+        },
+        {
+            "question_text": "What is 'Denormalization'?",
+            "options": [
+                "A mistake in design",
+                "Purposefully adding redundant data to improve read performance (often used in NoSQL)",
+                "Deleting the schema",
+                "Changing the DB name"
+            ],
+            "correct_answer": 1,
+            "explanation": "It trades space for speed in specific use cases."
+        },
+        {
+            "question_text": "Which property ensures a field must be filled in?",
+            "options": [
+                "unique",
+                "required",
+                "default",
+                "indexed"
+            ],
+            "correct_answer": 1,
+            "explanation": "Setting 'required: true' prevents saving incomplete data."
+        },
+        {
+            "question_text": "What is a 'Database Migration'?",
+            "options": [
+                "Moving the DB to a new city",
+                "Controlled version management of the database schema (updating tables/columns safely)",
+                "Backing up data",
+                "Deleting the DB"
+            ],
+            "correct_answer": 1,
+            "explanation": "Migrations track how your DB structure changes over time."
+        }
+    ]
+}

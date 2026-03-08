@@ -1,0 +1,184 @@
+{
+    "title": "JWT Strategy & Token Rotation",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=mbsmsi7l3r4",
+    "content": "## 🎫 JSON Web Tokens (JWT)\n\nJWT is an industry-standard for secure communication between a client and server. It allows the server to verify the user without checking the database every single time.\n\n---\n\n## 1️⃣ Structure of a JWT\n1.  **Header**: Algorithm used.\n2.  **Payload**: User data (e.g., `userId: 123`).\n3.  **Signature**: The cryptographic seal that proves the token hasn't been tampered with.\n\n---\n\n## 2️⃣ Access vs. Refresh Tokens\n\n*   **Access Token**: Short-lived (e.g., 15 minutes). Used to access data.\n*   **Refresh Token**: Long-lived (e.g., 7 days). Used to get a new Access Token without logging in again.\n\n---\n\n## 3️⃣ Token Rotation: The Security Shield\n\nIf a hacker steals a Refresh Token, they could stay logged in forever. **Token Rotation** detects this: if an old Refresh Token is used, the server detects a \"reuse\" and invalidates ALL tokens for that user.\n\n---\n\n## 🛡️ Storage Best Practice\nNever store JWTs in `localStorage`. They are vulnerable to XSS attacks. Instead, use **httpOnly Cookies** which are invisible to JavaScript.",
+    "questions": [
+        {
+            "question_text": "Which part of a JWT ensures that the data inside hasn't been changed by a hacker?",
+            "options": [
+                "The Payload",
+                "The Header",
+                "The Signature",
+                "The Expiration Date"
+            ],
+            "correct_answer": 2,
+            "explanation": "The signature is created by hashing the header and payload with a secret key. If the payload changes, the signature will no longer match."
+        },
+        {
+            "question_text": "What does JWT stand for?",
+            "options": [
+                "Java Web Token",
+                "JSON Web Token",
+                "Just Write Text",
+                "Joint Web Technique"
+            ],
+            "correct_answer": 1,
+            "explanation": "JWT is an open standard (RFC 7519) for securely transmitting information as a JSON object."
+        },
+        {
+            "question_text": "What are the three parts of a JWT?",
+            "options": [
+                "Start, Middle, End",
+                "Header, Payload, Signature",
+                "User, Pass, Secret",
+                "ID, Time, Data"
+            ],
+            "correct_answer": 1,
+            "explanation": "A JWT is a string separated by dots (xxxxx.yyyyy.zzzzz)."
+        },
+        {
+            "question_text": "What is contained in the 'Header'?",
+            "options": [
+                "User password",
+                "Token type and hashing algorithm (e.g., HS256)",
+                "User profile picture",
+                "The secret key"
+            ],
+            "correct_answer": 1,
+            "explanation": "It tells the receiver how to decode/verify the token."
+        },
+        {
+            "question_text": "What is the 'Payload'?",
+            "options": [
+                "The encrypted part",
+                "The actual data (claims) about the user/entity, like user_id and email",
+                "The signature",
+                "A list of errors"
+            ],
+            "correct_answer": 1,
+            "explanation": "The payload is Base64Url encoded, so anyone can read it (don't put passwords here!)."
+        },
+        {
+            "question_text": "What is the 'Signature' used for?",
+            "options": [
+                "To identify the user",
+                "To verify that the sender of the JWT is who it says it is and to ensure the message wasn't changed",
+                "To login to Google",
+                "For decoration"
+            ],
+            "correct_answer": 1,
+            "explanation": "The signature is created by mixing the header, payload, and a secret key."
+        },
+        {
+            "question_text": "Where is a JWT usually stored on the client-side?",
+            "options": [
+                "The Database",
+                "LocalStorage or an HttpOnly Cookie",
+                "The Redux store",
+                "In a text file"
+            ],
+            "correct_answer": 1,
+            "explanation": "HttpOnly cookies are more secure against XSS attacks."
+        },
+        {
+            "question_text": "How do you send a JWT to the server in an API request?",
+            "options": [
+                "In the URL: ?token=...",
+                "In the Authorization header: 'Bearer <token>'",
+                "In the body: { token: '...' }",
+                "By fax"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'Bearer' scheme is the industry standard for sending JWTs."
+        },
+        {
+            "question_text": "What does a 'Stateless' server mean in the context of JWT?",
+            "options": [
+                "The server has no power",
+                "The server doesn't need to look up session data in a DB for every request; the token has all the info it needs",
+                "The server resets every hour",
+                "The server only works with strings"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes JWT-based systems very easy to scale."
+        },
+        {
+            "question_text": "What is 'Expiration' (exp) in a JWT?",
+            "options": [
+                "When the token stops working",
+                "A timestamp after which the token is invalid and the user must log in again",
+                "The user's birthday",
+                "How fast the user is"
+            ],
+            "correct_answer": 1,
+            "explanation": "Tokens should have short lifespans for security."
+        },
+        {
+            "question_text": "What is a 'Refresh Token'?",
+            "options": [
+                "A token to refresh the page",
+                "A long-lived token used to get a new short-lived Access Token without asking for the password",
+                "A button on the UI",
+                "A security hole"
+            ],
+            "correct_answer": 1,
+            "explanation": "Refresh tokens allow users to stay logged in while keeping access tokens highly secure."
+        },
+        {
+            "question_text": "Can a user change the data in their JWT Payload?",
+            "options": [
+                "Yes, very easily",
+                "No; if they change a single character, the Signature will no longer match and the server will reject it",
+                "Only if they are an admin",
+                "Yes, but only once"
+            ],
+            "correct_answer": 1,
+            "explanation": "The signature guarantees the integrity of the data."
+        },
+        {
+            "question_text": "Is a JWT encrypted by default?",
+            "options": [
+                "Yes, it is hidden",
+                "No; it is signed and encoded. Anyone with the token can see the payload data by decoding from Base64",
+                "Only for admins",
+                "Only the password"
+            ],
+            "correct_answer": 1,
+            "explanation": "JWT is for *integrity*, not *secrecy*. Use JWE (JSON Web Encryption) if you need secrecy."
+        },
+        {
+            "question_text": "Which library is standard for working with JWT in Node.js?",
+            "options": [
+                "jsonwebtoken",
+                "jwt-node",
+                "auth-token",
+                "secure-json"
+            ],
+            "correct_answer": 0,
+            "explanation": "The 'jsonwebtoken' package is widely used and provides sign() and verify() methods."
+        },
+        {
+            "question_text": "What happens if you lose your JWT Secret Key?",
+            "options": [
+                "Nothing",
+                "You cannot verify any existing tokens, effectively logging out all users simultaneously",
+                "The site runs faster",
+                "The DB is deleted"
+            ],
+            "correct_answer": 1,
+            "explanation": "The secret is the 'key to the castle'. Keep it safe!"
+        },
+        {
+            "question_text": "What is a 'Public Key / Private Key' (Asymmetric) JWT strategy?",
+            "options": [
+                "Using two tokens",
+                "The auth server signs with a private key, and other services verify using a public key without needing the secret",
+                "Giving the secret to everyone",
+                "Only for banks"
+            ],
+            "correct_answer": 1,
+            "explanation": "This is great for Microservices where you don't want to share the secret everywhere."
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+{
+    "title": "DOM Manipulation",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=0ikeXp790p4",
+    "content": "## 🌳 The Document Object Model\n\nThe DOM is how browsers represent your HTML. JavaScript can reach into this tree and change anything in real-time.\n\n---\n\n## 1️⃣ Selecting Elements\n\n*   `document.getElementById('id')`: Fastest lookup.\n*   `document.querySelector('.class')`: Most flexible. Uses CSS selectors.\n*   `document.querySelectorAll('...')`: Returns a list (NodeList) of all matching elements.\n\n---\n\n## 2️⃣ Modifying Content & Styles\n\n```javascript\nconst title = document.querySelector('h1');\ntitle.textContent = \"Hello World!\";\ntitle.style.color = \"blue\";\ntitle.classList.add('active');\n```\n\n---\n\n## 3️⃣ Event Listeners: The Interaction\n\nWe don't use `onclick=\"...\"` in HTML anymore. We attach listeners in JS:\n\n```javascript\nconst button = document.querySelector('#btn');\nbutton.addEventListener('click', (event) => {\n  console.log(\"Clicked!\");\n});\n```\n\n---\n\n## 🚀 Why This Matters\nWhile React handles much of this for us later, understanding the native DOM is what separates a \"component-adder\" from a \"software engineer.\"",
+    "questions": [
+        {
+            "question_text": "What is the modern way to attach a click event to an element in JS?",
+            "options": [
+                "<button onclick='...'>",
+                "button.click(function() { ... })",
+                "button.addEventListener('click', () => { ... })",
+                "document.click(button)"
+            ],
+            "correct_answer": 2,
+            "explanation": "addEventListener is the modern standard, keeping your HTML clean and allowing multiple listeners on one element."
+        },
+        {
+            "question_text": "What does DOM stand for?",
+            "options": [
+                "Data Object Management",
+                "Document Object Model",
+                "Digital Optical Map",
+                "Desktop Oriented Media"
+            ],
+            "correct_answer": 1,
+            "explanation": "The DOM is a programming interface for HTML and XML documents."
+        },
+        {
+            "question_text": "Which method is the most efficient way to select a single element by its ID?",
+            "options": [
+                "document.getElementsByClassName()",
+                "document.querySelector()",
+                "document.getElementById()",
+                "document.tags()"
+            ],
+            "correct_answer": 2,
+            "explanation": "getElementById is highly optimized as IDs must be unique in a document."
+        },
+        {
+            "question_text": "How do you change the text content of an element?",
+            "options": [
+                "element.text = 'hello'",
+                "element.innerHTML = 'hello'",
+                "element.textContent = 'hello'",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "textContent is safer for plain text, while innerHTML allows HTML tags."
+        },
+        {
+            "question_text": "Which method is used to listen for a user clicking a button?",
+            "options": [
+                "button.on('click')",
+                "button.addEventListener('click', callback)",
+                "button.watch('click')",
+                "button.click()"
+            ],
+            "correct_answer": 1,
+            "explanation": "addEventListener is the standard way to attach event handlers."
+        },
+        {
+            "question_text": "How do you add a CSS class 'active' to an element?",
+            "options": [
+                "element.class = 'active'",
+                "element.classList.add('active')",
+                "element.className += 'active'",
+                "element.style.add('active')"
+            ],
+            "correct_answer": 1,
+            "explanation": "classList provides convenient methods like add, remove, and toggle."
+        },
+        {
+            "question_text": "What is 'Event Bubbling'?",
+            "options": [
+                "When an event disappears after being called",
+                "When an event fires on a child element and then moves up to its parents",
+                "When an event happens multiple times a second",
+                "When the browser reloads after an event"
+            ],
+            "correct_answer": 1,
+            "explanation": "Events propagate from the inner-most target up through the DOM tree."
+        },
+        {
+            "question_text": "Which property would you use to change the background color of an element directly in JS?",
+            "options": [
+                "element.background = 'blue'",
+                "element.style.backgroundColor = 'blue'",
+                "element.css('background-color', 'blue')",
+                "element.style('color', 'blue')"
+            ],
+            "correct_answer": 1,
+            "explanation": "JS uses camelCase for CSS properties when using the .style object."
+        },
+        {
+            "question_text": "How do you create a completely new <div> element using JS?",
+            "options": [
+                "document.new('div')",
+                "document.createElement('div')",
+                "new Div()",
+                "document.makeElement('div')"
+            ],
+            "correct_answer": 1,
+            "explanation": "This creates the element in memory; you then need to append it to the DOM."
+        },
+        {
+            "question_text": "Which method adds a node as the last child of a parent element?",
+            "options": [
+                "parent.add(child)",
+                "parent.append(child)",
+                "parent.appendChild(child)",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "appendChild is older; append is more modern and can handle multiple nodes or strings."
+        },
+        {
+            "question_text": "How do you prevent a form from submitting (reloading the page) after a click?",
+            "options": [
+                "event.stop()",
+                "event.preventDefault()",
+                "form.noSubmit()",
+                "return false"
+            ],
+            "correct_answer": 1,
+            "explanation": "preventDefault stops the browser's default behavior for that event."
+        },
+        {
+            "question_text": "What does a 'NodeList' returned by querySelectorAll differ from a normal 'Array'?",
+            "options": [
+                "It's not different at all",
+                "It's a collection of nodes that doesn't have all array methods like map() or filter() natively (though it has forEach)",
+                "It only contains text",
+                "It can only be used in CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "You often need to convert it to an array using Array.from() to use advanced methods."
+        },
+        {
+            "question_text": "Which property refers to the parent of the current element?",
+            "options": [
+                "element.parent",
+                "element.parentNode",
+                "element.parentElement",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "Both parentNode and parentElement traverse up the tree."
+        },
+        {
+            "question_text": "How do you remove an element from the DOM?",
+            "options": [
+                "element.delete()",
+                "element.remove()",
+                "element.hide()",
+                "document.removeElement(element)"
+            ],
+            "correct_answer": 1,
+            "explanation": "The modern .remove() method is the easiest way to delete an element."
+        },
+        {
+            "question_text": "What does the 'value' property do on an <input> element?",
+            "options": [
+                "Sets the font weight",
+                "Gets or sets the current text typed by the user",
+                "Sets the price of the item",
+                "Shows a popup with the text"
+            ],
+            "correct_answer": 1,
+            "explanation": "Accessing .value is how you process user input in forms."
+        },
+        {
+            "question_text": "Which event fires when the entire HTML document has been fully loaded and parsed?",
+            "options": [
+                "click",
+                "load",
+                "DOMContentLoaded",
+                "ready"
+            ],
+            "correct_answer": 2,
+            "explanation": "DOMContentLoaded is the best time to start running JS that interacts with the DOM."
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+{
+    "title": "Performance & Deployment",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=0ikeXp790p4",
+    "content": "## 🚀 Shipping Your Masterpiece\n\nBuilding an app is only half the battle. Now you need to make it fast and put it on the web.\n\n---\n\n## 1️⃣ Code Splitting & Lazy Loading\n\nDon't make your user download the *entire* app if they are only on the homepage. Use `React.lazy` to load components only when needed.\n\n```javascript\nconst LargeComponent = React.lazy(() => import('./LargeComponent'));\n```\n\n---\n\n## 2️⃣ The Build Process\n\nWhen you run `npm run build`, your code is **bundled**, **minified**, and **transpiled**. \n*   **Bundling**: Combining many files into few.\n*   **Minification**: Removing whitespace and shortening variable names to save bytes.\n\n---\n\n## 3️⃣ CI/CD Pipelines\n\nProfessional devs don't upload files manually. We use **CI/CD** (Continuous Integration / Continuous Deployment) tools like Vercel or GitHub Actions.\n\nEvery time you `git push`, the server automatically builds and deploys your new version.\n\n---\n\n## ✅ Deliverable: Phase 2 Final Project\nBuild a multi-page \"Personal Dashboard\" using React Router, TypeScript, and Tailwind CSS. It must include custom hooks for state management and be deployed to Vercel.",
+    "questions": [
+        {
+            "question_text": "What is the purpose of 'minification' in the build process?",
+            "options": [
+                "To make the code more readable",
+                "To reduce file size for faster loading",
+                "To encrypt security keys",
+                "To convert JS to CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Minification removes unnecessary characters from code without changing its functionality, resulting in smaller files that load faster over the network."
+        },
+        {
+            "question_text": "What is 'Code Splitting'?",
+            "options": [
+                "Breaking code into two separate files",
+                "Dynamic loading of code chunks only when needed to reduce initial bundle size",
+                "Deleting unused code",
+                "Writing code in two languages"
+            ],
+            "correct_answer": 1,
+            "explanation": "Vite and Webpack handle this by creating separate .js files for different routes or large libraries."
+        },
+        {
+            "question_text": "Which React component works with React.lazy to show a loading state during a split chunk download?",
+            "options": [
+                "<Loading>",
+                "<Suspense>",
+                "<Wait>",
+                "<ErrorBoundary>"
+            ],
+            "correct_answer": 1,
+            "explanation": "Suspense takes a 'fallback' prop (usually a spinner)."
+        },
+        {
+            "question_text": "What is the benefit of 'Memoization' (React.memo) for components?",
+            "options": [
+                "It makes them look better",
+                "It prevents a component from re-rendering if its props haven't changed",
+                "It saves them to the database",
+                "It hides them from the user"
+            ],
+            "correct_answer": 1,
+            "explanation": "Great for large lists or complex components used frequently."
+        },
+        {
+            "question_text": "What does a 'Production Build' do to your code?",
+            "options": [
+                "Minifies code, removes comments, and optimizes assets for the smallest possible size",
+                "Uploads it to the store",
+                "Checks for bugs",
+                "Asks the user for money"
+            ],
+            "correct_answer": 0,
+            "explanation": "Production builds are much faster for the user to download."
+        },
+        {
+            "question_text": "Which command is standard for creating a production build in a Vite/React app?",
+            "options": [
+                "npm run start",
+                "npm run build",
+                "npm run dev",
+                "npm run optimize"
+            ],
+            "correct_answer": 1,
+            "explanation": "The output is usually placed in a '/dist' or '/build' folder."
+        },
+        {
+            "question_text": "What is 'Tree Shaking'?",
+            "options": [
+                "A physical exercise",
+                "Automatically removing unused code from the final bundle",
+                "Rearranging the file structure",
+                "Optimizing images"
+            ],
+            "correct_answer": 1,
+            "explanation": "Modern tools only include the functions you actually `import`."
+        },
+        {
+            "question_text": "Where is a common place to host a modern React frontend for free?",
+            "options": [
+                "Vercel",
+                "Netlify",
+                "GitHub Pages",
+                "All of the above"
+            ],
+            "correct_answer": 3,
+            "explanation": "These platforms offer simple 'git-based' deployment."
+        },
+        {
+            "question_text": "What is an 'Environment Variable' (.env)?",
+            "options": [
+                "A variable for the weather",
+                "A way to store sensitive keys (like API URLs) that change between development and production",
+                "A global CSS variable",
+                "A secret password for the user"
+            ],
+            "correct_answer": 1,
+            "explanation": "Never commit sensitive .env values to GitHub!"
+        },
+        {
+            "question_text": "What is the purpose of 'Lighthouse' in Chrome DevTools?",
+            "options": [
+                "To browse the web anonymously",
+                "To audit the Performance, Accessibility, and SEO of your website",
+                "To build apps",
+                "To find images"
+            ],
+            "correct_answer": 1,
+            "explanation": "Aim for high scores to ensure a premium user experience."
+        },
+        {
+            "question_text": "What is 'SSR' (Server-Side Rendering)?",
+            "options": [
+                "Sending a pre-rendered HTML page from the server to the browser for better SEO and perceived speed",
+                "Rendering code on the user's phone",
+                "Deleting the server",
+                "A type of CSS layout"
+            ],
+            "correct_answer": 0,
+            "explanation": "Frameworks like Next.js are popular for SSR."
+        },
+        {
+            "question_text": "What is a 'PWA' (Progressive Web App)?",
+            "options": [
+                "A website that is always updating",
+                "A website that can be installed on a home screen and work offline like an app",
+                "A slow website",
+                "A premium subscription"
+            ],
+            "correct_answer": 1,
+            "explanation": "PWAs use 'Service Workers' to cache files offline."
+        },
+        {
+            "question_text": "Which attribute on a <script> tag helps improve page load speed?",
+            "options": [
+                "defer or async",
+                "wait",
+                "load",
+                "fast"
+            ],
+            "correct_answer": 0,
+            "explanation": "These prevent the script from blocking the initial HTML rendering."
+        },
+        {
+            "question_text": "How do you avoid 'Large Component Trees' becoming slow?",
+            "options": [
+                "Using less code",
+                "Component splitting and keeping state local as much as possible",
+                "Using a better computer",
+                "Deleting the UI"
+            ],
+            "correct_answer": 1,
+            "explanation": "Only update what needs to be updated."
+        },
+        {
+            "question_text": "What is 'Hydration' in the context of SSR?",
+            "options": [
+                "Drinking water while coding",
+                "The process of React 'attaching' its logic to static HTML already sent by the server",
+                "Deleting empty spaces",
+                "Optimizing colors"
+            ],
+            "correct_answer": 1,
+            "explanation": "Hydration makes the static page interactive."
+        },
+        {
+            "question_text": "What does a 'Content Delivery Network' (CDN) do?",
+            "options": [
+                "Builds the website",
+                "Distributes your website files across servers worldwide to serve them from the closest location to the user",
+                "Encrypts data",
+                "Manages users"
+            ],
+            "correct_answer": 1,
+            "explanation": "CDNs make your site load fast everywhere on Earth."
+        }
+    ]
+}

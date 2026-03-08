@@ -1,0 +1,173 @@
+{
+    "title": "Routing Architecture",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=C7D_6G16T70",
+    "content": "## 🛤️ Navigating the SPA\n\nIn a Single Page Application (SPA), we don't actually load new HTML files from the server. We use a **Router** to swap components based on the URL.\n\n---\n\n## 1️⃣ React Router Basics\n\n*   `<BrowserRouter>`: Wraps your whole app.\n*   `<Routes>`: Container for your route definitions.\n*   `<Route path=\"/...\" element={<MyPage />} />`: Maps a URL to a component.\n\n---\n\n## 2️⃣ Links vs A Tags\n\nNever use `<a href=\"...\">` for internal navigation in React. It triggers a full page reload, losing your app state. Always use the `<Link>` component.\n\n```javascript\nimport { Link } from 'react-router-dom';\n<Link to=\"/profile\">Go to Profile</Link>\n```\n\n---\n\n## 3️⃣ Dynamic Routes & Params\n\nBuilding pages for thousands of items (like products) requires dynamic routing.\n\n*   **Path**: `/product/:id`\n*   **Accessing**: `const { id } = useParams();` inside the component.\n\n---\n\n## 🛡️ Protected Routes\nWe can create a wrapper component that checks for an authentication token and redirects users to `/login` if they aren't authorized.",
+    "questions": [
+        {
+            "question_text": "What is 'Client-Side Routing'?",
+            "options": [
+                "The server sends a new HTML page for every link",
+                "The browser updates the URL and changes the UI without a full page reload",
+                "Matching users to servers",
+                "A type of CSS layout"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes the app feel fast and 'native' compared to traditional websites."
+        },
+        {
+            "question_text": "Which library is the industry standard for routing in React?",
+            "options": [
+                "React Navigation",
+                "React Router",
+                "Next Router",
+                "Vue Router"
+            ],
+            "correct_answer": 1,
+            "explanation": "React Router is the most widely used library for web-based React apps."
+        },
+        {
+            "question_text": "What does the <BrowserRouter> component do?",
+            "options": [
+                "Checks if the user has a browser",
+                "Provides the context for routing and syncs the UI with the URL",
+                "Downloads images",
+                "Secures the app"
+            ],
+            "correct_answer": 1,
+            "explanation": "It should wrap your entire application."
+        },
+        {
+            "question_text": "Which component is used to define a mapping between a URL path and a Component?",
+            "options": [
+                "<Link>",
+                "<Navigate>",
+                "<Route>",
+                "<Path>"
+            ],
+            "correct_answer": 2,
+            "explanation": "Example: `<Route path='/about' element={<About />} />`."
+        },
+        {
+            "question_text": "What is the difference between <Link> and regular <a> tags in React Router?",
+            "options": [
+                "There is no difference",
+                "<Link> prevents a full page reload; <a> causes the browser to refresh from the server",
+                "<a> is faster",
+                "<Link> is only for images"
+            ],
+            "correct_answer": 1,
+            "explanation": "Always use <Link> (or <NavLink>) to maintain the 'Single Page' experience."
+        },
+        {
+            "question_text": "How do you handle 'Dynamic Routes' (e.g., /user/123)?",
+            "options": [
+                "By creating 1000 files",
+                "Using URL parameters (e.g., path='/user/:id')",
+                "Using query strings only",
+                "You can't do this in React"
+            ],
+            "correct_answer": 1,
+            "explanation": "The colon ':' indicates a variable part of the URL."
+        },
+        {
+            "question_text": "Which Hook is used to access URL parameters (like 'id') in a component?",
+            "options": [
+                "useLocation",
+                "useParams",
+                "useRoute",
+                "usePath"
+            ],
+            "correct_answer": 1,
+            "explanation": "useParams returns an object of the dynamic segments of the current URL."
+        },
+        {
+            "question_text": "What is 'Nested Routing'?",
+            "options": [
+                "Routing inside a loop",
+                "Defining routes inside other routes to share a common layout",
+                "A security bug",
+                "Routing between different websites"
+            ],
+            "correct_answer": 1,
+            "explanation": "It allows specialized UIs like sidebars or tabs that stay visible while the main content changes."
+        },
+        {
+            "question_text": "What does the <Outlet /> component do in nested routing?",
+            "options": [
+                "It’s a place where you buy components",
+                "It's a placeholder where the child route's component will be rendered",
+                "It deletes the route",
+                "It redirects to another site"
+            ],
+            "correct_answer": 1,
+            "explanation": "Think of it as a 'hole' in the parent layout that sub-pages fill."
+        },
+        {
+            "question_text": "How do you programmatically navigate to another page (e.g., after a login form)?",
+            "options": [
+                "window.location.href = ...",
+                "Using the 'useNavigate' hook",
+                "Using <Link>",
+                "Asking the user to click"
+            ],
+            "correct_answer": 1,
+            "explanation": "const navigate = useNavigate(); navigate('/dashboard');."
+        },
+        {
+            "question_text": "What is a 'Protected Route'?",
+            "options": [
+                "A route that is encrypted",
+                "A route that checks if a user is authenticated before allowing access to its component",
+                "A route that only works on HTTPS",
+                "A hidden route"
+            ],
+            "correct_answer": 1,
+            "explanation": "You typically wrap these in an authentication check component."
+        },
+        {
+            "question_text": "Which hook provides information about the current URL (hash, search params, etc.)?",
+            "options": [
+                "useParams",
+                "useLocation",
+                "useHistory",
+                "useURL"
+            ],
+            "correct_answer": 1,
+            "explanation": "useLocation returns an object representing the current location."
+        },
+        {
+            "question_text": "How do you handle 404 (Not Found) pages in React Router?",
+            "options": [
+                "React handles it automatically",
+                "Create a Route with path='*' at the bottom of your routes list",
+                "Ask the server to redirect",
+                "Display an error message manually"
+            ],
+            "correct_answer": 1,
+            "explanation": "The asterisk matches any URL that hasn't been matched by previous routes."
+        },
+        {
+            "question_text": "What is 'Lazy Loading' in routing?",
+            "options": [
+                "Slow routing",
+                "Downloading the code for a route ONLY when the user navigates to it",
+                "Automatic routing",
+                "Routing without paths"
+            ],
+            "correct_answer": 1,
+            "explanation": "This improves initial load time by splitting the bundle (React.lazy and Suspense)."
+        },
+        {
+            "question_text": "What does 'useSearchParams' do?",
+            "options": [
+                "Searches for variables in the code",
+                "Allows reading and modifying the query string (e.g., ?query=search)",
+                "Searches the database",
+                "Finds components"
+            ],
+            "correct_answer": 1,
+            "explanation": "It returns an object similar to useState for handling URL query parameters."
+        }
+    ]
+}

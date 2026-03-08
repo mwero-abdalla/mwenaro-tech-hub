@@ -1,0 +1,63 @@
+{
+    "title": "How the Web Works",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=hJHvdBlSxug",
+    "content": "## 🗺️ The Map of the Internet\n\nWhen you type `google.com` into your browser, a lot happens in the background. Understanding this sequence is crucial for a full-stack engineer.\n\n---\n\n## 1️⃣ DNS: The Internet's Phonebook\n\nComputers don't understand `google.com`; they understand **IP Addresses** (like `142.250.72.110`).\n\n*   **Goal**: Translate a Domain Name into an IP Address.\n*   **Process**: Your browser asks a **DNS Server**: \"Where is google.com?\" and gets the IP back.\n\n---\n\n## 2️⃣ HTTP/HTTPS: The Language of the Web\n\n**HTTP (HyperText Transfer Protocol)** is how clients (browsers) and servers talk.\n\n*   **Client**: Sends a **Request** (e.g., \"Give me the homepage\").\n*   **Server**: Sends a **Response** (e.g., \"Here is the HTML code\").\n*   **HTTPS**: The secure version, encrypting data so hackers can't see it.\n\n---\n\n## 3️⃣ The Request-Response Lifecycle\n\n1.  **URL Entry**: You type the address.\n2.  **DNS Lookup**: domain -> IP.\n3.  **TCP/IP Connection**: Establishing a \"handshake\" between your PC and the server.\n4.  **HTTP Request**: Client asks for the page.\n5.  **Rendering**: The browser takes the HTML/CSS/JS and builds the view you see.\n\n---\n\n## 🧠 Why This Matters for Us\n\nWhen your app is slow, you need to know where the bottleneck is: Is it the DNS? The server response time? Or the browser rendering?",
+    "questions": [
+        {
+            "question_text": "What does DNS stand for?",
+            "options": [
+                "Digital Network Site",
+                "Domain Name System",
+                "Data Node Server",
+                "Direct Network Stream"
+            ],
+            "correct_answer": 1,
+            "explanation": "DNS (Domain Name System) translates human-readable domain names into machine-readable IP addresses."
+        },
+        {
+            "question_text": "Which HTTP method is typically used to request data from a server?",
+            "options": [
+                "POST",
+                "DELETE",
+                "GET",
+                "PUT"
+            ],
+            "correct_answer": 2,
+            "explanation": "GET is used to retrieve data. POST is used to send data to the server."
+        },
+        {
+            "question_text": "What is the primary difference between HTTP and HTTPS?",
+            "options": [
+                "HTTPS is faster",
+                "HTTPS uses encryption (SSL/TLS) to secure data",
+                "HTTP is only for images",
+                "There is no difference"
+            ],
+            "correct_answer": 1,
+            "explanation": "HTTPS (Hypertext Transfer Protocol Secure) encrypts the communication between the browser and server."
+        },
+        {
+            "question_text": "Which of these is a valid IP address format?",
+            "options": [
+                "www.google.com",
+                "192.168.1.1",
+                "admin@website.com",
+                "C:/Users/Home"
+            ],
+            "correct_answer": 1,
+            "explanation": "An IP address (IPv4) consists of four sets of numbers separated by dots."
+        },
+        {
+            "question_text": "What happens during the 'DNS Lookup' phase?",
+            "options": [
+                "The browser downloads the HTML",
+                "The domain name is converted to an IP address",
+                "The user types the URL",
+                "The server sends a 404 error"
+            ],
+            "correct_answer": 1,
+            "explanation": "DNS lookup is the process of finding the numerical IP address associated with a domain name."
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+{
+    "title": "TypeScript Fundamentals",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=gieEQFIfgYw",
+    "content": "## 🛡️ The Static Advantage\n\nJavaScript is a \"dynamic\" language—it figures out types while the code is running. **TypeScript** is \"static\"—it checks for errors *before* the code runs.\n\n---\n\n## 1️⃣ Explicit Types\n\nIn JS, a variable can be a string now and a number later. In TS, we lock it down.\n\n```typescript\nlet username: string = \"Mwero\";\nlet age: number = 25;\nlet isInstructor: boolean = true;\n```\n\n---\n\n## 2️⃣ The Compiler (tsc)\n\nBrowsers cannot run TypeScript. We use the **TypeScript Compiler (tsc)** to turn our `.ts` files into standard `.js` files. \n*   If there is a type error, the compiler will refuse to build the app, preventing bugs from reaching your users.\n\n---\n\n## 3️⃣ Type Inference\n\nYou don't have to type everything! TypeScript is smart. If you write `let city = \"Nairobi\";`, TS automatically knows `city` is a string. This is called **Inference**.\n\n---\n\n## 🧠 Why we use it\nInstead of finding a bug when a user clicks a button and the app crashes, you find the bug in VS Code while you are still typing.",
+    "questions": [
+        {
+            "question_text": "What happens if you try to assign a number to a variable explicitly typed as a string in TypeScript?",
+            "options": [
+                "JavaScript converts it automatically",
+                "The code runs but shows a warning in the console",
+                "TypeScript shows an error and the code won't compile",
+                "Nothing happens"
+            ],
+            "correct_answer": 2,
+            "explanation": "TypeScript enforces strict type safety; assigning the wrong type is a 'compile-time' error."
+        },
+        {
+            "question_text": "What is TypeScript?",
+            "options": [
+                "A new programming language to replace JS",
+                "A superset of JavaScript that adds static types",
+                "A tool for writing CSS",
+                "A type of database"
+            ],
+            "correct_answer": 1,
+            "explanation": "Any valid JS is valid TS, but TS adds safety and tooling benefits."
+        },
+        {
+            "question_text": "What is the primary benefit of Static Typing?",
+            "options": [
+                "Makes the code run faster in the browser",
+                "Catches errors during development (compile-time) instead of after deployment (runtime)",
+                "Allows for smaller file sizes",
+                "Eliminates the need for testing"
+            ],
+            "correct_answer": 1,
+            "explanation": "TS warns you if you pass a string where a number is expected."
+        },
+        {
+            "question_text": "How do you explicitly define a variable's type as a number?",
+            "options": [
+                "let x = number 5;",
+                "let x: number = 5;",
+                "let x = (number)5;",
+                "let x = 5#number;"
+            ],
+            "correct_answer": 1,
+            "explanation": "The colon syntax is used for type annotations."
+        },
+        {
+            "question_text": "What does 'Type Inference' mean?",
+            "options": [
+                "TypeScript guessing the type based on the value you assign",
+                "TypeScript asking the user for the type",
+                "Searching for types in a library",
+                "Using 'any' for everything"
+            ],
+            "correct_answer": 0,
+            "explanation": "If you write `let x = 5`, TS automatically knows it's a number."
+        },
+        {
+            "question_text": "What is the 'Interface' keyword used for?",
+            "options": [
+                "To create a visual UI",
+                "To define the structure of an object",
+                "To connect to the internet",
+                "To write comments"
+            ],
+            "correct_answer": 1,
+            "explanation": "Interfaces act as 'contracts' ensuring an object has specific properties."
+        },
+        {
+            "question_text": "What is an 'Optional Property' in TS?",
+            "options": [
+                "A property that doesn't exist",
+                "A property that may or may not be present (marked with '?')",
+                "A property that changes frequently",
+                "A property that doesn't have a value"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `{ id: number; name?: string }` means name is optional."
+        },
+        {
+            "question_text": "What is a 'Union Type'?",
+            "options": [
+                "A variable that can hold multiple values at once",
+                "A type that allows a variable to be one of several types (marked with '|') ",
+                "A type for large companies",
+                "A type that cannot be changed"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `string | number` can be either a string or a number."
+        },
+        {
+            "question_text": "What happens if you use the 'any' type?",
+            "options": [
+                "Your code is 100% safe",
+                "TypeScript disables type checking for that variable (effectively turning off TS)",
+                "The code becomes faster",
+                "The variable can only be a string"
+            ],
+            "correct_answer": 1,
+            "explanation": "Use 'any' sparingly, as it defeats the purpose of using TypeScript."
+        },
+        {
+            "question_text": "What type should you use for a function that doesn't return anything?",
+            "options": [
+                "null",
+                "undefined",
+                "void",
+                "empty"
+            ],
+            "correct_answer": 2,
+            "explanation": "void signifies the function performs an action but returns no value."
+        },
+        {
+            "question_text": "How do you define an array of strings?",
+            "options": [
+                "string[]",
+                "Array<string>",
+                "Both A and B",
+                "strings[]"
+            ],
+            "correct_answer": 2,
+            "explanation": "Both syntaxes are valid and commonly used."
+        },
+        {
+            "question_text": "What is an 'Enum'?",
+            "options": [
+                "A list of numbers",
+                "A way to define a set of named constants (like directions or status levels)",
+                "A type of loop",
+                "An external library"
+            ],
+            "correct_answer": 1,
+            "explanation": "Enums make code more readable (e.g., `Status.Pending` instead of `0`)."
+        },
+        {
+            "question_text": "What is the difference between 'type' and 'interface'?",
+            "options": [
+                "There is no difference",
+                "They are similar, but interfaces are better for object shapes (mergable) and 'type' is better for aliases/unions",
+                "Types are only for numbers",
+                "Interfaces are for the backend"
+            ],
+            "correct_answer": 1,
+            "explanation": "Start with interfaces, use types when you need advanced features."
+        },
+        {
+            "question_text": "What is 'Narrowing' in TS?",
+            "options": [
+                "Deleting code",
+                "The process of refining a wide type (like string | number) to a more specific type using logic like `typeof`",
+                "Making the font smaller",
+                "Decreasing file size"
+            ],
+            "correct_answer": 1,
+            "explanation": "Narrowing allows you to safely use type-specific methods."
+        },
+        {
+            "question_text": "Which of these is NOT a basic TS type?",
+            "options": [
+                "string",
+                "boolean",
+                "component",
+                "number"
+            ],
+            "correct_answer": 2,
+            "explanation": "Component is a React concept, not a primitive TS type."
+        },
+        {
+            "question_text": "What tool converts TS into JS so the browser can understand it?",
+            "options": [
+                "The Browser itself",
+                "The TypeScript Compiler (tsc)",
+                "VS Code",
+                "The internet"
+            ],
+            "correct_answer": 1,
+            "explanation": "Browsers cannot run .ts files directly."
+        }
+    ]
+}

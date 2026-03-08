@@ -1,0 +1,184 @@
+{
+    "title": "Collaborative Git & GitHub",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+    "content": "## 🤝 Working Together without Chaos\n\nMost software is built in teams. Collaboration requires **Branching** and **Pull Requests**.\n\n---\n\n## 1️⃣ Branches: Parallel Timelines\n\n*   `git branch feature-name`: Creates a new line of history.\n*   `git checkout -b feature-name`: Creates AND switches to it.\n*   `git merge feature-name`: Pulls the feature work into `main`.\n\n---\n\n## 2️⃣ The Pull Request (PR) Workflow\n\n1.  **Fork**: Create your own copy of the project on GitHub.\n2.  **Clone**: Download it to your machine.\n3.  **Branch**: Create a new branch for your specific task.\n4.  **Push**: Upload your branch to GitHub.\n5.  **PR**: Propose merging your branch into the main repository.\n\n---\n\n## 3️⃣ Merge vs Rebase\n\n*   **Merge**: Keeps the full history, including \"merge commits.\"\n*   **Rebase**: Repositions your changes on top of the latest work for a cleaner, linear history.\n\n---\n\n## ☁️ Setting Up an Upstream\n`git remote add upstream [original-url]`\n\nThis lets you keep your fork in sync with the main project.",
+    "questions": [
+        {
+            "question_text": "Which command creates a new branch and switches to it?",
+            "options": [
+                "git branch -s",
+                "git checkout -b",
+                "git switch -c",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "Both 'git checkout -b' (classic) and 'git switch -c' (modern) are used specifically for this purpose."
+        },
+        {
+            "question_text": "What command is used to download an existing repository from GitHub to your local machine?",
+            "options": [
+                "git download",
+                "git pull",
+                "git clone",
+                "git copy"
+            ],
+            "correct_answer": 2,
+            "explanation": "git clone creates a full copy of the remote repository and its history."
+        },
+        {
+            "question_text": "What is a 'Remote' in Git?",
+            "options": [
+                "A wireless mouse",
+                "A URL pointing to a version of your project on a server (like GitHub)",
+                "A developer working from home",
+                "A branch that has been deleted"
+            ],
+            "correct_answer": 1,
+            "explanation": "Remotes allow you to sync your local work with a shared repository."
+        },
+        {
+            "question_text": "Which command sends your local commits to GitHub?",
+            "options": [
+                "git push",
+                "git pull",
+                "git upload",
+                "git send"
+            ],
+            "correct_answer": 0,
+            "explanation": "Pushing 'updates' the remote branch with your local changes."
+        },
+        {
+            "question_text": "Which command fetches changes from GitHub AND merges them into your local branch?",
+            "options": [
+                "git fetch",
+                "git sync",
+                "git pull",
+                "git merge"
+            ],
+            "correct_answer": 2,
+            "explanation": "git pull is essentially 'git fetch' followed by 'git merge'."
+        },
+        {
+            "question_text": "What is a 'Pull Request' (PR)?",
+            "options": [
+                "A request to download code",
+                "A proposal to merge changes from one branch into another in a collaborative setting",
+                "An error message from Git",
+                "A way to delete a branch"
+            ],
+            "correct_answer": 1,
+            "explanation": "PRs are the heart of collaboration on platforms like GitHub."
+        },
+        {
+            "question_text": "How do you create a new branch named 'feature-login'?",
+            "options": [
+                "git branch new feature-login",
+                "git branch feature-login",
+                "git checkout -b feature-login",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "'git branch' creates it. 'git checkout -b' creates it AND switches to it."
+        },
+        {
+            "question_text": "What happens during a 'Merge Conflict'?",
+            "options": [
+                "Git deletes both versions of the file",
+                "Git cannot automatically decide which changes to keep and needs a human to fix it",
+                "The computer crashes",
+                "The repository is locked forever"
+            ],
+            "correct_answer": 1,
+            "explanation": "Conflicts happen when two people change the same line of the same file."
+        },
+        {
+            "question_text": "Which command switches you from the 'main' branch to a 'dev' branch?",
+            "options": [
+                "git go dev",
+                "git move dev",
+                "git checkout dev",
+                "git change dev"
+            ],
+            "correct_answer": 2,
+            "explanation": "Checkout (or 'git switch') updates your files to match the target branch."
+        },
+        {
+            "question_text": "What is 'Forking' a repository?",
+            "options": [
+                "Deleting the repo",
+                "Creating a personal copy of someone else's repo on your GitHub account",
+                "Splitting a file into two",
+                "Running two versions of Git at once"
+            ],
+            "correct_answer": 1,
+            "explanation": "Forking lets you experiment on a project without affecting the original."
+        },
+        {
+            "question_text": "In a 'Rebase', what happens to your commits?",
+            "options": [
+                "They are combined into one",
+                "They are moved to the end of the target branch's history",
+                "They are deleted",
+                "They are sent to the trash"
+            ],
+            "correct_answer": 1,
+            "explanation": "Rebase creates a cleaner, linear history by moving your base commit."
+        },
+        {
+            "question_text": "What is the standard name of the main remote on most repositories?",
+            "options": [
+                "main",
+                "master",
+                "origin",
+                "server"
+            ],
+            "correct_answer": 2,
+            "explanation": "Origin is the default alias for the URL you cloned from."
+        },
+        {
+            "question_text": "How do you delete a local branch named 'old-feature'?",
+            "options": [
+                "git branch -d old-feature",
+                "git rm branch old-feature",
+                "git delete old-feature",
+                "git checkout -p old-feature"
+            ],
+            "correct_answer": 0,
+            "explanation": "The '-d' flag safely deletes a branch that has been merged."
+        },
+        {
+            "question_text": "Which GitHub feature allows you to automate tasks like testing or deployment?",
+            "options": [
+                "GitHub Issues",
+                "GitHub Projects",
+                "GitHub Actions",
+                "GitHub Wiki"
+            ],
+            "correct_answer": 2,
+            "explanation": "Actions allow you to run 'workflows' on your code automatically."
+        },
+        {
+            "question_text": "What is the 'Stash' useful for?",
+            "options": [
+                "Permanently saving code",
+                "Temporarily hiding uncommitted changes so you can switch branches",
+                "Deleting files",
+                "Viewing log history"
+            ],
+            "correct_answer": 1,
+            "explanation": "Stashing is like a 'pause button' for your current work."
+        },
+        {
+            "question_text": "Which command is used to see which remotes are connected to your local repo?",
+            "options": [
+                "git remote -v",
+                "git show remote",
+                "git remote -all",
+                "git list"
+            ],
+            "correct_answer": 0,
+            "explanation": "The '-v' (verbose) flag shows the fetch and push URLs."
+        }
+    ]
+}

@@ -1,0 +1,173 @@
+{
+    "title": "CSS Foundations",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=1PnVor36_40",
+    "content": "## 🎨 Styling the Web Surface\n\nCSS (Cascading Style Sheets) controls how your HTML looks. To master it, you MUST understand its core logic, not just properties.\n\n---\n\n## 1️⃣ The Box Model\n\nEvery element in HTML is a box. It consists of:\n*   **Content**: The actual text/image.\n*   **Padding**: Space *inside* the border.\n*   **Border**: The line around the padding.\n*   **Margin**: Space *outside* the box.\n\n---\n\n## 2️⃣ Specificity & The Cascade\n\nWhy does your CSS sometimes not apply? It's usually due to **Specificity**.\n\n*   **Inline styles**: (e.g., `style=\"...\"`) Highest priority.\n*   **IDs** (`#id`): High priority.\n*   **Classes** (`.class`): Medium priority.\n*   **Elements** (`h1`, `div`): Lowest priority.\n\n**The Cascade**: If specificity is equal, the last rule written in the file wins.\n\n---\n\n## 3️⃣ Colors & Units\n\n*   **Colors**: `hex`, `rgb`, `hsl`. HSL is often preferred by designers for its literal meaning (Hue, Saturation, Lightness).\n*   **Units**: \n    *   **Absolute**: `px` (Don't use for layouts!).\n    *   **Relative**: `rem`, `em`, `%`, `vh`, `vw`. Always use `rem` for accessibility.",
+    "questions": [
+        {
+            "question_text": "What does CSS stand for?",
+            "options": [
+                "Creative Style Sheets",
+                "Cascading Style Sheets",
+                "Computer Style Sheets",
+                "Colorful Style Sheets"
+            ],
+            "correct_answer": 1,
+            "explanation": "Cascading refers to the way styles are applied based on priority and order."
+        },
+        {
+            "question_text": "Which property is used to change the background color of an element?",
+            "options": [
+                "color",
+                "bgcolor",
+                "background-color",
+                "fill"
+            ],
+            "correct_answer": 2,
+            "explanation": "background-color is the standard CSS property for setting background fills."
+        },
+        {
+            "question_text": "What are the four parts of the CSS Box Model (from inside to outside)?",
+            "options": [
+                "Content, Margin, Padding, Border",
+                "Content, Padding, Border, Margin",
+                "Padding, Content, Border, Margin",
+                "Margin, Border, Padding, Content"
+            ],
+            "correct_answer": 1,
+            "explanation": "The order is: Content -> Padding (space inside) -> Border -> Margin (space outside)."
+        },
+        {
+            "question_text": "Which CSS selector has the highest specificity?",
+            "options": [
+                "Class selector (.my-class)",
+                "ID selector (#my-id)",
+                "Element selector (div)",
+                "Universal selector (*)"
+            ],
+            "correct_answer": 1,
+            "explanation": "ID selectors are more specific than classes, which are more specific than elements."
+        },
+        {
+            "question_text": "How do you select an element with id 'header' in CSS?",
+            "options": [
+                ".header",
+                "#header",
+                "*header",
+                "header"
+            ],
+            "correct_answer": 1,
+            "explanation": "The '#' symbol is used for IDs in CSS."
+        },
+        {
+            "question_text": "What does the 'position: absolute' property do?",
+            "options": [
+                "Positions the element relative to its normal position",
+                "Positions the element relative to its nearest positioned ancestor",
+                "Fixed the element to the viewport",
+                "Centers the element automatically"
+            ],
+            "correct_answer": 1,
+            "explanation": "If no positioned ancestor exists, it uses the document body."
+        },
+        {
+            "question_text": "Which property is used to change the text color of an element?",
+            "options": [
+                "text-color",
+                "fgcolor",
+                "color",
+                "font-color"
+            ],
+            "correct_answer": 2,
+            "explanation": "The 'color' property specifically targets the foreground text color."
+        },
+        {
+            "question_text": "What is the difference between 'padding' and 'margin'?",
+            "options": [
+                "Padding is outside the border; Margin is inside",
+                "Padding is inside the border; Margin is outside",
+                "They are exactly the same",
+                "Padding handles text size; Margin handles spacing"
+            ],
+            "correct_answer": 1,
+            "explanation": "Padding adds space between content and border; Margin adds space between elements."
+        },
+        {
+            "question_text": "How do you make the text bold in CSS?",
+            "options": [
+                "font-style: bold",
+                "text-decoration: bold",
+                "font-weight: bold",
+                "style: bold"
+            ],
+            "correct_answer": 2,
+            "explanation": "font-weight controls the thickness of the characters."
+        },
+        {
+            "question_text": "What does 'z-index' control?",
+            "options": [
+                "The zoom level of the page",
+                "The horizontal position of an element",
+                "The stack order (layering) of positioned elements",
+                "The size of the border"
+            ],
+            "correct_answer": 2,
+            "explanation": "Higher z-index values appear on top of lower ones."
+        },
+        {
+            "question_text": "What is the default value of the 'position' property?",
+            "options": [
+                "relative",
+                "fixed",
+                "absolute",
+                "static"
+            ],
+            "correct_answer": 3,
+            "explanation": "Static elements follow the normal document flow and are not affected by top/bottom/left/right properties."
+        },
+        {
+            "question_text": "Which property is used to control the size of the text?",
+            "options": [
+                "text-size",
+                "font-size",
+                "font-style",
+                "size"
+            ],
+            "correct_answer": 1,
+            "explanation": "font-size is the standard property (e.g., 16px, 1rem)."
+        },
+        {
+            "question_text": "How do you apply a style to all <p> elements inside a <div>?",
+            "options": [
+                "div p",
+                "div + p",
+                "div.p",
+                "div > p"
+            ],
+            "correct_answer": 0,
+            "explanation": "The descendant selector (space) targets all matching nested elements."
+        },
+        {
+            "question_text": "What does the 'display: none' property do?",
+            "options": [
+                "Makes the element transparent",
+                "Hides the element and removes it from the document layout",
+                "Hides the element but keeps its space in the layout",
+                "Moves the element to the bottom"
+            ],
+            "correct_answer": 1,
+            "explanation": "Contrast this with 'visibility: hidden', which keeps the layout space."
+        },
+        {
+            "question_text": "Which CSS unit is relative to the font-size of the root element (html)?",
+            "options": [
+                "em",
+                "px",
+                "rem",
+                "vh"
+            ],
+            "correct_answer": 2,
+            "explanation": "rem stands for 'Root EM'."
+        }
+    ]
+}

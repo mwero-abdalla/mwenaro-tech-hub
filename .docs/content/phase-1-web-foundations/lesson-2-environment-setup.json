@@ -1,0 +1,63 @@
+{
+    "title": "Environment Setup",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=9S_YJ_n2C7Y",
+    "content": "## 🛠️ Building Your Professional Workshop\n\nA messy environment leads to bugs. We need a standardized setup for this bootcamp.\n\n---\n\n## 1️⃣ VS Code: The Industry Standard\n\nDownload and install **Visual Studio Code**. It’s the most popular Editor for web development.\n\n### Essential Extensions:\n*   **ESLint**: Catches JS errors.\n*   **Prettier**: Formats your code automatically.\n*   **Tailwind CSS IntelliSense**: Helps with styling classes.\n*   **Auto Rename Tag**: Keeps HTML tags synced.\n\n---\n\n## 2️⃣ Node.js: The JavaScript Runtime\n\nNode.js allows you to run JavaScript outside the browser. We will use it for our backend and to run development tools.\n\n*   **LTS Version**: Always install the **Long Term Support (LTS)** version for stability.\n*   **Verification**: Run `node -v` in your terminal to see if it's installed.\n\n---\n\n## 3️⃣ Key Tools for Mac/Linux/Windows\n\n*   **Windows**: Install **WSL2 (Windows Subsystem for Linux)**. It gives you a real Linux environment inside Windows.\n*   **All**: Install **Google Chrome** (DevTools are best for debugging).\n\n---\n\n## 💡 Professional Tip\nUse a consistent theme and font (like **Fira Code**) to reduce eye strain during long coding sessions.",
+    "questions": [
+        {
+            "question_text": "What is the primary purpose of a 'Linter' like ESLint?",
+            "options": [
+                "To compile the code into machine language",
+                "To automatically fix grammar in comments",
+                "To analyze code for potential errors and styling inconsistencies",
+                "To upload files to GitHub"
+            ],
+            "correct_answer": 2,
+            "explanation": "Linters catch bugs (like unused variables) and enforce style rules before you even run the code."
+        },
+        {
+            "question_text": "Which VS Code extension is essential for viewing HTML changes in real-time?",
+            "options": [
+                "Prettier",
+                "Live Server",
+                "Docker",
+                "Python"
+            ],
+            "correct_answer": 1,
+            "explanation": "Live Server launches a local development server with a live reload feature for static and dynamic pages."
+        },
+        {
+            "question_text": "What does 'LTS' stand for in Node.js versions?",
+            "options": [
+                "Latest Total Security",
+                "Long Term Support",
+                "Low Tech Software",
+                "Level Two Scripting"
+            ],
+            "correct_answer": 1,
+            "explanation": "LTS versions are stable and recommended for most users and production environments."
+        },
+        {
+            "question_text": "Why do we use 'Prettier' in a team environment?",
+            "options": [
+                "To make the code faster",
+                "To ensure every developer uses the exact same code formatting",
+                "To encrypt the source code",
+                "To write the code for us"
+            ],
+            "correct_answer": 1,
+            "explanation": "Prettier handles code formatting (tabs, quotes, semicolons) automatically so developers don't argue over style."
+        },
+        {
+            "question_text": "Which tool is typically used to manage different versions of Node.js on a single machine?",
+            "options": [
+                "NPM",
+                "NVM (Node Version Manager)",
+                "VS Code",
+                "Git"
+            ],
+            "correct_answer": 1,
+            "explanation": "NVM allows you to switch between different Node.js versions for different projects seamlessly."
+        }
+    ]
+}

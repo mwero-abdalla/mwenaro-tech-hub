@@ -1,0 +1,182 @@
+{
+    "title": "Component Architecture",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=y6Dsz8U3oH0",
+    "content": "## 🏗️ Thinking in Components\n\nReact is built on the concept of **Components**. A component is a self-contained unit of UI that combines logic (JS), structure (JSX), and styling.\n\n---\n\n## 1️⃣ JSX: JavaScript XML\n\nJSX looks like HTML but lives in JavaScript. It allows you to write UI declarative way.\n\n*   **Rule 1**: Return a single parent element (or a `<Fragment>`).\n*   **Rule 2**: Close all tags.\n*   **Rule 3**: Use `camelCase` for attributes (e.g., `className` instead of `class`).\n\n---\n\n## 2️⃣ Props: Communication Lines\n\nProps are like arguments to a function. They allow data to flow from a **Parent** component down to a **Child** component.\n\n```javascript\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n\n// Usage\n<Welcome name=\"Mwero\" />\n```\n\n---\n\n## 3️⃣ Composition vs Inheritance\n\nReact favors **Composition**. Instead of creating complex class hierarchies, we build small, focused components and combine them to create complex UIs.\n\n---\n\n## 🧠 Pro Tip\nKeep your components \"Pure\". A component should always return the same JSX for the same props.",
+    "questions": [
+        {
+            "question_text": "What is the primary way to pass data from a parent component to a child component in React?",
+            "options": [
+                "State",
+                "Props",
+                "Context",
+                "Events"
+            ],
+            "correct_answer": 1,
+            "explanation": "Props (short for properties) are the standard way to pass data down the component tree."
+        },
+        {
+            "question_text": "What is the primary benefit of 'Component-Based Architecture'?",
+            "options": [
+                "It makes the code run faster",
+                "It allows you to build complex UIs by composing small, isolated, and reusable pieces of code",
+                "It eliminates the need for CSS",
+                "It only works with databases"
+            ],
+            "correct_answer": 1,
+            "explanation": "Components promote reusability and make large codebases easier to maintain."
+        },
+        {
+            "question_text": "In React, what are 'Props'?",
+            "options": [
+                "Internal variables inside a component",
+                "External inputs passed to a component from its parent",
+                "A way to store data in a database",
+                "The CSS styles applied to a component"
+            ],
+            "correct_answer": 1,
+            "explanation": "Props are read-only to the child component and allow parent-to-child communication."
+        },
+        {
+            "question_text": "What is 'JSX'?",
+            "options": [
+                "A type of CSS library",
+                "A syntax extension for JavaScript that looks like HTML",
+                "A database query language",
+                "A new version of Java"
+            ],
+            "correct_answer": 1,
+            "explanation": "JSX allows you to write the UI structure directly within your JavaScript code."
+        },
+        {
+            "question_text": "Which rule is mandatory for React component names?",
+            "options": [
+                "They must start with an underscore",
+                "They must be in lowercase",
+                "They must start with an Uppercase letter",
+                "They must be shorter than 10 characters"
+            ],
+            "correct_answer": 2,
+            "explanation": "React uses the uppercase first letter to distinguish between custom components and standard HTML tags."
+        },
+        {
+            "question_text": "What is the 'Virtual DOM'?",
+            "options": [
+                "A 3D representation of the website",
+                "A lightweight, in-memory copy of the real DOM used by React for performance optimization",
+                "A separate server for images",
+                "A browser plugin"
+            ],
+            "correct_answer": 1,
+            "explanation": "React compares the Virtual DOM with the real DOM and only updates the parts that changed (Reconciliation)."
+        },
+        {
+            "question_text": "How do you pass a value named 'title' into a component named 'Header'?",
+            "options": [
+                "<Header title='My Website' />",
+                "<Header {title: 'My Website'} />",
+                "<Header @title='My Website' />",
+                "<Header TITLE='My Website' />"
+            ],
+            "correct_answer": 0,
+            "explanation": "Props are passed like HTML attributes."
+        },
+        {
+            "question_text": "What does it mean that React data flow is 'Unidirectional'?",
+            "options": [
+                "Data can only be changed by the user",
+                "Data flows only from parent to child via props",
+                "Data can only move horizontally between siblings",
+                "Data never changes"
+            ],
+            "correct_answer": 1,
+            "explanation": "This makes behavior more predictable and easier to debug."
+        },
+        {
+            "question_text": "What is 'Lifting State Up'?",
+            "options": [
+                "Moving state from a parent to a child",
+                "Moving state from a child to its nearest common ancestor so multiple children can share it",
+                "Deleting state to save memory",
+                "Sending state to a server"
+            ],
+            "correct_answer": 1,
+            "explanation": "This is the standard way to share data between sibling components in React."
+        },
+        {
+            "question_text": "In JSX, how do you embed a variable named 'username'?",
+            "options": [
+                "<span>${username}</span>",
+                "<span>(username)</span>",
+                "<span>{username}</span>",
+                "<span>[[username]]</span>"
+            ],
+            "correct_answer": 2,
+            "explanation": "Curly braces {} are used to execute JavaScript logic inside JSX."
+        },
+        {
+            "question_text": "What is the purpose of 'Fragments' (<>...</>)?",
+            "options": [
+                "To speed up the app",
+                "To group multiple elements without adding an extra unnecessary <div> to the DOM",
+                "To create animations",
+                "To hide elements"
+            ],
+            "correct_answer": 1,
+            "explanation": "Fragments keep the DOM tree cleaner."
+        },
+        {
+            "question_text": "True or False: A React component can return multiple sibling elements without a wrapper.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "A component must return a single root element (or a Fragment)."
+        },
+        {
+            "question_text": "What is 'Composition' in React?",
+            "options": [
+                "Writing music with code",
+                "Using 'children' or specific props to pass components into other components",
+                "Merging two files together",
+                "A type of CSS layout"
+            ],
+            "correct_answer": 1,
+            "explanation": "Composition is preferred over inheritance for building flexible UI components."
+        },
+        {
+            "question_text": "How do you access the content between the opening and closing tags of a component?",
+            "options": [
+                "props.content",
+                "props.children",
+                "props.inner",
+                "props.body"
+            ],
+            "correct_answer": 1,
+            "explanation": "The 'children' prop is automatically populated with nested content."
+        },
+        {
+            "question_text": "Which of these is a functional component?",
+            "options": [
+                "class MyComp extends React.Component { ... }",
+                "function MyComp() { return <h1>Hi</h1>; }",
+                "const MyComp = <h1>Hi</h1>;",
+                "new React.Component()"
+            ],
+            "correct_answer": 1,
+            "explanation": "Functional components are now the standard in modern React development."
+        },
+        {
+            "question_text": "What is the difference between a Component and an Element in React?",
+            "options": [
+                "They are the same",
+                "A Component is a blueprint (function); an Element is a specific instance (returned object)",
+                "Components are in HTML, Elements are in JS",
+                "Elements are only for the backend"
+            ],
+            "correct_answer": 1,
+            "explanation": "Calling a component function produces a React element."
+        }
+    ]
+}

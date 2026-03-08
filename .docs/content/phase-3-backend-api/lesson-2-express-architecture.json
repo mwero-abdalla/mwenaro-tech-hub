@@ -1,0 +1,184 @@
+{
+    "title": "Express Architecture",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=L72fhGm1tfE",
+    "content": "## 🛠️ The Minimalist Web Framework\n\nExpress is the most popular framework for Node.js. It simplifies routing and handling requests through a concept called **Middleware**.\n\n---\n\n## 1️⃣ Middleware: The Assembly Line\n\nA request in Express is like a product on a conveyor belt. It passes through several functions (middleware) before the response is sent.\n\n```javascript\napp.use((req, res, next) => {\n  console.log(\"Logging request...\");\n  next(); // Pass to the next function\n});\n```\n\n---\n\n## 2️⃣ Routing & Parameters\n\nExpress makes it easy to handle specific URLs and methods.\n\n```javascript\napp.get('/users/:id', (req, res) => {\n  const id = req.params.id;\n  res.json({ userId: id });\n});\n```\n\n---\n\n## 3️⃣ Error Handling: The Last Stop\n\nInstead of putting `try/catch` in every route, we use **Centralized Error Middleware** to catch everything in one place.\n\n```javascript\napp.use((err, req, res, next) => {\n  res.status(500).send(\"Something broke!\");\n});\n```\n\n---\n\n## 💡 Professional Tip\nAlways use `express.json()` middleware at the top of your app to automatically parse JSON data in the request body.",
+    "questions": [
+        {
+            "question_text": "What is the primary function of 'next()' in an Express middleware?",
+            "options": [
+                "To send the response to the client",
+                "To stop the server",
+                "To pass the request to the next middleware in the stack",
+                "To go to the next page"
+            ],
+            "correct_answer": 2,
+            "explanation": "If next() is not called, the request will hang and the next middleware/route will never be reached."
+        },
+        {
+            "question_text": "What is Express.js?",
+            "options": [
+                "A type of database",
+                "A minimal and flexible Node.js web application framework",
+                "A new programming language",
+                "A tool for front-end styling"
+            ],
+            "correct_answer": 1,
+            "explanation": "Express provides a robust set of features to build web and mobile applications."
+        },
+        {
+            "question_text": "How do you create a new Express application instance?",
+            "options": [
+                "const app = new Express();",
+                "const app = express();",
+                "const app = createServer();",
+                "const app = express.init();"
+            ],
+            "correct_answer": 1,
+            "explanation": "You invoke the express function exported by the library."
+        },
+        {
+            "question_text": "What does a Route consist of in Express?",
+            "options": [
+                "A URL only",
+                "A path, an HTTP method (GET, POST, etc.), and a handler function",
+                "A CSS file",
+                "A database table"
+            ],
+            "correct_answer": 1,
+            "explanation": "Example: `app.get('/home', (req, res) => { ... })`."
+        },
+        {
+            "question_text": "What is 'Middleware' in Express?",
+            "options": [
+                "Software for the middle of the room",
+                "Functions that have access to the request object (req), the response object (res), and the next middleware function",
+                "A security firewall",
+                "A type of image processing"
+            ],
+            "correct_answer": 1,
+            "explanation": "Middleware can execute code, modify req/res, and end the cycle or call 'next()'."
+        },
+        {
+            "question_text": "Which method is used to send a JSON response to the client?",
+            "options": [
+                "res.send()",
+                "res.json()",
+                "res.write()",
+                "res.output()"
+            ],
+            "correct_answer": 1,
+            "explanation": "res.json() automatically sets the Content-Type header to application/json."
+        },
+        {
+            "question_text": "How do you access URL parameters like /users/:id?",
+            "options": [
+                "req.body.id",
+                "req.params.id",
+                "req.query.id",
+                "req.url.id"
+            ],
+            "correct_answer": 1,
+            "explanation": "Route parameters are stored in the req.params object."
+        },
+        {
+            "question_text": "What is the purpose of `app.use()`?",
+            "options": [
+                "To define a GET route",
+                "To apply middleware globally or to a specific path",
+                "To start the server",
+                "To connect to MongoDB"
+            ],
+            "correct_answer": 1,
+            "explanation": "Commonly used for body-parsing, logging, and CORS."
+        },
+        {
+            "question_text": "Which built-in middleware is used to parse incoming JSON payloads?",
+            "options": [
+                "app.use(express.json())",
+                "app.use(jsonParser)",
+                "app.use(express.body())",
+                "app.use(body.json())"
+            ],
+            "correct_answer": 0,
+            "explanation": "This allows you to access `req.body` in POST/PUT requests."
+        },
+        {
+            "question_text": "What does 'req' represent in the handler `(req, res) => {}`?",
+            "options": [
+                "The Response object",
+                "The Request object (incoming data from the client)",
+                "A required field",
+                "The current route"
+            ],
+            "correct_answer": 1,
+            "explanation": "It contains headers, query params, body, and more."
+        },
+        {
+            "question_text": "What does 'res' represent?",
+            "options": [
+                "The result of the database query",
+                "The Response object (used to send data back to the client)",
+                "The rest of the code",
+                "A reserved keyword"
+            ],
+            "correct_answer": 1,
+            "explanation": "Methods like .send(), .json(), and .status() are called on this object."
+        },
+        {
+            "question_text": "How do you set an HTTP status code (like 404) in Express?",
+            "options": [
+                "res.status(404)",
+                "res.code(404)",
+                "res.set(404)",
+                "res.error(404)"
+            ],
+            "correct_answer": 0,
+            "explanation": "Often chained: `res.status(404).json({ message: 'Not Found' })`."
+        },
+        {
+            "question_text": "What is an Express Router?",
+            "options": [
+                "A physical device for internet",
+                "A mini-application used to group related routes into separate files (modularization)",
+                "A tool for navigation",
+                "A type of loop"
+            ],
+            "correct_answer": 1,
+            "explanation": "Routers make big apps easier to manage."
+        },
+        {
+            "question_text": "Which method starts the server listening for connections?",
+            "options": [
+                "app.start()",
+                "app.listen(port, callback)",
+                "app.open()",
+                "app.run()"
+            ],
+            "correct_answer": 1,
+            "explanation": "This is usually the last line in your main server file."
+        },
+        {
+            "question_text": "How do you handle Query Parameters (e.g., ?page=2)?",
+            "options": [
+                "req.params.page",
+                "req.query.page",
+                "req.body.page",
+                "req.url.search"
+            ],
+            "correct_answer": 1,
+            "explanation": "Query strings are automatically parsed into req.query."
+        },
+        {
+            "question_text": "What is the result of calling `res.end()` without any data?",
+            "options": [
+                "The server crashes",
+                "The response is finished immediately without sending any content",
+                "The user is logged out",
+                "A blank page is shown"
+            ],
+            "correct_answer": 1,
+            "explanation": "Useful for finishing a response cycle quickly."
+        }
+    ]
+}

@@ -1,0 +1,182 @@
+{
+    "title": "Caching & Performance Tuning",
+    "has_project": true,
+    "video_url": "https://www.youtube.com/watch?v=R9KNDYv-8x0",
+    "content": "## 🏎️ The Need for Speed\n\nA one-second delay in page load can lead to a 7% drop in conversions. Performance is a feature, not an afterthought.\n\n---\n\n## 1️⃣ Caching Layers\n\n1.  **Browser Cache**: Storing assets locally on the user's device.\n2.  **CDN Cache**: Storing assets on edge servers close to the user.\n3.  **Server Cache (Redis)**: Storing expensive database results in RAM so you don't hit the database every time.\n\n---\n\n## 2️⃣ Database Profiling\n\nAs your data grows, simple queries become slow. Use **Explain Plans** in MongoDB to see how the database is executing your query. If it's doing a \"Collection Scan,\" you need an **Index**.\n\n---\n\n## 3️⃣ Core Web Vitals\n\nGoogle ranks your site based on these metrics:\n*   **LCP (Largest Contentful Paint)**: How fast does the main content appear?\n*   **FID (First Input Delay)**: How fast does the site react to a click?\n*   **CLS (Cumulative Layout Shift)**: Does the page jump around while loading?\n\n---\n\n## ✅ Deliverable: Final Bootcamp Project\nDeploy a high-performance MERN + Next.js application. It must score 90+ on Lighthouse, implement ISR for static data, and use Redis or equivalent caching for expensive API endpoints.",
+    "questions": [
+        {
+            "question_text": "What is the primary benefit of using a CDN (Content Delivery Network)?",
+            "options": [
+                "It makes your database larger",
+                "It delivers assets from a server physically closer to the user to reduce latency",
+                "It replaces the need for a backend server",
+                "It encrypts all user passwords"
+            ],
+            "correct_answer": 1,
+            "explanation": "By distributing your content across global servers, a CDN ensures that a user in Nairobi gets data from a nearby server instead of one in New York."
+        },
+        {
+            "question_text": "What is a 'Cache' in web development?",
+            "options": [
+                "A fast, temporary storage layer that holds data so future requests for that data can be served faster",
+                "A type of money",
+                "A permanent database",
+                "Encrypted data"
+            ],
+            "correct_answer": 0,
+            "explanation": "Caching avoids re-calculating or re-fetching data multiple times."
+        },
+        {
+            "question_text": "What is the 'Cache-Control' header used for?",
+            "options": [
+                "To control who can see the site",
+                "To tell browsers and CDNs how long they should store a copy of a file",
+                "To change the site title",
+                "To delete the cache"
+            ],
+            "correct_answer": 1,
+            "explanation": "Setting a long 'max-age' for images and CSS improves site speed for returning visitors."
+        },
+        {
+            "question_text": "What is 'Redis'?",
+            "options": [
+                "A red-colored UI theme",
+                "An open-source, in-memory data store frequently used as a database cache",
+                "A CSS framework",
+                "A search engine"
+            ],
+            "correct_answer": 1,
+            "explanation": "Redis is extremely fast because it stores everything in RAM instead of on a disk."
+        },
+        {
+            "question_text": "What is 'Lighthouse' in Chrome DevTools?",
+            "options": [
+                "A tool for finding lights",
+                "An automated tool for improving the quality of web pages (performance, SEO, accessibility)",
+                "A code editor",
+                "A security firewall"
+            ],
+            "correct_answer": 1,
+            "explanation": "Lighthouse gives you a score and specific suggestions to make your site faster."
+        },
+        {
+            "question_text": "What is 'Code Splitting'?",
+            "options": [
+                "Breaking your code into multiple small files that are only loaded when needed",
+                "Writing code in two languages",
+                "Deleting half of the code",
+                "A bug"
+            ],
+            "correct_answer": 0,
+            "explanation": "This prevents users from downloading the 'Admin Dashboard' code when they are only visiting the 'Home' page."
+        },
+        {
+            "question_text": "What is 'Tree Shaking'?",
+            "options": [
+                "Cleaning up the office",
+                "A build process that removes unused (dead) code from your final bundle",
+                "Creating a file tree",
+                "A type of database indexing"
+            ],
+            "correct_answer": 1,
+            "explanation": "It 'shakes' the tree of your dependencies and only keeps the parts you actually used."
+        },
+        {
+            "question_text": "What is a 'Bottleneck' in a system?",
+            "options": [
+                "The neck of a bottle",
+                "The slowest part of a system that limits the overall performance",
+                "A security vulnerability",
+                "A type of error"
+            ],
+            "correct_answer": 1,
+            "explanation": "Common bottlenecks include slow database queries or unoptimized loops."
+        },
+        {
+            "question_text": "What is 'Database Profiling'?",
+            "options": [
+                "Taking a picture of the DB",
+                "The process of analyzing queries to find which ones are slow and need optimization (e.g., adding an index)",
+                "Deleting the database",
+                "Creating a user profile"
+            ],
+            "correct_answer": 1,
+            "explanation": "Profiling helps you identify 'The N+1 Problem' and other efficiency issues."
+        },
+        {
+            "question_text": "What is a 'Cold Start' in serverless functions?",
+            "options": [
+                "Starting an engine in winter",
+                "The delay that occurs when a serverless function is triggered for the first time after being idle",
+                "A computer virus",
+                "A slow internet connection"
+            ],
+            "correct_answer": 1,
+            "explanation": "Serverless platforms spin down code when not in use; waking it up takes time."
+        },
+        {
+            "question_text": "What is 'Gzip' or 'Brotli' compression?",
+            "options": [
+                "Algorithms that shrink the size of your HTML/JS/CSS files during transmission",
+                "A way to encrypt passwords",
+                "A type of image format",
+                "A build tool"
+            ],
+            "correct_answer": 0,
+            "explanation": "Compressed files can be up to 70% smaller, leading to faster downloads."
+        },
+        {
+            "question_text": "What is the 'Time to First Byte' (TTFB)?",
+            "options": [
+                "How long it takes the user to click",
+                "The time it takes for the browser to receive the first byte of data from the server",
+                "The file size",
+                "The time to finish the build"
+            ],
+            "correct_answer": 1,
+            "explanation": "A high TTFB usually indicates slow server processing or database queries."
+        },
+        {
+            "question_text": "What is 'Memoization' (e.g., React.memo or useMemo)?",
+            "options": [
+                "Remembering passwords",
+                "Storing the results of expensive function calls and returning the cached result when the same inputs occur again",
+                "A type of documentation",
+                "Deleting state"
+            ],
+            "correct_answer": 1,
+            "explanation": "Memoization helps prevent unnecessary re-renders in React."
+        },
+        {
+            "question_text": "What is an 'Edge Network'?",
+            "options": [
+                "A network for browsers",
+                "A network of servers located geographically close to the user (e.g., Vercel Edge, Cloudflare)",
+                "A type of CSS border",
+                "The end of the site"
+            ],
+            "correct_answer": 1,
+            "explanation": "Executing code 'at the edge' reduces latency significantly."
+        },
+        {
+            "question_text": "What is 'Invalidating' a cache?",
+            "options": [
+                "Making the cache illegal",
+                "The process of declaring cached data as 'old' and forcing the system to fetch fresh data",
+                "Formatting the cache",
+                "A security hack"
+            ],
+            "correct_answer": 1,
+            "explanation": "You should invalidate a cache when the underlying data in the database changes."
+        },
+        {
+            "question_text": "True or False: More RAM always makes a slow database query faster.",
+            "options": [
+                "False (You usually need better indexes or query logic)",
+                "True"
+            ],
+            "correct_answer": 0,
+            "explanation": "Scaling 'out' (more hardware) is often more expensive and less effective than scaling 'up' (better code and indexing)."
+        }
+    ]
+}

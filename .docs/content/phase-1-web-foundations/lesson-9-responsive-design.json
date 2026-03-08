@@ -1,0 +1,184 @@
+{
+    "title": "Responsive Design",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=srvUrASNj0s",
+    "content": "## 📱 The Mobile-First Revolution\n\nOver 50% of web traffic is mobile. We don't build \"desktop sites\" anymore; we build sites that **adapt**.\n\n---\n\n## 1️⃣ Media Queries\n\nMedia queries allow you to apply CSS only if a condition is met (like screen width).\n\n```css\n/* Standard Layout (Mobile) */\n.card { width: 100%; }\n\n/* Desktop Layout (Screen >= 768px) */\n@media (min-width: 768px) {\n  .card { width: 50%; }\n}\n```\n\n---\n\n## 2️⃣ Viewport Meta Tag\n\nWithout this tag, mobile browsers will assume you're on a desktop and scale down the text until it's unreadable.\n\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n```\n\n---\n\n## 3️⃣ Fluid Typography & Images\n\n*   `font-size: 1.5rem;` - Scales based on user browser settings.\n*   `max-width: 100%; height: auto;` - Ensures images never overflow their container.",
+    "questions": [
+        {
+            "question_text": "What does the 'min-width: 768px' media query condition target?",
+            "options": [
+                "Screens smaller than 768px",
+                "Screens exactly 768px",
+                "Screens 768px and larger",
+                "Only landscape orientations"
+            ],
+            "correct_answer": 2,
+            "explanation": "'min-width' means the CSS will apply once the screen reaches a minimum of 768px, targeting larger devices."
+        },
+        {
+            "question_text": "What is the primary tool used in CSS for Responsive Design?",
+            "options": [
+                "Flexbox",
+                "Media Queries",
+                "JavaScript",
+                "HTML5"
+            ],
+            "correct_answer": 1,
+            "explanation": "Media queries allow you to apply different styles based on device characteristics like screen width."
+        },
+        {
+            "question_text": "What does a 'Mobile-First' approach mean in CSS?",
+            "options": [
+                "Writing styles for desktop first and then shrinking them",
+                "Writing styles for small screens first and using 'min-width' queries for larger screens",
+                "Only building apps for mobile phones",
+                "Hiding the desktop version of a site"
+            ],
+            "correct_answer": 1,
+            "explanation": "Mobile-first is more efficient as mobile devices have less processing power and should load fewer styles initially."
+        },
+        {
+            "question_text": "Which meta tag is required for responsive websites to scale correctly on mobile devices?",
+            "options": [
+                "<meta name='mobile'>",
+                "<meta name='viewport' content='width=device-width, initial-scale=1.0'>",
+                "<meta charset='UTF-8'>",
+                "<meta name='description'>"
+            ],
+            "correct_answer": 1,
+            "explanation": "The viewport meta tag tells the browser how to control the page's dimensions and scaling."
+        },
+        {
+            "question_text": "What is a 'Breakpoint'?",
+            "options": [
+                "A bug in the code that stops execution",
+                "The specific screen width at which the layout changes using a media query",
+                "A coffee break for developers",
+                "A way to stop an animation"
+            ],
+            "correct_answer": 1,
+            "explanation": "Breakpoints are typically set at common screen widths like 768px (tablet) or 1024px (laptop)."
+        },
+        {
+            "question_text": "Which CSS unit is typically used for responsive typography that scales with the screen?",
+            "options": [
+                "px",
+                "rem or vw",
+                "pt",
+                "cm"
+            ],
+            "correct_answer": 1,
+            "explanation": "rem (relative to root font) and vw (viewport width) are preferred for elasticity."
+        },
+        {
+            "question_text": "How do you target screens that are WIDER than 768px in a media query?",
+            "options": [
+                "@media (max-width: 768px)",
+                "@media (min-width: 768px)",
+                "@media (screen: 768px)",
+                "@media (width > 768px)"
+            ],
+            "correct_answer": 1,
+            "explanation": "min-width targets everything from that size up."
+        },
+        {
+            "question_text": "What happens if you don't use 'responsive design' on a modern website?",
+            "options": [
+                "The server will crash",
+                "The site will appear tiny and unreadable on smartphones",
+                "Search engines will rank it higher",
+                "JavaScript will stop working"
+            ],
+            "correct_answer": 1,
+            "explanation": "Non-responsive sites expect a large desktop screen and don't adapt to smaller viewports."
+        },
+        {
+            "question_text": "Which property is often set to '100%' for images to make them responsive?",
+            "options": [
+                "height",
+                "max-width",
+                "min-width",
+                "scale"
+            ],
+            "correct_answer": 1,
+            "explanation": "Setting 'max-width: 100%' ensures images never get wider than their container."
+        },
+        {
+            "question_text": "What is 'Fluid Layout'?",
+            "options": [
+                "A layout that uses pixels for everything",
+                "A layout that uses percentages instead of fixed units like pixels",
+                "A site that has animations on every page",
+                "A site that uses video backgrounds"
+            ],
+            "correct_answer": 1,
+            "explanation": "Fluid layouts expand and contract smoothly with the browser window."
+        },
+        {
+            "question_text": "What does the 'vh' unit represent?",
+            "options": [
+                "Variable Height",
+                "1% of the Viewport Height",
+                "Vertical Header",
+                "Value in Hex"
+            ],
+            "correct_answer": 1,
+            "explanation": "100vh always takes up the full height of the visible screen area."
+        },
+        {
+            "question_text": "Why is 'px' generally avoided for container widths in responsive design?",
+            "options": [
+                "It is deprecated",
+                "It is a fixed unit and doesn't change size based on the screen",
+                "It causes security vulnerabilities",
+                "Browsers can't read pixels anymore"
+            ],
+            "correct_answer": 1,
+            "explanation": "Fixed widths lead to horizontal scrolling on smaller screens."
+        },
+        {
+            "question_text": "Which CSS property is useful for hiding items only on mobile?",
+            "options": [
+                "visibility: collapse",
+                "display: none (inside a media query)",
+                "opacity: 0",
+                "scale: 0"
+            ],
+            "correct_answer": 1,
+            "explanation": "You can wrap 'display: none' in a query like '@media (max-width: 600px)'."
+        },
+        {
+            "question_text": "What is the benefit of a 12-column grid system (like Bootstrap used)?",
+            "options": [
+                "It is faster to render",
+                "12 is divisible by 2, 3, 4, and 6, making it extremely flexible for different layouts",
+                "It uses less memory",
+                "It is the only way to build grids"
+            ],
+            "correct_answer": 1,
+            "explanation": "This allows for easy 50/50, 33/33/33, or 25/75 splits."
+        },
+        {
+            "question_text": "What is 'Container Queries' (the modern alternative to Media Queries)?",
+            "options": [
+                "Queries about your Docker containers",
+                "Styles that change based on the size of the parent element, not the whole screen",
+                "Questions asked to a database",
+                "A new version of Flexbox"
+            ],
+            "correct_answer": 1,
+            "explanation": "Container queries are perfect for reusable components that shift layout based on where they are placed."
+        },
+        {
+            "question_text": "In a Flexbox row, how do you make items wrap on mobile but stay in a row on desktop?",
+            "options": [
+                "Change display: flex to display: block",
+                "Use 'flex-wrap: wrap' on the container",
+                "Use media queries to change 'flex-direction' from 'column' to 'row' at a breakpoint",
+                "Both B and C"
+            ],
+            "correct_answer": 3,
+            "explanation": "Usually, you start with 'flex-direction: column' for mobile and switch to 'row' for larger screens."
+        }
+    ]
+}

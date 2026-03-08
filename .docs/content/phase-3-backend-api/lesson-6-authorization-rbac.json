@@ -1,0 +1,184 @@
+{
+    "title": "Authorization (RBAC)",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=J1qUK8P7940",
+    "content": "## 👮 Who Can Do What?\n\nAuthentication is \"Who are you?\". **Authorization** is \"What are you allowed to do?\". We use **RBAC** (Role-Based Access Control) to manage permissions.\n\n---\n\n## 1️⃣ Defining Roles\n\nCommon roles: `USER`, `INSTRUCTOR`, `ADMIN`.\n\n```javascript\nconst roles = {\n  USER: ['read:course'],\n  ADMIN: ['read:course', 'delete:course', 'manage:users']\n};\n```\n\n---\n\n## 2️⃣ Guarding the Routes\n\nWe use middleware to check if a user has the right \"Badge\" (Role) before they enter a route.\n\n```javascript\nconst isAdmin = (req, res, next) => {\n  if (req.user.role !== 'ADMIN') return res.status(403).send(\"Access Denied\");\n  next();\n};\n\napp.delete('/course/:id', isAdmin, deleteCourse);\n```\n\n---\n\n## 3️⃣ Permission Matrices\n\nInstead of hard-coding roles everywhere, professional systems use an **Ability Matrix**. This makes it easy to add new roles or change what an `INSTRUCTOR` can do without editing 50 different files.\n\n---\n\n## 💡 Professional Tip\nAlways check authorization on the BACKEND. Just because a button is hidden in CSS doesn't mean a smart user can't find your API endpoint.",
+    "questions": [
+        {
+            "question_text": "What is the difference between Authentication and Authorization?",
+            "options": [
+                "They are the same thing",
+                "Authentication verifies identity; Authorization verifies permissions",
+                "Authentication is for users; Authorization is for servers",
+                "Authentication is for public data; Authorization is for private data"
+            ],
+            "correct_answer": 1,
+            "explanation": "Verify identity first (AuthN), then check what that verified identity can access (AuthZ)."
+        },
+        {
+            "question_text": "What does RBAC stand for?",
+            "options": [
+                "Request Based Access Control",
+                "Role-Based Access Control",
+                "Random Binary Access Code",
+                "Remote Backend Action Center"
+            ],
+            "correct_answer": 1,
+            "explanation": "RBAC assigns permissions to roles (like 'admin') rather than individual users."
+        },
+        {
+            "question_text": "What is the primary benefit of RBAC?",
+            "options": [
+                "Faster login speed",
+                "Easier management; you change access for a whole role instead of 1000 individual users",
+                "Better UI design",
+                "Users don't need passwords"
+            ],
+            "correct_answer": 1,
+            "explanation": "Efficiency and consistency in scaling permissions."
+        },
+        {
+            "question_text": "What is 'ABAC' (Attribute-Based Access Control)?",
+            "options": [
+                "A simpler version of RBAC",
+                "Permission based on attributes like department, time of day, or location (more granular than roles)",
+                "Permission for alphabet apps",
+                "Deleting attributes"
+            ],
+            "correct_answer": 1,
+            "explanation": "ABAC allows for very specific logic (e.g., 'Only show this file to Managers in HR during working hours')."
+        },
+        {
+            "question_text": "What is the 'Principle of Least Privilege'?",
+            "options": [
+                "Giving everyone admin access",
+                "Users should only have the minimum access necessary to perform their job",
+                "Ignoring security",
+                "Charging users for permissions"
+            ],
+            "correct_answer": 1,
+            "explanation": "This reduces the damage if an account is compromised."
+        },
+        {
+            "question_text": "Where do you typically store a user's role?",
+            "options": [
+                "In the JWT Payload and the Database",
+                "In a text file",
+                "In the user's browser history",
+                "In the CSS"
+            ],
+            "correct_answer": 0,
+            "explanation": "Storing it in the JWT allows for fast checks on the server without a DB lookup for every request."
+        },
+        {
+            "question_text": "How do you protect a route so ONLY admins can access it?",
+            "options": [
+                "Naming the route /admin",
+                "Using a middleware that checks `req.user.role === 'admin'`",
+                "Telling the user not to click it",
+                "Using a hidden button"
+            ],
+            "correct_answer": 1,
+            "explanation": "Middleware is the standard way to enforce RBAC."
+        },
+        {
+            "question_text": "What is a 'Permission Matrix'?",
+            "options": [
+                "A movie about code",
+                "A table showing which roles have which permissions (Create, Read, Update, Delete)",
+                "A complex algorithm",
+                "A list of all users"
+            ],
+            "correct_answer": 1,
+            "explanation": "Essential for planning security in large applications."
+        },
+        {
+            "question_text": "What is 'Scope' in OAuth?",
+            "options": [
+                "A telescope for code",
+                "A mechanism to limit an application's access to a user's account (e.g., 'read-only' access)",
+                "A new feature in JS",
+                "A global variable"
+            ],
+            "correct_answer": 1,
+            "explanation": "Scopes define the 'width' of the access given to a 3rd party app."
+        },
+        {
+            "question_text": "In a blog app, which role should have the 'delete post' permission?",
+            "options": [
+                "Guest",
+                "The Post Author or Admin",
+                "Any logged-in user",
+                "Nobody"
+            ],
+            "correct_answer": 1,
+            "explanation": "Ownership is a key part of authorization (Resource-Based Authorization)."
+        },
+        {
+            "question_text": "What is 'Multi-Tenancy'?",
+            "options": [
+                "Having 10 users",
+                "A single instance of software serving multiple groups of users (tenants) while keeping their data completely isolated",
+                "Renting a server",
+                "A type of cloud storage"
+            ],
+            "correct_answer": 1,
+            "explanation": "Crucial for SaaS platforms (like Slack or Trello)."
+        },
+        {
+            "question_text": "Which HTTP status code should you return if a user is logged in but doesn't have the right permissions?",
+            "options": [
+                "401 Unauthorized",
+                "403 Forbidden",
+                "404 Not Found",
+                "500 Server Error"
+            ],
+            "correct_answer": 1,
+            "explanation": "401 means 'I don't know who you are'; 403 means 'I know you, but you aren't allowed here'."
+        },
+        {
+            "question_text": "What is a 'Super Admin' role?",
+            "options": [
+                "A role with zero permissions",
+                "A special role with absolute power over the entire system and all other admins",
+                "A user with a subscription",
+                "A myth"
+            ],
+            "correct_answer": 1,
+            "explanation": "Super Admins are usually the developers or platform owners."
+        },
+        {
+            "question_text": "How do you handle 'Dynamic Permissions' (permissions that change based on data)?",
+            "options": [
+                "You can't do it with RBAC",
+                "By writing custom logic inside your middleware or using advanced libraries like CASL",
+                "By restarting the server",
+                "By asking the user"
+            ],
+            "correct_answer": 1,
+            "explanation": "Dynamic logic handles things like 'Can edit post ONLY IF it was created in the last 2 hours'."
+        },
+        {
+            "question_text": "Why is it dangerous to trust the 'user_id' sent in a POST request body for authorization?",
+            "options": [
+                "It isn't dangerous",
+                "A user could change the ID to someone else's and steal/modify their data",
+                "ID is too long",
+                "It ruins the formatting"
+            ],
+            "correct_answer": 1,
+            "explanation": "ALWAYS use the user_id extracted from the secure token (JWT) instead of the request body."
+        },
+        {
+            "question_text": "What is 'Revoking' a permission?",
+            "options": [
+                "Saying it again",
+                "Taking away access that was previously given",
+                "Adding a new role",
+                "Deleting a user"
+            ],
+            "correct_answer": 1,
+            "explanation": "Systems must be able to remove access instantly if a user is fired or a role changes."
+        }
+    ]
+}

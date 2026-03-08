@@ -1,0 +1,182 @@
+{
+    "title": "State Management (Basic)",
+    "has_project": false,
+    "video_url": "https://www.youtube.com/watch?v=4pO-HcG2igk",
+    "content": "## 🧠 The Memory of a Component\n\nProps are read-only. If you want a component to \"remember\" things that change (like a counter or a form input), you use **State**.\n\n---\n\n## 1️⃣ The `useState` Hook\n\n`useState` is a function that returns an array with two items: the current value and a function to update it.\n\n```javascript\nimport { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Count: {count}\n    </button>\n  );\n}\n```\n\n---\n\n## 2️⃣ Derived State\n\nDon't put things in state if you can calculate them from existing state or props. \n*   **Bad**: `const [fullName, setFullName] = useState(firstName + ' ' + lastName);` \n*   **Good**: `const fullName = firstName + ' ' + lastName;` (Just a variable inside the component).\n\n---\n\n## 3️⃣ Lifting State Up\n\nWhen two components need to share the same changing data, move the state to their **closest common parent** and pass it down via props.\n\n---\n\n## ⚠️ Warning\nNever modify state directly (e.g., `count = count + 1`). Always use the setter function to trigger a re-render.",
+    "questions": [
+        {
+            "question_text": "Why shouldn't you modify state variables directly in React?",
+            "options": [
+                "It causes a syntax error",
+                "It won't trigger a re-render of the component",
+                "It is deprecated in newer versions",
+                "It makes the code unreadable"
+            ],
+            "correct_answer": 1,
+            "explanation": "React only knows to update the UI when the setter function from useState is called."
+        },
+        {
+            "question_text": "What is 'State' in React?",
+            "options": [
+                "A global variable for the whole website",
+                "An object that holds information that may change over the lifetime of a specific component",
+                "The current URL path",
+                "The configuration of the server"
+            ],
+            "correct_answer": 1,
+            "explanation": "When state changes, the component automatically re-renders to reflect the new data."
+        },
+        {
+            "question_text": "Which Hook is used to manage state in a functional component?",
+            "options": [
+                "useEffect",
+                "useContext",
+                "useState",
+                "useRef"
+            ],
+            "correct_answer": 2,
+            "explanation": "useState returns a state variable and a function to update it."
+        },
+        {
+            "question_text": "What happens when you call the 'setState' function?",
+            "options": [
+                "The browser refreshes",
+                "The component re-renders",
+                "The page background changes",
+                "Nothing until the next click"
+            ],
+            "correct_answer": 1,
+            "explanation": "React schedules a re-render of the component and its children."
+        },
+        {
+            "question_text": "How do you initialize a state variable 'count' to 0?",
+            "options": [
+                "const count = 0;",
+                "const [count, setCount] = useState(0);",
+                "let count = useState(0);",
+                "const count = new State(0);"
+            ],
+            "correct_answer": 1,
+            "explanation": "This follows the destructuring pattern required by useState."
+        },
+        {
+            "question_text": "Can you change state directly (e.g., count = count + 1)?",
+            "options": [
+                "Yes, it's a regular variable",
+                "No, you must always use the setter function to trigger a re-render",
+                "Only in class components",
+                "Yes, but only for numbers"
+            ],
+            "correct_answer": 1,
+            "explanation": "Direct mutation won't trigger React's rendering engine."
+        },
+        {
+            "question_text": "What is 'Immutability' in React state?",
+            "options": [
+                "Never changing the state",
+                "Creating a new copy of an object/array instead of modifying the existing one",
+                "Using 'const' for everything",
+                "Setting values to null"
+            ],
+            "correct_answer": 1,
+            "explanation": "React relies on new object references to detect changes efficiently."
+        },
+        {
+            "question_text": "How do you update an object in state `{ name: 'John', age: 25 }` to change only the age?",
+            "options": [
+                "setUser({ age: 26 })",
+                "user.age = 26; setUser(user)",
+                "setUser({ ...user, age: 26 })",
+                "setUser(user.age = 26)"
+            ],
+            "correct_answer": 2,
+            "explanation": "The spread operator (...) copies the existing properties, then overrides the specific one."
+        },
+        {
+            "question_text": "What is the result of `const [val, setVal] = useState();` (no initial value)?",
+            "options": [
+                "Error",
+                "null",
+                "undefined",
+                "0"
+            ],
+            "correct_answer": 2,
+            "explanation": "If no initial value is passed, the state is 'undefined'."
+        },
+        {
+            "question_text": "What is 'State Co-location'?",
+            "options": [
+                "Moving all state to the very top component",
+                "Keeping state as close as possible to where it is being used",
+                "Storing state in a database",
+                "Sharing state between different websites"
+            ],
+            "correct_answer": 1,
+            "explanation": "Co-location improves performance and makes components easier to move/refactor."
+        },
+        {
+            "question_text": "When should you use 'props' vs 'state'?",
+            "options": [
+                "Props for data that changes; State for data passed in",
+                "Props for data passed from parent; State for internal data that changes within the component",
+                "They are interchangeable",
+                "State is for the backend; Props is for CSS"
+            ],
+            "correct_answer": 1,
+            "explanation": "Props are like function arguments; State is like internal variables."
+        },
+        {
+            "question_text": "What is a 'controlled component' in React forms?",
+            "options": [
+                "A component that is password protected",
+                "An input whose value is determined by the React state",
+                "A component that has no styles",
+                "A component that cannot be moved"
+            ],
+            "correct_answer": 1,
+            "explanation": "React becomes the 'single source of truth' for the form value."
+        },
+        {
+            "question_text": "True or False: useState updates are always synchronous.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correct_answer": 1,
+            "explanation": "React may batch state updates for performance, so they behave asynchronously."
+        },
+        {
+            "question_text": "How do you update state based on a previous value (e.g., incrementing)?",
+            "options": [
+                "setCount(count + 1)",
+                "setCount(prev => prev + 1)",
+                "count++",
+                "update(count + 1)"
+            ],
+            "correct_answer": 1,
+            "explanation": "The functional update pattern (prev => ...) is safer when updates rely on the current state value."
+        },
+        {
+            "question_text": "What is the purpose of 'Batching' in React?",
+            "options": [
+                "To make the code look messy",
+                "To group multiple state updates into a single re-render for better performance",
+                "To delete multiple states at once",
+                "To send data to the server in chunks"
+            ],
+            "correct_answer": 1,
+            "explanation": "React 18 introduced 'Automatic Batching' for almost all updates."
+        },
+        {
+            "question_text": "Why shouldn't you use props directly in useState (e.g., `useState(props.user)`) unless it's for 'initial' only?",
+            "options": [
+                "It's a security risk",
+                "The state won't update automatically if the prop changes later; it only sets the value once at mount",
+                "It's too slow",
+                "It causes a recursion error"
+            ],
+            "correct_answer": 1,
+            "explanation": "If you want it to stay synced, use the prop directly or 'useEffect'."
+        }
+    ]
+}

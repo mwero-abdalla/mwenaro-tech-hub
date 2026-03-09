@@ -71,9 +71,19 @@ export function ReceiptVoucher({ receipt }: ReceiptVoucherProps) {
 
                 <div className="border-t border-zinc-800/50 pt-8 space-y-4">
                     <div className="flex justify-between text-[9px] uppercase tracking-widest font-bold">
+                        <span>Payment Method</span>
+                        <span className="text-zinc-500">{receipt.provider || 'STRIPE'}</span>
+                    </div>
+                    <div className="flex justify-between text-[9px] uppercase tracking-widest font-bold">
                         <span>Provider Reference</span>
                         <span className="text-zinc-500">{receipt.provider_reference || 'INTERNAL_ALLOCATION'}</span>
                     </div>
+                    {receipt.description && (
+                         <div className="flex justify-between text-[9px] uppercase tracking-widest font-bold">
+                             <span>Notes</span>
+                             <span className="text-zinc-500 text-right max-w-[200px] truncate">{receipt.description}</span>
+                         </div>
+                    )}
                     <div className="flex justify-between text-[9px] uppercase tracking-widest font-bold">
                         <span>Checksum Analysis</span>
                         <span className="text-zinc-500">SHA256: {Math.random().toString(36).substring(7).toUpperCase()}...</span>

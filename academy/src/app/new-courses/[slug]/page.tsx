@@ -3,6 +3,7 @@ import path from 'path'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { VideoPlayer } from '@/components/video-player'
+import Mermaid from '@/components/mermaid'
 import { CheckCircle2, PlayCircle, BookOpen, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -156,7 +157,22 @@ export default async function NewCoursePreviewPage({
                     {/* Text Content */}
                     <article className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary">
                         <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 md:p-12 shadow-sm">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            <ReactMarkdown 
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                    code({ node, inline, className, children, ...props }: any) {
+                                        const match = /language-(\w+)/.exec(className || '')
+                                        if (!inline && match && match[1] === 'mermaid') {
+                                            return <Mermaid chart={String(children).replace(/\n$/, '')} />
+                                        }
+                                        return (
+                                            <code className={className} {...props}>
+                                                {children}
+                                            </code>
+                                        )
+                                    }
+                                }}
+                            >
                                 {activeLesson.content}
                             </ReactMarkdown>
                         </div>

@@ -97,6 +97,13 @@ export default async function AdminDashboard() {
                         </Card>
                     </Link>
 
+                    <Link href="/admin/dashboard/payments">
+                        <Card className="group p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-t-4 border-t-green-500 bg-card/50 backdrop-blur-sm">
+                            <h3 className="text-xl font-black mb-2 group-hover:text-green-500 transition-colors">Manual Payments</h3>
+                            <p className="text-muted-foreground leading-relaxed">Record offline payments, generate receipts, and grant course access.</p>
+                        </Card>
+                    </Link>
+
                     <Link href="/admin/analytics">
                         <Card className="group p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-t-4 border-t-secondary bg-card/50 backdrop-blur-sm">
                             <h3 className="text-xl font-black mb-2 group-hover:text-secondary transition-colors">Platform Intelligence</h3>

@@ -9,7 +9,9 @@ export interface Receipt {
     amount: number
     currency: string
     status: string
+    provider: string
     provider_reference: string
+    description?: string
     created_at: string
 }
 
@@ -28,7 +30,9 @@ export async function getMyReceipts(): Promise<Receipt[]> {
             amount,
             currency,
             status,
+            provider,
             provider_reference,
+            description,
             created_at,
             courses (
                 title
@@ -49,7 +53,9 @@ export async function getMyReceipts(): Promise<Receipt[]> {
         amount: p.amount,
         currency: p.currency,
         status: p.status,
+        provider: p.provider,
         provider_reference: p.provider_reference,
+        description: p.description,
         created_at: p.created_at
     }))
 }

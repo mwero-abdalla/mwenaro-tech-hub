@@ -1,5 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getAllCohorts, isAdmin } from '@/lib/admin'
+import { getAllCohorts, isAdmin, getAllPayments } from '@/lib/admin'
 import { redirect } from 'next/navigation'
 import AdminPaymentsClient from '@/components/admin/admin-payments-client'
 import Link from 'next/link'
@@ -16,11 +16,12 @@ export default async function AdminPaymentsPage() {
 
     const adminSupabase = createAdminClient()
 
-    // Fetch users (auth) and profiles
-    const [{ data: authData }, { data: profiles }, cohorts] = await Promise.all([
+    // Fetch users (auth), profiles, cohorts, and payments
+    const [{ data: authData }, { data: profiles }, cohorts, payments] = await Promise.all([
         adminSupabase.auth.admin.listUsers(),
         adminSupabase.from('profiles').select('id, full_name'),
-        getAllCohorts()
+        getAllCohorts(),
+        getAllPayments()
     ])
 
     const authUsers = authData?.users || []
@@ -58,7 +59,11 @@ export default async function AdminPaymentsPage() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-8">
-                    <AdminPaymentsClient users={users} cohorts={cohorts || []} />
+                    <AdminPaymentsClient 
+                        users={users} 
+                        cohorts={cohorts || []} 
+                        initialPayments={payments || []}
+                    />
                 </div>
             </div>
         </div>

@@ -629,8 +629,12 @@ export async function recordManualPayment(data: {
     description?: string,
     created_at?: string
 }) {
-    if (!await isAdmin()) throw new Error('Unauthorized')
-    const supabase = await createClient()
+    console.log('[recordManualPayment] Starting...', { user_id: data.user_id, course_id: data.course_id });
+    if (!await isAdmin()) {
+        console.error('[recordManualPayment] Unauthorized');
+        throw new Error('Unauthorized');
+    }
+    const supabase = createAdminClient()
 
     const paymentData = {
         user_id: data.user_id,
@@ -644,14 +648,19 @@ export async function recordManualPayment(data: {
         created_at: data.created_at || new Date().toISOString()
     }
 
+    console.log('[recordManualPayment] Inserting data...', paymentData);
     const { data: result, error } = await supabase
         .from('course_payments')
         .insert(paymentData)
         .select()
         .single()
 
-    if (error) throw new Error(error.message)
+    if (error) {
+        console.error('[recordManualPayment] Insert Error:', error);
+        throw new Error(error.message);
+    }
     
+    console.log('[recordManualPayment] Insert Successful. Updating enrollment...');
     // Attempt to also grant course access if not already enrolled/active
     try {
         const { data: enrollment } = await supabase
@@ -674,12 +683,67 @@ export async function recordManualPayment(data: {
             })
         }
     } catch (e) {
-        console.error("Failed to update enrollment after payment", e)
+        console.error("[recordManualPayment] Failed to update enrollment after payment", e)
     }
 
+    console.log('[recordManualPayment] Revalidating paths...');
     revalidatePath('/admin/dashboard/payments')
-    revalidatePath('/dashboard/payments')
+    revalidatePath('/dashboard/receipts')
 
     return result
+}
+
+export async function getAllPayments() {
+    if (!await isAdmin()) throw new Error('Unauthorized')
+    const supabase = createAdminClient()
+
+    // 1. Fetch payments with course titles
+    const { data: payments, error: pError } = await supabase
+        .from('course_payments')
+        .select(`
+            *,
+            courses:course_id (
+                title
+            )
+        `)
+        .order('created_at', { ascending: false })
+
+    if (pError) throw new Error(pError.message)
+    if (!payments || payments.length === 0) return []
+
+    // 2. Fetch unique profiles for these payments
+    const userIds = Array.from(new Set(payments.map(p => p.user_id)))
+    const { data: profiles, error: prError } = await supabase
+        .from('profiles')
+        .select('id, full_name, email')
+        .in('id', userIds)
+
+    if (prError) {
+        console.error('Error fetching profiles for payments:', prError)
+        // We can still return payments without profile names if needed, but let's try to be consistent
+    }
+
+    const profileMap = new Map((profiles || []).map(p => [p.id, p]))
+
+    // 3. Map them together
+    return payments.map(p => ({
+        ...p,
+        profiles: profileMap.get(p.user_id) || { full_name: 'Unknown', email: null }
+    }))
+}
+
+export async function deletePayment(id: string) {
+    if (!await isAdmin()) throw new Error('Unauthorized')
+    const supabase = createAdminClient()
+
+    const { error } = await supabase
+        .from('course_payments')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw new Error(error.message)
+    revalidatePath('/admin/dashboard/payments')
+    revalidatePath('/dashboard/receipts')
+    return { success: true }
 }
 

@@ -42,6 +42,7 @@ export default function ReceiptPreview({ receipt }: ReceiptPreviewProps) {
             {/* Receipt Card */}
             <div 
                 ref={printRef}
+                id="receipt-card"
                 className="w-full max-w-md bg-white text-gray-900 border border-gray-200 rounded-lg shadow-sm p-8 print:shadow-none print:border-none print:p-0"
             >
                 {/* Header */}
@@ -128,27 +129,28 @@ export default function ReceiptPreview({ receipt }: ReceiptPreviewProps) {
             </div>
 
             {/* Print Styles */}
-            <style jsx global>{`
+            <style dangerouslySetInnerHTML={{ __html: `
                 @media print {
                     body * {
                         visibility: hidden;
                     }
                     /* Make the receipt div and all its children visible */
-                    .flex.flex-col.items-center > div:nth-child(2),
-                    .flex.flex-col.items-center > div:nth-child(2) * {
+                    #receipt-card,
+                    #receipt-card * {
                         visibility: visible;
                     }
-                    .flex.flex-col.items-center > div:nth-child(2) {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100vw;
-                        border: none;
-                        box-shadow: none;
-                        padding: 2rem;
+                    #receipt-card {
+                        position: absolute !important;
+                        left: 0 !important;
+                        top: 0 !important;
+                        width: 100% !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
                     }
                 }
-            `}</style>
+            `}} />
         </div>
     )
 }

@@ -12,7 +12,8 @@ import {
     Settings,
     FileQuestion,
     Bell,
-    Award
+    Award,
+    Receipt
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -106,6 +107,11 @@ export function AdminSidebar({ user, ...props }: AdminSidebarProps) {
             title: "Cohorts",
             url: "/admin/cohorts",
             icon: UsersRound,
+        },
+        {
+            title: "Manual Payments",
+            url: "/admin/dashboard/payments",
+            icon: Receipt,
         },
         {
             title: "Analytics",

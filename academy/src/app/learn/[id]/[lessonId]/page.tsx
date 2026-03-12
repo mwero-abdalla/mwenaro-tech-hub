@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button'
 import { QuizModal } from '@/components/quiz-modal'
 import { ProjectSubmission } from '@/components/project-submission'
 import { VideoPlayer } from '@/components/video-player'
+import Mermaid from '@/components/mermaid'
+import { LessonQuiz } from '@/components/course/lesson-quiz'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Maximize2, Monitor } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface LessonPageProps {
@@ -57,12 +59,18 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
             {/* Top Bar / Metadata */}
             <div className="flex items-center justify-between group">
                 <div className="space-y-2">
-                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-primary/80 dark:text-primary">
-                        Module {currentIndex + 1} of {allLessons.length}
-                    </p>
-                    <h1 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-tight">
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                        <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                                Module {currentIndex + 1} of {allLessons.length}
+                            </p>
+                        </div>
+                    </div>
+                    <h1 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
                         {lesson.title}
                     </h1>
+                </div>
                 </div>
                 <Link href={`/courses/${courseId}/lessons/${lessonId}`}>
                     <Button variant="outline" size="sm" className="rounded-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity">
@@ -81,48 +89,37 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
 
             {/* Content & Activities */}
             <div className="grid grid-cols-1 gap-12">
-                <div className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold hover:prose-a:text-primary/80 prose-img:rounded-3xl prose-img:shadow-xl">
-                    <div className="rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/50 p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <div className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold hover:prose-a:text-primary/80 prose-img:rounded-3xl prose-img:shadow-xl prose-strong:font-black">
+                    <div className="rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/50 p-8 md:p-14 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
+                        <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                code({ node, inline, className, children, ...props }: any) {
+                                    const match = /language-(\w+)/.exec(className || "");
+                                    if (!inline && match && match[1] === "mermaid") {
+                                        return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                                    }
+                                    return (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    );
+                                },
+                            }}
+                        >
                             {lesson.content}
                         </ReactMarkdown>
                     </div>
                 </div>
 
                 <div className="grid gap-8">
-                    {/* Quiz Section */}
                     {questions.length > 0 && (
-                        <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100/50 dark:bg-zinc-900/30 p-10">
-                            <div className="mb-8 flex items-center justify-between">
-                                <div>
-                                    <h2 className="text-2xl font-black tracking-tight mb-1">Knowledge Check</h2>
-                                    <p className="text-sm text-zinc-500 font-medium">Verify your understanding of this module.</p>
-                                </div>
-                                {progress?.is_completed && (
-                                    <div className="flex items-center gap-2 bg-green-500 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-green-500/20">
-                                        Passed
-                                    </div>
-                                )}
-                            </div>
-                            {isInstructor ? (
-                                <p className="text-primary font-bold bg-primary/5 p-6 rounded-2xl border border-primary/20 italic">
-                                    Instructor Preview: Quizzes are disabled in this mode.
-                                </p>
-                            ) : progress?.is_completed ? (
-                                <p className="text-zinc-600 dark:text-zinc-400 font-medium bg-white dark:bg-zinc-800/50 p-6 rounded-2xl border border-green-500/20">
-                                    Bravo! You've mastered this quiz with a score of <span className="font-black text-zinc-900 dark:text-white">{progress.highest_quiz_score}%</span>.
-                                </p>
-                            ) : (
-                                <QuizModal
-                                    lessonId={lesson.id}
-                                    questions={questions}
-                                    initialProgress={progress ? {
-                                        highest_quiz_score: progress.highest_quiz_score,
-                                        quiz_attempts: progress.quiz_attempts
-                                    } : undefined}
-                                />
-                            )}
-                        </div>
+                        <LessonQuiz 
+                            questions={questions}
+                            lessonId={lessonId}
+                            userRole={user?.user_metadata?.role}
+                            nextLessonHref={nextLesson ? `/learn/${courseId}/${nextLesson.id}` : undefined}
+                        />
                     )}
 
                     {/* Project Section */}
@@ -156,16 +153,12 @@ export default async function ImmersiveLessonPage({ params }: LessonPageProps) {
             {/* Float Navigation */}
             <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 lg:pl-[340px] lg:pr-8 lg:max-w-none lg:left-0 lg:translate-x-0 lg:flex lg:justify-center">
                 <div className="bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/50 dark:border-zinc-800/50 px-6 py-4 rounded-3xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] backdrop-blur-xl flex items-center justify-between gap-10 w-full max-w-2xl transition-all duration-300 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.3)] hover:-translate-y-1">
-                    {prevLesson ? (
-                        <Link href={`/learn/${courseId}/${prevLesson.id}`}>
-                            <Button variant="ghost" className="font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white px-4 rounded-xl">
-                                <ChevronLeft className="w-5 h-5 mr-2" />
-                                Previous
-                            </Button>
-                        </Link>
-                    ) : (
-                        <div />
-                    )}
+                    <Link href={prevLesson ? `/learn/${courseId}/${prevLesson.id}` : `/courses/${courseId}`}>
+                        <Button variant="ghost" className="font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white px-4 rounded-xl">
+                            <ChevronLeft className="w-5 h-5 mr-2" />
+                            {prevLesson ? 'Previous' : 'Overview'}
+                        </Button>
+                    </Link>
 
                     <div className="hidden sm:flex flex-col items-center">
                         <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Progress</p>

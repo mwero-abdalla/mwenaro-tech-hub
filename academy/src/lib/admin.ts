@@ -502,7 +502,12 @@ export async function createQuestion(data: { lesson_id: string, question_text: s
     if (!await isAuthorizedForLesson(data.lesson_id)) throw new Error('Unauthorized')
     const supabase = await createClient()
     const { error } = await supabase.from('questions').insert(data)
-    if (error) throw new Error(error.message)
+    if (error) {
+        if (error.code === '23505') {
+            throw new Error('A question with this text already exists in this lesson.')
+        }
+        throw new Error(error.message)
+    }
 
     await revalidateLessonPaths(supabase, data.lesson_id)
 }
@@ -536,7 +541,7 @@ export async function createQuestionsBulk(lessonId: string, questions: { questio
         ...q
     }))
 
-    const { error } = await supabase.from('questions').insert(data)
+    const { error } = await supabase.from('questions').upsert(data, { onConflict: 'lesson_id, question_text', ignoreDuplicates: true })
     if (error) throw new Error(error.message)
 
     await revalidateLessonPaths(supabase, lessonId)

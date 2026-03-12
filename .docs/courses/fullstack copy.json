@@ -3,12 +3,9 @@
     "slug": "fullstack",
     "title": "MERN Full-Stack Engineering Bootcamp",
     "description": "The ultimate 37-module curriculum taking you from zero to deployed fullstack engineer, covering everything from DNS to Next.js caching.",
+    "difficulty": "Comprehensive",
     "price": 149.99,
     "total_modules": 37,
-    "duration": 24,
-    "difficulty": "Professional",
-    "course_overview": "# The Ultimate MERN Engineering Odyssey\n\nThis is not just a tutorial; it is an industrial-grade engineering bootcamp designed to take you from a curious beginner to a **Production-Ready Full-Stack Engineer**. Over 37 modules, you will master the entire modern web stack, moving beyond 'how' to code and into 'why' we architect systems the way we do.\n\n### Why this track?\n- **Architectural Depth**: We don't just build apps; we design systems. You'll learn Clean Architecture, RBAC, and JWT security.\n- **Modern Tech**: Master the T3 Stack philosophy using Next.js, TypeScript, and MongoDB.\n- **Real Engineering**: Go deep into Git internals, Node.js event loops, and performance tuning.\n\nWhether you're aiming for a role at a top-tier tech firm or building your own startup, this curriculum provides the exact technical blueprint used in high-traffic production environments.",
-    "course_outline": "### 🚀 Phase 1: Web Foundations\nMaster the absolute fundamentals. DNS, HTTP/S, Linux Terminal mastery, and advanced HTML/CSS architecture.\n\n### ⚛️ Phase 2: React Frontend Engineering\nShift into high-gear with React. Hooks, TypeScript, Global State Management, and performant UI architectures.\n\n### 🛠️ Phase 3: Backend API Engineering\nArchitect secure, scalable servers with Node.js and Express. Master MongoDB indexing, JWT Token Rotation, and RBAC.\n\n### 🔗 Phase 4: Fullstack Synergy\nBridge the gap. Axios interceptors, Auth Sync strategies, Optimistic UI patterns, and Cloud Asset handling.\n\n### 🏁 Phase 5: Advanced Production\nGo beyond the code. Next.js App Router architecture, Caching strategies, and Performance Tuning for scale.",
     "modules": [
         {
             "module_id": "e98fdc5a-4bb3-4121-af5f-7e5839d6b735",

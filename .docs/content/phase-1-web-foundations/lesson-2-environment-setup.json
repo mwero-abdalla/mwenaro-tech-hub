@@ -126,17 +126,6 @@
             "explanation": "The Elements panel lets you inspect and tweak the DOM (HTML) and CSS of a page, showing exactly how the browser understands and renders the page."
         },
         {
-            "question_text": "What does 'LTS' stand for when downloading Node.js?",
-            "options": [
-                "Latest Technical Standard",
-                "Long Term Support",
-                "Local Testing Server",
-                "Lightweight Terminal Shell"
-            ],
-            "correct_answer": 1,
-            "explanation": "LTS stands for Long Term Support. LTS versions of Node.js are recommended for most users because they guarantee stability and security updates for an extended period."
-        },
-        {
             "question_text": "Which terminal command is used to initialize a new Node.js project and create a package.json file?",
             "options": [
                 "node init",

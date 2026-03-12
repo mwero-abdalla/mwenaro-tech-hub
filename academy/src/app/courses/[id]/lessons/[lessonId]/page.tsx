@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button'
 import { QuizModal } from '@/components/quiz-modal'
 import { ProjectSubmission } from '@/components/project-submission'
 import { VideoPlayer } from '@/components/video-player'
-import { QuizReview } from '@/components/quiz-review'
+import Mermaid from '@/components/mermaid'
+import { LessonQuiz } from '@/components/course/lesson-quiz'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { ChevronLeft, ChevronRight, Monitor } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Monitor, PlayCircle, BookOpen, HelpCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface LessonPageProps {
@@ -95,9 +96,24 @@ export default async function LessonPage({ params }: LessonPageProps) {
                 {lesson.video_url && (
                     <VideoPlayer url={lesson.video_url} />
                 )}
-                <div className="prose prose-slate lg:prose-lg dark:prose-invert max-w-none">
-                    <div className="rounded-2xl border bg-card p-8 shadow-sm">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <div className="prose prose-slate lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:font-black">
+                    <div className="rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 bg-white dark:bg-zinc-900/50 p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+                        <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                code({ node, inline, className, children, ...props }: any) {
+                                    const match = /language-(\w+)/.exec(className || "");
+                                    if (!inline && match && match[1] === "mermaid") {
+                                        return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                                    }
+                                    return (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    );
+                                },
+                            }}
+                        >
                             {lesson.content}
                         </ReactMarkdown>
                     </div>
@@ -106,73 +122,14 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
             {/* Activity Sections */}
             <div className="grid gap-8">
-                {/* Quiz Section */}
-                {questions.length > 0 && (
-                    <div className="rounded-2xl border bg-muted/30 p-8">
-                        <div className="mb-6 flex items-center justify-between">
-                            <h2 className="text-2xl font-bold tracking-tight">Knowledge Check</h2>
-                            {progress?.is_completed && (
-                                <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                                    Passed
-                                </span>
-                            )}
-                        </div>
-                        {isInstructor ? (
-                            <p className="text-primary font-bold italic bg-primary/5 p-4 rounded-xl border border-primary/10">
-                                Instructor Preview: Quizzes are disabled.
-                            </p>
-                        ) : progress?.is_completed ? (
-                            <div className="space-y-6">
-                                <p className="text-muted-foreground">
-                                    You've already passed this quiz with a score of <span className="font-bold text-foreground">{progress.highest_quiz_score}%</span>.
-                                </p>
-                                {reviewData && (
-                                    <div className="border rounded-xl p-6 bg-background/50">
-                                        <h3 className="text-xl font-bold mb-4">Quiz Feedback</h3>
-                                        <QuizReview
-                                            questions={reviewData.questions as any}
-                                            answers={reviewData.user_answers}
-                                            correctAnswers={reviewData.questions.map((q: any) => q.correct_answer)}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        ) : latestSubmission ? (
-                            <div className="space-y-6 mt-6">
-                                <p className="text-muted-foreground">
-                                    Your latest attempt scored <span className="font-bold text-red-500">{latestSubmission.score}%</span>. You need 70% to pass.
-                                </p>
-                                {reviewData && (
-                                    <div className="border rounded-xl p-6 bg-red-50/10 border-red-100 dark:border-red-900/30">
-                                        <h3 className="text-xl font-bold text-red-800 dark:text-red-400 mb-4">Review Your Mistakes</h3>
-                                        <QuizReview
-                                            questions={reviewData.questions as any}
-                                            answers={reviewData.user_answers}
-                                            correctAnswers={reviewData.questions.map((q: any) => q.correct_answer)}
-                                        />
-                                    </div>
-                                )}
-                                <QuizModal
-                                    lessonId={lesson.id}
-                                    questions={questions}
-                                    initialProgress={progress ? {
-                                        highest_quiz_score: progress.highest_quiz_score,
-                                        quiz_attempts: progress.quiz_attempts
-                                    } : undefined}
-                                />
-                            </div>
-                        ) : (
-                            <QuizModal
-                                lessonId={lesson.id}
-                                questions={questions}
-                                initialProgress={progress ? {
-                                    highest_quiz_score: progress.highest_quiz_score,
-                                    quiz_attempts: progress.quiz_attempts
-                                } : undefined}
-                            />
-                        )}
-                    </div>
-                )}
+                    {questions.length > 0 && (
+                        <LessonQuiz 
+                            questions={questions}
+                            lessonId={lessonId}
+                            userRole={user?.user_metadata?.role}
+                            nextLessonHref={nextLesson ? `/courses/${courseId}/lessons/${nextLesson.id}` : undefined}
+                        />
+                    )}
 
                 {/* Project Section */}
                 {lesson.has_project && (
@@ -200,16 +157,12 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
             {/* Sticky Navigation Footer */}
             <div className="sticky bottom-8 z-10 flex items-center justify-between rounded-2xl border bg-background/80 p-4 shadow-xl backdrop-blur-md">
-                {prevLesson ? (
-                    <Button variant="ghost" asChild>
-                        <Link href={`/courses/${courseId}/lessons/${prevLesson.id}`}>
-                            <ChevronLeft className="mr-2 h-4 w-4" />
-                            Previous
-                        </Link>
-                    </Button>
-                ) : (
-                    <div />
-                )}
+                <Button variant="ghost" asChild>
+                    <Link href={prevLesson ? `/courses/${courseId}/lessons/${prevLesson.id}` : `/courses/${courseId}`}>
+                        <ChevronLeft className="mr-2 h-4 w-4" />
+                        {prevLesson ? 'Previous' : 'Overview'}
+                    </Link>
+                </Button>
 
                 <div className="hidden text-sm font-medium text-muted-foreground md:block">
                     {Math.round(((currentIndex + (progress?.is_completed ? 1 : 0)) / allLessons.length) * 100)}% Complete

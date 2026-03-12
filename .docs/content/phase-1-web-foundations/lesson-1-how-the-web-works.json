@@ -60,17 +60,6 @@
             "explanation": "DNS lookup is the process of finding the numerical IP address associated with a domain name."
         },
         {
-            "question_text": "What does DNS stand for in the context of the web?",
-            "options": [
-                "Dynamic Network System",
-                "Domain Name System",
-                "Digital Node Service",
-                "Data Naming Standard"
-            ],
-            "correct_answer": 1,
-            "explanation": "DNS stands for Domain Name System. It acts as the phonebook of the internet, translating human-readable domain names into IP addresses."
-        },
-        {
             "question_text": "Which of the following describes the role of an IP address?",
             "options": [
                 "It is the physical location of a computer.",

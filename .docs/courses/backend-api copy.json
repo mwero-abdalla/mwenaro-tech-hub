@@ -3,12 +3,9 @@
     "slug": "backend-api",
     "title": "Backend API Engineering",
     "description": "Architect production-grade Node.js systems, design resilient PostgreSQL databases, and master JWT Authentication and Clean Architecture.",
+    "difficulty": "Advanced",
     "price": 89.99,
     "total_modules": 7,
-    "duration": 8,
-    "difficulty": "Advanced",
-    "course_overview": "# The Engine Room: API Architecture & Security\n\nThe backend is the soul of any application. In this track, we go deep into the server-side, focusing on **performance, security, and clean code**. You will learn to build APIs that are not just working, but are resilient and professional.\n\n### Focus Areas:\n- **Node.js Internals**: Understand the Event Loop and how servers actually handle thousands of concurrent users.\n- **Database Modeling**: Master MongoDB Schema design and advanced indexing.\n- **Security**: Implement JWT Token Rotation, Refresh Tokens, and Role-Based Access Control (RBAC).\n- **Clean Architecture**: Decouple your business logic from your framework for ultimate maintainability.",
-    "course_outline": "### ⚙️ Module 1-2: Server Design\nNode.js Internals and Express Architecture.\n\n### 💾 Module 3: Persistent Data\nAdvanced MongoDB Database Design and Modeling.\n\n### 🔒 Module 4-6: Security & Auth\nAuthentication, JWT Strategy, and RBAC Authorization.\n\n### 🏛️ Module 7: Clean Code\nImplementing Clean Architecture and Enterprise Patterns.",
     "modules": [
         {
             "module_id": "902be0f4-e293-424c-9d0e-3814f40d134f",

@@ -137,17 +137,6 @@
             "explanation": "You often need to convert it to an array using Array.from() to use advanced methods."
         },
         {
-            "question_text": "Which property refers to the parent of the current element?",
-            "options": [
-                "element.parent",
-                "element.parentNode",
-                "element.parentElement",
-                "Both B and C"
-            ],
-            "correct_answer": 3,
-            "explanation": "Both parentNode and parentElement traverse up the tree."
-        },
-        {
             "question_text": "How do you remove an element from the DOM?",
             "options": [
                 "element.delete()",

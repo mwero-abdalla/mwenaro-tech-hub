@@ -3,12 +3,9 @@
     "slug": "web-foundations",
     "title": "Web Foundations & Engineering",
     "description": "Master the absolute fundamentals of the internet, HTML5, CSS layout architecture, and Modern JavaScript. Move from internet user to system architect.",
+    "difficulty": "Beginner",
     "price": 49.99,
     "total_modules": 14,
-    "duration": 6,
-    "difficulty": "Beginner",
-    "course_overview": "# The Blueprint of the Internet\n\nEvery professional engineer starts here. The Web Foundations track is designed to peel back the curtain on the technology that powers our world. You won't just learn to build websites; you'll learn to architect the **foundation** upon which all modern software sits.\n\n### What you will achieve:\n- **Command Line Mastery**: Master the Linux Terminal and Git history like a pro.\n- **Semantic Web**: Build accessible, lightning-fast HTML5 structures.\n- **Layout Architecture**: Master CSS Flexbox and Grid without the guesswork.\n- **JavaScript Core**: Understand the engine of the web before jumping into frameworks.\n\nBy the end of this track, you will have moved from being a consumer of the internet to someone who understands the system from the inside out.",
-    "course_outline": "### 🌐 Module 1-3: Infrastructure\nHow the web works, Environment setup, and Terminal mastery.\n\n### 🌳 Module 4-5: Version Control\nGit internals and Collaborative workflows on GitHub.\n\n### 🎨 Module 6-10: Structural Styling\nHTML5 Mastery, CSS foundations, Modern Layouts, and Tailwind CSS.\n\n### ⚡ Module 11-14: The Logic Layer\nJavaScript Fundamentals, DOM Manipulation, and Asynchronous programming.",
     "modules": [
         {
             "module_id": "fa6e31e2-fb4d-40a7-accf-68079990200c",
@@ -138,3 +135,4 @@
         }
     ]
 }
+

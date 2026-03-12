@@ -9,7 +9,9 @@ import { Progress } from '@/components/ui/progress'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { CheckCircle2, Lock, PlayCircle, Maximize2 } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { CheckCircle2, Lock, PlayCircle, Maximize2, Clock, Globe, Award } from 'lucide-react'
 
 interface CoursePageProps {
     params: Promise<{
@@ -44,33 +46,76 @@ export default async function CoursePage({ params }: CoursePageProps) {
             </Link>
 
             <div className="grid gap-12 lg:grid-cols-3">
-                <div className="lg:col-span-2 space-y-8">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl bg-muted group">
+                <div className="lg:col-span-2 space-y-12">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-[2.5rem] border-8 border-white dark:border-zinc-900 shadow-2xl bg-muted group">
                         <Image
                             src={course.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop'}
                             alt={course.title}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                             priority
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div className="absolute bottom-6 left-6 text-white">
-                            <h1 className="text-4xl font-extrabold tracking-tight">{course.title}</h1>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div className="absolute bottom-10 left-10 text-white space-y-4">
+                            <div className="flex gap-3">
+                                <span className="px-4 py-1.5 backdrop-blur-md bg-white/20 border border-white/30 rounded-full text-xs font-black uppercase tracking-widest shadow-xl">
+                                    {course.level || 'Advanced'}
+                                </span>
+                                <span className="px-4 py-1.5 backdrop-blur-md bg-primary/80 border border-white/30 rounded-full text-xs font-black uppercase tracking-widest shadow-xl flex items-center gap-2">
+                                    <Clock className="w-3.5 h-3.5" />
+                                    {course.duration || 12} Weeks
+                                </span>
+                            </div>
+                            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight drop-shadow-2xl">
+                                {course.title}
+                            </h1>
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-3xl font-bold tracking-tight">About this Course</h2>
-                            {!canPreview && (
-                                <div className="text-3xl font-black text-primary drop-shadow-sm">
-                                    KSh {course.price.toLocaleString()}
+                    <div className="space-y-10">
+                        {/* Course Overview Section */}
+                        <section className="space-y-6">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-3xl font-black tracking-tighter flex items-center gap-3">
+                                    <Globe className="text-primary" />
+                                    Course Overview
+                                </h2>
+                                {!canPreview && (
+                                    <div className="text-4xl font-black text-primary drop-shadow-sm">
+                                        KSh {course.price.toLocaleString()}
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary leading-relaxed">
+                                <div className="bg-white dark:bg-zinc-900 p-8 md:p-12 rounded-[2rem] border border-zinc-100 dark:border-white/5 shadow-sm">
+                                    {course.course_overview ? (
+                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                            {course.course_overview}
+                                        </ReactMarkdown>
+                                    ) : (
+                                        <p className="text-muted-foreground whitespace-pre-wrap">
+                                            {course.description}
+                                        </p>
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                        <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-                            {course.description}
-                        </div>
+                            </div>
+                        </section>
+
+                        {/* Course Outline Section */}
+                        {course.course_outline && (
+                            <section className="space-y-6">
+                                <h3 className="text-3xl font-black tracking-tighter flex items-center gap-3">
+                                    <Award className="text-primary" />
+                                    Curriculum Outline
+                                </h3>
+                                <div className="prose prose-zinc lg:prose-xl dark:prose-invert max-w-none bg-gradient-to-br from-primary/5 to-transparent p-8 md:p-12 rounded-[2rem] border border-primary/10 shadow-inner">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                        {course.course_outline}
+                                    </ReactMarkdown>
+                                </div>
+                            </section>
+                        )}
                     </div>
 
                     {isEnrolled && (
@@ -128,6 +173,19 @@ export default async function CoursePage({ params }: CoursePageProps) {
                                         </Button>
                                     </Link>
                                 )}
+
+                                {/* Module 0: Overview */}
+                                <Link href={`/courses/${course.id}`} className="group mb-2 block sticky top-0 z-10">
+                                    <div className="flex items-center justify-between p-4 rounded-xl border-2 border-primary/20 bg-primary/5 shadow-sm hover:bg-primary/10 transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs font-black text-primary/40">00</span>
+                                            <span className="font-bold text-sm tracking-tight text-primary">Course Overview</span>
+                                        </div>
+                                        <div className="bg-primary/10 text-primary p-1.5 rounded-full">
+                                            <CheckCircle2 size={18} />
+                                        </div>
+                                    </div>
+                                </Link>
                                 {phases.map(phase => {
                                     const phaseLessons = lessons.filter(l => l.phase_id === phase.id)
                                     if (phaseLessons.length === 0) return null

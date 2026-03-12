@@ -3,12 +3,9 @@
     "slug": "react-frontend",
     "title": "React Frontend Engineering",
     "description": "Build type-safe, performant Single Page Applications (SPAs) using React, TypeScript, and modern state management architectures.",
+    "difficulty": "Intermediate",
     "price": 79.99,
     "total_modules": 10,
-    "duration": 8,
-    "difficulty": "Intermediate",
-    "course_overview": "# UI Engineering with React & TypeScript\n\nBuilding user interfaces is easy; engineering production-grade, type-safe frontend systems is hard. This track is dedicated to mastering **React** through the lens of a software engineer.\n\n### Core Pillars:\n- **Type-Safety**: Master TypeScript to catch bugs before they ever reach the browser.\n- **State Architecture**: Learn when to use Local State vs. Global Context vs. External Stores.\n- **Efficiency**: Master the Effect Lifecycle and Custom Hooks to build performant, reusable UI logic.\n- **Structure**: Architect clean routing and form validation patterns that scale to thousands of users.",
-    "course_outline": "### 🧱 Module 1-4: Core Framework\nComponent Architecture, State Management, and the Effect Lifecycle.\n\n### 🛡️ Module 5-6: Navigation & Forms\nRouting Architecture and Bulletproof Form Validation.\n\n### 📘 Module 7-9: TypeScript Mastery\nTS Fundamentals, Interfaces, Generics, and React Integration.\n\n### 🚀 Module 10: Ship it\nPerformance optimization and Professional Deployment strategies.",
     "modules": [
         {
             "module_id": "97673f42-79a7-4bb2-b483-d0b462348b74",

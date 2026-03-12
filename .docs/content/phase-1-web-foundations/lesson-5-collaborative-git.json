@@ -1,184 +1,83 @@
 {
-    "title": "Collaborative Git & GitHub",
+    "title": "Collaborative Git: Team Workflows & Safe Undos",
     "has_project": true,
     "video_url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
-    "content": "# 🤝 Collaborative Git: GitHub, Remotes, and Team Workflows\n\nGit alone is just a local database. The true power of Git emerges when teams connect their local repositories through **Remotes**. A Remote is simply a version of your project hosted somewhere else, like GitHub, GitLab, or an internal corporate server.\n\nIn this lesson, we master the professional workflows that allow hundreds of engineers to work on the exact same codebase simultaneously without destroying it.\n\n---\n\n## 1️⃣ Cloning vs. Remote Add\n\nThere are two primary ways to connect your local machine to GitHub.\n\n### Scenario A: The Project Already Exists on GitHub\nIf you join a new company, the code is already on GitHub. You need to download it and automatically set up the connection.\n\n```bash\ngit clone https://github.com/company/project.git\ncd project\n```\nThis single command downloads the files, initializes the `.git` folder, and automatically sets up a remote called `origin` pointing back to GitHub.\n\n### Scenario B: You Built It Locally First\nYou started a project on your laptop, and now you want to back it up to a shiny new, empty GitHub repository.\n\n```bash\ngit init\ngit add .\ngit commit -m \"initial commit\"\n# Link the local database to the cloud URL and name it \"origin\"\ngit remote add origin https://github.com/yourname/new-project.git\n# Push the \"main\" branch to \"origin\", and set it as the default tracking branch\ngit push -u origin main\n```\n\n---\n\n## 2️⃣ Fetch, Pull, and Push\n\nWhen collaborating, you are constantly syncing your local database with GitHub's database.\n\n```mermaid\nsequenceDiagram\n    participant Local\n    participant GitHub\n    participant CoWorker\n    CoWorker->>GitHub: git push (adds new feature)\n    Local->>GitHub: git fetch (downloads knowledge of the feature)\n    Note over Local: The knowledge is stored locally,<br/>but your files remain unchanged.\n    Local->>Local: git merge origin/main (updates your files)\n    Note over Local: \"git pull\" does both fetch and merge<br/>in one command.\n    Local->>GitHub: git push (uploads your changes)\n```\n\n1. **`git push`**: Takes all new commits on your local branch and blasts them up to the corresponding branch on GitHub.\n2. **`git fetch`**: Only downloads the *metadata* from GitHub. If a coworker pushed 10 commits, `fetch` downloads them into your `.git` database, but it does **not** change the files in your Working Directory. You can inspect their code before deciding to merge it.\n3. **`git pull`**: The dangerous one. It is literally `git fetch` followed immediately by `git merge`. It downloads the new commits and instantly modifies your Working Directory files to include them.\n\n---\n\n## 3️⃣ The Feature Branch Workflow\n\nIn a professional setting, **you never, ever commit directly to the `main` branch.** The `main` branch represents code currently running in production for live users. You must protect it at all costs.\n\n**The Workflow:**\n1. A new ticket comes in: \"Add stripe payment button.\"\n2. You create an isolated branch: `git checkout -b feature/stripe-payment`.\n3. You write the code, make 5 commits locally.\n4. You push your branch to GitHub: `git push origin feature/stripe-payment`.\n5. On GitHub, you open a **Pull Request (PR)**.\n\n### What is a Pull Request?\nA Pull Request (or Merge Request in GitLab) is a formal request asking the Lead Developer: \"Please pull my `feature/stripe` code and merge it into `main`.\" \n\nA PR creates a discussion thread. Teammates can review the exact lines of code changed, comment on them, demand changes, or click **Approve**. Once approved, it is mathematically merged into `main`.\n\n---\n\n## 4️⃣ Merge Conflicts (The Final Boss)\n\nConflict is inevitable. A **Merge Conflict** occurs when two engineers edit the *exact same line of code in the exact same file*, and Git cannot mathematically determine whose changes should win.\n\n```javascript\n// Engineer A's commit:\nfunction calculateTax(subtotal) {\n<<<<<<< HEAD\n    return subtotal * 0.08; // Your local changes\n=======\n    return subtotal * 0.12; // GitHub's incoming changes\n>>>>>>> origin/feature\n}\n```\n\nGit halts the merge and injects these ugly `<<<<<<<` conflict markers directly into your file. Your project is literally broken until you resolve it.\n\n**How to Fix It:**\n1. Open the conflicted file in VS Code.\n2. Look for the conflict markers. VS Code provides helpful buttons: \"Accept Current Change\", \"Accept Incoming Change\", or \"Accept Both\".\n3. Manually edit the file until it is correct. Remove the `<<<` and `>>>` symbols.\n4. Tell Git you have resolved it by staging the file: `git add file.js`.\n5. Finish the merge: `git commit -m \"resolve merge conflict\"`.\n\n---\n\n## 5️⃣ Advanced Professional Techniques\n\n### `git stash` (The Temporary Pocket)\nImagine you are halfway through a complex feature, your code is completely broken, and your boss says: \"I need you to fix a typo on the login page right now.\" You cannot commit broken code, and you cannot checkout a new branch with uncommitted changes.\n\n`git stash` takes all uncommitted changes, rips them out of your Working Directory, and tucks them in a temporary hidden pocket. Your project is instantly reverted to a clean state.\nYou fix the typo, commit it, and then run `git stash pop` to dump your messy, half-finished work right back into your lap exactly as you left it.\n\n### `git rebase` vs `git merge`\nWhen catching your branch up with `main`:\n- **`git merge main`**: Takes all new commits from `main`, brings them to your branch, and creates a messy \"Merge Commit\" tying the histories together like a knot.\n- **`git rebase main`**: Rewrites history. It unplugs your feature branch, moves the entire base of it to the very tip of `main`, and replays your commits one by one. The resulting history is a perfectly straight, beautiful line with no merge knots.\n\n---\n\n## 💡 Summary Checklist for Teams\n\n- [ ] I always run `git pull` before starting work to avoid conflicts later.\n- [ ] I never commit directly to `main`. I always use an isolated `feature/` branch.\n- [ ] My commits are granular and have descriptive messages.\n- [ ] I open a Pull Request for team review before merging to production.\n- [ ] I know how to manually resolve conflict markers (`<<<<<<<`) when Git gets confused.\n",
+    "content": "# 🤝 Collaborative Git: Remotes, PRs, and Safety Nets\n\n## 🎯 Lesson Objectives\n\nBy the end of this lesson, you will be able to:\n*   Connect local projects to GitHub using **Remotes**.\n*   Master the **Feature Branch Workflow** used by professional teams.\n*   Understand how to **safely undo mistakes** in a shared codebase without breaking history.\n*   Resolve **Merge Conflicts** using standard developer tools.\n\n---\n\n## 1️⃣ One Source of Truth: Remotes\n\nA **Remote** is simply a copy of your project hosted in the cloud (like GitHub). It allows teams to sync their work.\n\n### Cloning vs. Adding\n- **`git clone <url>`**: Use this when a project already exists on GitHub and you want to download a copy. It automatically sets up the remote for you.\n- **`git remote add origin <url>`**: Use this when you have a local project and want to connect it to a brand new, empty GitHub repository.\n\n---\n\n## 2️⃣ Syncing: Fetch, Pull, and Push\n\nCollaboration is a constant cycle of pushing and pulling code:\n\n*   **`git push origin <branch>`**: Uploads your local commits to GitHub.\n*   **`git fetch`**: Downloads current \"news\" from GitHub. It updates your local database of what others have done, but **does not touch your files**.\n*   **`git pull`**: Downloads the code AND instantly merges it into your files. \n\n> [!CAUTION]\n> `git pull` can be scary because it forces a merge. Many pro developers prefer `git fetch` followed by a manual check before merging.\n\n---\n\n## 3️⃣ The Safe Undo: `git revert` vs `git reset`\n\nIn a shared GitHub repo, **never use `git reset --hard`** on a branch someone else is using. It rewrites history and can crash your teammates' work.\n\n### 🛡️ The Professional Way: `git revert` \nIf a bad bug reaches the `main` branch, use `git revert <hash>`. \n\nInstead of deleting the \"bad\" commit, Git creates a **new** \"Undo\" commit that reverses the changes. This keeps history linear and safe for everyone on the team.\n\n| Command | Safety | Effect |\n|---|---|---|\n| `git revert` | ✅ Safe | Adds a NEw commit to undo old work. |\n| `git reset --hard` | ❌ Dangerous | **Deletes** history permanently. Only use on private, local work. |\n\n---\n\n## 4️⃣ The Feature Branch Workflow\n\nProfessional teams **never commit directly to `main`**. \n\n1.  **Branch**: `git checkout -b feature/login` (Create an isolated space).\n2.  **Work**: Code, add, and commit locally.\n3.  **Push**: `git push origin feature/login`.\n4.  **PR**: Open a **Pull Request** on GitHub for code review.\n5.  **Merge**: Once approved, the code is merged into `main`.\n\n---\n\n## 🧪 Practice Exercise: The Team Simulator\n\nTry this flow to simulate a team environment:\n\n```bash\n# 1. Create a branch for a new feature\ngit checkout -b lab-feature\n\n# 2. Simulate work\necho \"Adding navbar\" > navbar.html\ngit add .\ngit commit -m \"feat: add basic navbar\"\n\n# 3. Simulate a mistake that needs undoing\necho \"Bad code that breaks stuff\" >> navbar.html\ngit add .\ngit commit -m \"feat: add broken analytics\"\n\n# 4. Save the day with a Revert\ngit log --oneline # Copy the hash of the 'broken' commit\ngit revert <paste-hash-here>\n\n# 5. Check history - notice the NEW 'Revert' commit\ngit log --oneline\n```\n\n---\n\n## 🖼️ GitHub Workflow\n\n![GitHub Workflow](/images/github-workflow.png)\n\n---\n\n## 🎥 Lesson Video\n\n<video controls width=\"100%\">\n  <source src=\"/videos/lesson-5-collaborative-git.mp4\" type=\"video/mp4\">\n  Your browser does not support the video tag.\n</video>\n\n---\n\n## 📝 Project Task: Team Collaboration Simulation\n\n1.  Create a local repo and a file `main.js`. Commit it to `main`.\n2.  Create a branch `team-feature-1` and add `style.css`. Commit it.\n3.  Modify `main.js` on your branch and commit it.\n4.  Switch back to `main`, and modify `main.js` there too. (This sets up a conflict!)\n5.  Try to merge your branch: `git merge team-feature-1`.\n6.  **Resolve the Conflict**: Open `main.js`, pick the best version, stage it, and commit.\n7.  Final check: Use `git revert` to undo your very first commit on the branch.\n",
     "questions": [
         {
-            "question_text": "Which command creates a new branch and switches to it?",
+            "question_text": "Why is 'git revert' safer for teams than 'git reset'?",
             "options": [
-                "git branch -s",
-                "git checkout -b",
-                "git switch -c",
-                "Both B and C"
-            ],
-            "correct_answer": 3,
-            "explanation": "Both 'git checkout -b' (classic) and 'git switch -c' (modern) are used specifically for this purpose."
-        },
-        {
-            "question_text": "What command is used to download an existing repository from GitHub to your local machine?",
-            "options": [
-                "git download",
-                "git pull",
-                "git clone",
-                "git copy"
-            ],
-            "correct_answer": 2,
-            "explanation": "git clone creates a full copy of the remote repository and its history."
-        },
-        {
-            "question_text": "What is a 'Remote' in Git?",
-            "options": [
-                "A wireless mouse",
-                "A URL pointing to a version of your project on a server (like GitHub)",
-                "A developer working from home",
-                "A branch that has been deleted"
+                "It is faster to type.",
+                "It creates a new commit instead of deleting history.",
+                "It only works on GitHub.",
+                "It automatically fixes bugs."
             ],
             "correct_answer": 1,
-            "explanation": "Remotes allow you to sync your local work with a shared repository."
+            "explanation": "Revert leaves the original history intact, which prevents breaking your coworker's local repositories."
         },
         {
-            "question_text": "Which command sends your local commits to GitHub?",
+            "question_text": "Which command downloads changes from GitHub but does NOT modify your local files?",
             "options": [
+                "git pull",
                 "git push",
-                "git pull",
-                "git upload",
-                "git send"
-            ],
-            "correct_answer": 0,
-            "explanation": "Pushing 'updates' the remote branch with your local changes."
-        },
-        {
-            "question_text": "Which command fetches changes from GitHub AND merges them into your local branch?",
-            "options": [
                 "git fetch",
-                "git sync",
-                "git pull",
-                "git merge"
+                "git sync"
             ],
             "correct_answer": 2,
-            "explanation": "git pull is essentially 'git fetch' followed by 'git merge'."
+            "explanation": "Fetch updates your internal knowledge of the remote, letting you inspect code before merging."
         },
         {
-            "question_text": "What is a 'Pull Request' (PR)?",
+            "question_text": "What is the standard professional workflow for adding a new feature?",
             "options": [
-                "A request to download code",
-                "A proposal to merge changes from one branch into another in a collaborative setting",
-                "An error message from Git",
-                "A way to delete a branch"
-            ],
-            "correct_answer": 1,
-            "explanation": "PRs are the heart of collaboration on platforms like GitHub."
-        },
-        {
-            "question_text": "How do you create a new branch named 'feature-login'?",
-            "options": [
-                "git branch new feature-login",
-                "git branch feature-login",
-                "git checkout -b feature-login",
-                "Both B and C"
-            ],
-            "correct_answer": 3,
-            "explanation": "'git branch' creates it. 'git checkout -b' creates it AND switches to it."
-        },
-        {
-            "question_text": "What happens during a 'Merge Conflict'?",
-            "options": [
-                "Git deletes both versions of the file",
-                "Git cannot automatically decide which changes to keep and needs a human to fix it",
-                "The computer crashes",
-                "The repository is locked forever"
-            ],
-            "correct_answer": 1,
-            "explanation": "Conflicts happen when two people change the same line of the same file."
-        },
-        {
-            "question_text": "Which command switches you from the 'main' branch to a 'dev' branch?",
-            "options": [
-                "git go dev",
-                "git move dev",
-                "git checkout dev",
-                "git change dev"
+                "Commit directly to main.",
+                "Email code to the boss.",
+                "Create a feature branch, push to GitHub, and open a Pull Request.",
+                "Delete the repo and start over."
             ],
             "correct_answer": 2,
-            "explanation": "Checkout (or 'git switch') updates your files to match the target branch."
+            "explanation": "This workflow allows for code reviews and protects the production (main) branch."
         },
         {
-            "question_text": "What is 'Forking' a repository?",
+            "question_text": "When should you use 'git remote add origin <url>'?",
             "options": [
-                "Deleting the repo",
-                "Creating a personal copy of someone else's repo on your GitHub account",
-                "Splitting a file into two",
-                "Running two versions of Git at once"
+                "When you want to delete a repository.",
+                "When you have a local project and want to connect it to a new GitHub repo.",
+                "When you are cloning from GitHub.",
+                "When your internet is down."
             ],
             "correct_answer": 1,
-            "explanation": "Forking lets you experiment on a project without affecting the original."
+            "explanation": "This tells Git where the 'home' of the project is in the cloud."
         },
         {
-            "question_text": "In a 'Rebase', what happens to your commits?",
+            "question_text": "What is a Pull Request (PR)?",
             "options": [
-                "They are combined into one",
-                "They are moved to the end of the target branch's history",
-                "They are deleted",
-                "They are sent to the trash"
+                "A request for more storage space.",
+                "A formal request to merge your branch's changes into the main codebase.",
+                "An error message from Git.",
+                "A way to download files."
             ],
             "correct_answer": 1,
-            "explanation": "Rebase creates a cleaner, linear history by moving your base commit."
+            "explanation": "PRs are the heart of collaboration, allowing for discussion and approval of code."
         },
         {
-            "question_text": "What is the standard name of the main remote on most repositories?",
+            "question_text": "True or False: You should use 'git reset --hard' on a commit that has already been pushed to GitHub.",
             "options": [
-                "main",
-                "master",
-                "origin",
-                "server"
-            ],
-            "correct_answer": 2,
-            "explanation": "Origin is the default alias for the URL you cloned from."
-        },
-        {
-            "question_text": "How do you delete a local branch named 'old-feature'?",
-            "options": [
-                "git branch -d old-feature",
-                "git rm branch old-feature",
-                "git delete old-feature",
-                "git checkout -p old-feature"
-            ],
-            "correct_answer": 0,
-            "explanation": "The '-d' flag safely deletes a branch that has been merged."
-        },
-        {
-            "question_text": "Which GitHub feature allows you to automate tasks like testing or deployment?",
-            "options": [
-                "GitHub Issues",
-                "GitHub Projects",
-                "GitHub Actions",
-                "GitHub Wiki"
-            ],
-            "correct_answer": 2,
-            "explanation": "Actions allow you to run 'workflows' on your code automatically."
-        },
-        {
-            "question_text": "What is the 'Stash' useful for?",
-            "options": [
-                "Permanently saving code",
-                "Temporarily hiding uncommitted changes so you can switch branches",
-                "Deleting files",
-                "Viewing log history"
+                "True",
+                "False"
             ],
             "correct_answer": 1,
-            "explanation": "Stashing is like a 'pause button' for your current work."
+            "explanation": "False. This rewrites history and will cause problems for anyone else who has pulled that code."
         },
         {
-            "question_text": "Which command is used to see which remotes are connected to your local repo?",
+            "question_text": "How do you finish a merge after resolving conflict markers manually?",
             "options": [
-                "git remote -v",
-                "git show remote",
-                "git remote -all",
-                "git list"
+                "git exit",
+                "git add <resolved-file> and then git commit",
+                "git delete conflict",
+                "git push"
             ],
-            "correct_answer": 0,
-            "explanation": "The '-v' (verbose) flag shows the fetch and push URLs."
+            "correct_answer": 1,
+            "explanation": "You must stage the resolved file and commit it to complete the merge process."
         }
     ]
 }

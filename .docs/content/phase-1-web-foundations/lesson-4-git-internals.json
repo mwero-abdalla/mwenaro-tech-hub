@@ -1,182 +1,118 @@
 {
-    "title": "Git Internals",
+    "title": "Git Internals: Mastering the Time Machine",
     "has_project": false,
     "video_url": "https://www.youtube.com/watch?v=lG908ixpqsw",
-    "content": "# 🌳 Git Internals: How Version Control Actually Works\n\nMost beginners learn a few Git commands (`add`, `commit`, `push`) by rote memorization. They type them in blindly, and the moment a merge conflict happens, panic sets in. \n\nTo become a professional engineer, you must stop viewing Git as a series of magic terminal spells. You must understand its architecture. Git is not just a backup tool; it is a **Distributed Time Machine for Code**.\n\n---\n\n## 1️⃣ What is Git? (And what it is NOT)\n\n**Git** is the local software installed on your computer. It creates snapshots of your files.\n**GitHub** (or GitLab, Bitbucket) is an external cloud hosting service that stores copies of your Git repositories. You do not strictly need GitHub to use Git.\n\n### Distributed Architecture\nOlder systems like SVN were *Centralized*. If the central server went down, nobody could work.\nGit is *Distributed*. When you clone a repository, you download the **entire history of the project** onto your local hard drive. You have the full database of every change ever made.\n\n---\n\n## 2️⃣ The Three Trees (The Core Concept of Git)\n\nThis is the most critical concept to understand. A Git repository on your local machine is divided into three distinct \"states\" or \"trees\".\n\n```mermaid\ngraph LR\n    A[Working Directory] -->|git add| B[Staging Area / Index]\n    B -->|git commit| C[Local Repository / History]\n    C -.->|checkout| A\n```\n\n1. **The Working Directory**: The actual files on your hard drive that you see in VS Code right now. You edit these, break them, and delete them. Git watches these files but doesn't track their history yet.\n2. **The Staging Area (The Index)**: A loading area. When you type `git add file.js`, you are taking a snapshot of `file.js` *in its current state* and placing it in the staging area. You are telling Git: \"I plan to save this specific change in my next time-capsule.\"\n3. **The Local Repository (The .git folder)**: The actual database of permanent snapshots. When you type `git commit`, everything in the Staging Area is bundled into a permanent time-capsule (a commit) and safely locked away in the `.git` directory.\n\n---\n\n## 3️⃣ Tracked vs. Untracked Files\n\nWhen you start a project, you run `git init`. This creates a hidden `.git` folder.\n\nIf you create a new file `secrets.txt`, Git ignores it. It is **Untracked**. It is not in Git's database.\nIf you type `git add secrets.txt`, Git begins tracking it.\n\n### The `.gitignore` File\nSome things should **never** be copied into Git's permanent history:\n- `node_modules/`: Giant folders of open-source code downloaded by npm. They can be re-downloaded easily.\n- `.env`: Files containing API keys, database URLs, and passwords. Adding these to Git and pushing to GitHub is a critical security breach resulting in stolen funds and hacked servers.\n\nThe `.gitignore` file contains a list of filenames and directories that Git should refuse to ever look at or stage.\n\n---\n\n## 4️⃣ The Lifecycle of a Commit\n\nLet's walk through the day-to-day workflow of an engineer utilizing the Three Trees.\n\n**Step 1. Check status**\n```bash\ngit status\n# Output: modified: server.js (Red text - Working Directory)\n```\n\n**Step 2. Move to Staging**\n```bash\ngit add server.js\ngit status\n# Output: modified: server.js (Green text - Staging Area)\n```\n\n**Step 3. Seal the Time Capsule**\n```bash\ngit commit -m \"feat: setup Express server on port 5000\"\n# Output: [main 1a2b3c4] feat: setup Express server...\n```\nA commit message is mandatory. It should explain *why* a change was made, not just *what* changed. Notice the `1a2b3c4`—that is the commit's unique SHA-1 Hash.\n\n---\n\n## 5️⃣ Branching: Parallel Dimensions\n\nSoftware development is chaotic. You might be building a new checkout feature while simultaneously fixing a critical bug in the login page. Doing this in the same file setup is a recipe for disaster.\n\nA **Branch** in Git is simply a lightweight, movable pointer to a specific commit.\n\n```mermaid\ngitGraph\n    commit id:\"init\"\n    commit id:\"setup database\"\n    branch feature-checkout\n    checkout feature-checkout\n    commit id:\"add cart ui\"\n    commit id:\"integrate stripe\"\n    checkout main\n    commit id:\"hotfix: login crash\"\n    merge feature-checkout\n```\n\n- `git branch feature/checkout`: Creates a new parallel timeline.\n- `git checkout feature/checkout`: Physically switches the files in your Working Directory to match that alternate timeline. (In modern Git, `git switch` is used instead).\n\nWhen you are isolated on your `feature/checkout` branch, you can break the code completely. The `main` branch (the production code) remains completely unaffected and pristine.\n\n---\n\n## 6️⃣ Time Travel: Exploring the Past\n\nBecause Git is a database of snapshots, you can easily go back in time to inspect or resurrect old code.\n\n- **Viewing History:** \n  `git log --oneline` shows a cleanly formatted list of all past commits and their SHA hashes.\n- **Detached HEAD State:** \n  If you type `git checkout 9f3a1b`, Git literally rewinds all the files in your project folders back to exactly how they looked when that commit was made months ago. You can poke around, view the old code, and then type `git checkout main` to snap right back to the present.\n\n---\n\n## 7️⃣ Undoing Mistakes (Local)\n\nBecause you now understand the Three Trees, fixing mistakes is logical:\n\n- **Mistake**: You edited a file, made it worse, and haven't staged it.\n  **Fix**: `git restore file.js` (Overwrites the Working Directory file with the last safe version from the Repository).\n- **Mistake**: You typed `git add .` to stage everything, but accidentally included a massive log file.\n  **Fix**: `git restore --staged big_log.txt` (Pulls it out of the Staging Area, back to the Working Directory).\n- **Mistake**: You made a commit, but realized there was a typo, or your commit message was wrong.\n  **Fix**: `git commit --amend` (Re-opens the last time capsule, lets you put new changes in, and modify the message).\n\n---\n\n## 💡 Summary\n\n| Command | The Architecture Behind It | Result |\n|---|---|---|\n| `git init` | Creates the `.git` database directory. | Enables Git tracking for the folder. |\n| `git status` | Compares Working Dir to Staging Dir to Local Repo. | Shows you exactly where files currently sit. |\n| `git add .` | Copies snapshot from Working to Staging. | Prepares everything for the next commit. |\n| `git commit -m \"\"` | Seals Staging Area into Local Repo database. | Creates permanent, hash-identified time capsule. |\n| `git branch <name>` | Creates a pointer to the current commit. | Starts a parallel timeline for an isolated feature. |\n| `git checkout <name>` | Swaps Working Directory files to match branched timeline. | Moves you physically into the new timeline. |\n",
+    "content": "# 🌳 Git Internals: How Version Control Actually Works\n\n## 🎯 Lesson Objectives\n\nBy the end of this lesson, learners will be able to:\n*   Explain the difference between **Git** (local tool) and **GitHub** (cloud backup).\n*   Understand the **Three Trees** architecture (Working Directory, Staging, Repository).\n*   Master the fundamental lifecycle of a commit.\n*   Understand why and how to use `.gitignore` to protect sensitive data.\n\n---\n\n## 🕒 What is Git? (And what it is NOT)\n\n**Git** is a \"Distributed Version Control System.\" Think of it as a **Distributed Time Machine for Code**.\n\n- **Git**: The local software installed on your computer. It creates snapshots of your files.\n- **GitHub**: An external cloud service where you store copies of your Git repositories. You don't need GitHub to use Git, but you need it to collaborate.\n\n### Why use it?\nWithout Git, developers would save files as `index_v1.js`, `index_v2_final.js`, `index_v2_FINAL_FINAL.js`. With Git, you have one clean file and a complete history of every change ever made.\n\n---\n\n## 🏗️ The Three Trees (Git Architecture)\n\nThis is the most critical concept. A Git repository on your local machine is divided into three distinct \"states\".\n\n```mermaid\ngraph LR\n    A[Working Directory] -->|git add| B[Staging Area / Index]\n    B -->|git commit| C[Local Repository / History]\n    C -.->|checkout| A\n```\n\n1.  **Working Directory**: The actual files you see and edit in VS Code. Git watches these but doesn't track their history yet.\n2.  **Staging Area (The Index)**: A loading area. When you type `git add`, you are telling Git: \"I plan to save this specific change in my next snapshot.\"\n3.  **Local Repository (The .git folder)**: The database of permanent snapshots. When you type `git commit`, your staged changes are locked away safely in history.\n\n---\n\n## 🛡️ The `.gitignore` File\n\nSome things should **never** be in Git:\n- **Secrets**: API keys, passwords, database URLs (usually in `.env`).\n- **Bulk**: Giant folders of downloaded code like `node_modules/`.\n\nCreating a `.gitignore` file tells Git to ignore these files forever. **Never push a `.env` file to GitHub—it is a critical security breach.**\n\n---\n\n# 🔑 Essential Commands\n\n| Command | Description |\n|---|---|\n| `git init` | Starts a new, empty Git repository in the current folder. |\n| `git status` | Shows which files are modified, staged, or untracked. |\n| `git add <file>` | Moves changes from the **Working Directory** to **Staging**. |\n| `git commit -m \"msg\"` | Saves the staged changes as a permanent snapshot with a message. |\n| `git log --oneline` | Shows a clean, one-line-per-commit history of your project. |\n\n### 💡 The Perfect Commit Message\nA good message speaks for you: `feat: add login validation logic` is better than `changed some things`. Focus on *why* the change happened.\n\n---\n\n## 🧪 Practice Exercise\n\nLet's build a mini-project in the terminal to see Git in action:\n\n```bash\n# 1. Start the repo\nmkdir git-practice && cd git-practice\ngit init\n\n# 2. Create and track a file\necho \"Hello Git\" > readme.md\ngit status\ngit add readme.md\n\n# 3. Commit the change\ngit commit -m \"initial commit\"\n\n# 4. Make a change and view history\necho \"Adding more context\" >> readme.md\ngit add readme.md\ngit commit -m \"update readme\"\ngit log --oneline\n```\n\n---\n\n## 🖼️ Terminal Example\n\n![Git workflow](/images/git-workflow.png)\n\n--- \n\n## 🎥 Lesson Video\n\n<video controls width=\"100%\">\n  <source src=\"/videos/lesson-4-git-internals.mp4\" type=\"video/mp4\">\n  Your browser does not support the video tag.\n</video>\n\n---\n\n## 📝 Project Task: The Git Time Machine\n\nUsing only the terminal and Git:\n\n1.  Create a folder named `my-story` and initialize it with Git.\n2.  Create a file `part1.txt` with some text inside and commit it.\n3.  Create a `.gitignore` file and add `secrets.txt` to it.\n4.  Create `secrets.txt`, add some text, and run `git status`. (Verify Git is ignoring it!).\n5.  Modify `part1.txt`, stage it, and then **undo** the staging using `git restore --staged part1.txt`.\n6.  Make a final commit with both `part1.txt` and a new `part2.txt`.\n7.  Take a screenshot showing `git log --oneline` and submit it.\n",
     "questions": [
         {
-            "question_text": "What does Git use to represent the contents of a single file?",
+            "question_text": "What is the primary difference between Git and GitHub?",
             "options": [
-                "Tree",
-                "Blob",
-                "Node",
-                "Commit"
+                "Git is for Mac; GitHub is for Windows.",
+                "Git is the local version control tool; GitHub is a cloud hosting service.",
+                "GitHub is the tool; Git is the website.",
+                "There is no difference."
             ],
             "correct_answer": 1,
-            "explanation": "A Blob stores the content of a file, but not its name or metadata."
+            "explanation": "Git is the engine that tracks changes; GitHub is a place to store and share those changes."
         },
         {
-            "question_text": "Where does Git store all its internal data and history in a project?",
+            "question_text": "Which of the 'Three Trees' represents the files as they appear on your hard drive?",
             "options": [
-                ".git folder",
-                "node_modules",
-                "src/git",
-                "Database"
-            ],
-            "correct_answer": 0,
-            "explanation": "The .git directory contains the database, configuration, and history of your repo."
-        },
-        {
-            "question_text": "Which area contains the files you have modified but not yet committed?",
-            "options": [
-                "History",
-                "The Staging Area (Index)",
-                "Remote Repos",
-                "Recycle Bin"
-            ],
-            "correct_answer": 1,
-            "explanation": "The Staging Area is the middle ground where you prepare content for a commit."
-        },
-        {
-            "question_text": "What command initializes a new Git repository?",
-            "options": [
-                "git new",
-                "git create",
-                "git init",
-                "git setup"
+                "The Staging Area",
+                "The Local Repository",
+                "The Working Directory",
+                "The Remote Tree"
             ],
             "correct_answer": 2,
-            "explanation": "git init creates the hidden .git folder."
+            "explanation": "The Working Directory is the actual folder where you edit files in VS Code."
         },
         {
-            "question_text": "Which command adds files to the Staging Area?",
+            "question_text": "Which command moves a file from the Working Directory to the Staging Area?",
             "options": [
                 "git commit",
+                "git move",
                 "git add",
-                "git push",
-                "git status"
-            ],
-            "correct_answer": 1,
-            "explanation": "git add marks changes to be included in the next snapshot."
-        },
-        {
-            "question_text": "What is a 'Commit' in Git?",
-            "options": [
-                "A backup of the entire computer",
-                "A snapshot of your project at a specific point in time",
-                "A way to delete code",
-                "A link to GitHub"
-            ],
-            "correct_answer": 1,
-            "explanation": "Commits are the building blocks of Git history."
-        },
-        {
-            "question_text": "What command shows the current state of your working directory?",
-            "options": [
-                "git log",
-                "git check",
-                "git status",
-                "git view"
+                "git push"
             ],
             "correct_answer": 2,
-            "explanation": "git status tells you which files are modified, staged, or untracked."
+            "explanation": "git add marks a file as ready to be included in the next commit."
         },
         {
-            "question_text": "How do you view the history of commits in your repo?",
+            "question_text": "What is the purpose of the '.gitignore' file?",
+            "options": [
+                "To speed up your computer.",
+                "To hide files from your teammates.",
+                "To list files that Git should never track (like passwords or large dependencies).",
+                "To delete files automatically."
+            ],
+            "correct_answer": 2,
+            "explanation": ".gitignore prevents sensitive or bulky files from being committed to history."
+        },
+        {
+            "question_text": "What happens when you run 'git commit -m \"message\"'?",
+            "options": [
+                "The files are uploaded to GitHub.",
+                "The staged changes are saved as a permanent snapshot in your local history.",
+                "The files are deleted.",
+                "The computer restarts."
+            ],
+            "correct_answer": 1,
+            "explanation": "A commit seals the staged changes into the local database (.git folder)."
+        },
+        {
+            "question_text": "Which command shows you a history of all commits in your repository?",
             "options": [
                 "git history",
-                "git list",
+                "git view",
                 "git log",
-                "git timeline"
+                "git status"
             ],
             "correct_answer": 2,
-            "explanation": "git log displays the commit ID, author, and message for every commit."
+            "explanation": "git log displays a timeline of snapshots, authors, and messages."
         },
         {
-            "question_text": "What is the 'HEAD' in Git?",
+            "question_text": "Why is it dangerous to commit a '.env' file?",
             "options": [
-                "The main branch",
-                "A pointer to the current branch/commit you are working on",
-                "The first line of a file",
-                "The GitHub server"
+                "It makes the repository too large.",
+                "It can contain sensitive API keys and passwords.",
+                "Git doesn't know how to read it.",
+                "It causes merge conflicts."
             ],
             "correct_answer": 1,
-            "explanation": "HEAD moves whenever you switch branches or make a new commit."
+            "explanation": ".env files store secrets; if committed, anyone with access to the repo can see them."
         },
         {
-            "question_text": "Which command undoes changes in your working directory to match the last commit?",
+            "question_text": "Which command tells you which files are currently modified or staged?",
+            "options": [
+                "git check",
+                "git status",
+                "git diff",
+                "git list"
+            ],
+            "correct_answer": 1,
+            "explanation": "git status is the most used command to check the state of the three trees."
+        },
+        {
+            "question_text": "If you stage a file by accident, which command 'unstages' it?",
             "options": [
                 "git undo",
+                "git restore --staged <file>",
                 "git delete",
-                "git checkout -- <file>",
-                "git revert"
-            ],
-            "correct_answer": 2,
-            "explanation": "Checkout discards local changes (modern Git also uses 'git restore')."
-        },
-        {
-            "question_text": "What is a 'Blob' in Git internals?",
-            "options": [
-                "A bug in the code",
-                "A file's content (Binary Large Object)",
-                "A commit message",
-                "A branch name"
+                "git commit --amend"
             ],
             "correct_answer": 1,
-            "explanation": "Git stores file contents as blobs, decoupled from filenames."
+            "explanation": "git restore --staged pulls a file back from the staging area to the working directory."
         },
         {
-            "question_text": "What is a 'Tree' object in Git?",
+            "question_text": "What does 'git init' do?",
             "options": [
-                "The structure of branches",
-                "A representation of a directory and its contents",
-                "A list of authors",
-                "A visual log"
+                "Deletes the project.",
+                "Initializes a new, empty Git repository.",
+                "Connects to GitHub.",
+                "Installs VS Code."
             ],
             "correct_answer": 1,
-            "explanation": "Trees map filenames to blobs and other nested trees."
-        },
-        {
-            "question_text": "Which command allows you to name a specific commit (e.g., 'v1.0')?",
-            "options": [
-                "git name",
-                "git label",
-                "git tag",
-                "git mark"
-            ],
-            "correct_answer": 2,
-            "explanation": "Tags are permanent labels for specific points in history."
-        },
-        {
-            "question_text": "What is the purpose of the .gitignore file?",
-            "options": [
-                "To speed up Git",
-                "To list files that Git should never track (e.g., passwords, node_modules)",
-                "To delete files automatically",
-                "To hide files from the user"
-            ],
-            "correct_answer": 1,
-            "explanation": ".gitignore ensures temporary or sensitive files don't clutter the repo."
-        },
-        {
-            "question_text": "What character is used as a wildcard in .gitignore?",
-            "options": [
-                "$",
-                "!",
-                "*",
-                "?"
-            ],
-            "correct_answer": 2,
-            "explanation": "The asterisk matches any number of characters."
-        },
-        {
-            "question_text": "True or False: Git is the same thing as GitHub.",
-            "options": [
-                "True",
-                "False"
-            ],
-            "correct_answer": 1,
-            "explanation": "Git is the local tool; GitHub is a cloud hosting platform for Git repositories."
+            "explanation": "git init creates the hidden .git folder that starts tracking your project."
         }
     ]
 }

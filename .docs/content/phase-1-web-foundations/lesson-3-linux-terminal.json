@@ -1,110 +1,77 @@
 {
-    "title": "Linux & Terminal",
+    "title": "The Terminal: Cross-Platform CLI Mastery",
     "has_project": false,
     "video_url": "https://www.youtube.com/watch?v=J3mC0t_G7qQ",
-    "content": "# 🐧 Mastering the Linux Terminal\n\nThe graphical user interface (GUI) with its mouse clicks and drag-and-drop mechanics is wonderful for general computing. However, for a Fullstack Engineer, the GUI is slow, limiting, and impossible to automate. \n\nThe **Command Line Interface (CLI)**—specifically the Linux/Unix terminal—is the universal language of software engineering. When you deploy a MERN app to an AWS server, there is no mouse; there is only a blinking cursor.\n\n---\n\n## 1️⃣ The Anatomy of the Terminal\n\nWhen you open a terminal, you are interacting with a **Shell**. The shell is a program that takes your text commands, passes them to the operating system's kernel to execute, and returns the output to your screen.\n\n- **Bash (Bourne Again Shell)**: The historical default for most Linux distributions.\n- **Zsh (Z Shell)**: The modern default for macOS and many pro developers. It supports incredible customization (like Oh-My-Zsh) and advanced autocompletion.\n\n### The Shell Prompt\nEvery line starts with a prompt, giving you context before you type:\n`mwero@ubuntu:~/projects/mwenaro-academy$`\n\n- `mwero`: The current logged-in user.\n- `@ubuntu`: The machine you are attached to (hostname).\n- `~/projects/...`: Your current directory location.\n- `$`: Indicates you are a standard user. If you see `#`, you are the Root (Super Admin) user.\n\n---\n\n## 2️⃣ Navigating the File System\n\nThe Linux file system is an inverted tree. At the very top is the **Root** `/`. Everything exists inside it.\n\n```mermaid\ngraph TD\n    A[ / (Root) ] --> B[ /home ]\n    A --> C[ /etc (Configs) ]\n    A --> D[ /var ]\n    B --> E[ /home/mwero ]\n    E --> F[ /home/mwero/projects ]\n```\n\n### Essential Navigation Commands\n| Command | What it Stands For | What it Does | Example |\n|---|---|---|---|\n| `pwd` | Print Working Directory | Tells you exactly where you are right now. | `pwd` → `/home/mwero` |\n| `ls` | List | Shows all files and folders in your current directory. | `ls -la` (Shows hidden files as a vertical list) |\n| `cd` | Change Directory | Moves you into a different folder. | `cd projects/academy` |\n| `cd ..` | Go Up | Moves you one level up toward the root. | `cd ..` |\n| `cd ~` | Go Home | Instantly transports you to your user's home folder. | `cd ~` |\n\n*(Note: In Linux, a file starting with a dot, like `.env` or `.gitignore`, is a **hidden file**. You must use `ls -a` to see it.)*\n\n---\n\n## 3️⃣ Creating and Destroying Files & Folders\n\nYou will rarely use a mouse to create projects. The CLI is exponentially faster.\n\n### Creating Things\n- `mkdir new_project`: Makes an empty folder called `new_project`.\n- `touch index.js`: Creates an empty file named `index.js`. It's incredibly fast for scaffolding multi-file projects: `touch index.html style.css app.js`.\n\n### Destroying Things\n**⚠️ CAUTION: The terminal has no Recycle Bin. Deletions are instantaneous and permanent.**\n\n- `rm old_file.txt`: Removes a single file.\n- `rm -r old_folder`: The `-r` stands for recursive. It tells the terminal to dive into the folder, delete all files inside it, and then delete the folder itself.\n- `rm -rf node_modules`: The nuclear option. Recursive and Force. Deletes massive directories silently with no confirmation prompts.\n\n---\n\n## 4️⃣ File Manipulation & Viewing\n\nInstead of opening VS Code just to read a file, utilize these lightweight built-in tools:\n\n- `cat .env`: Dumps the entire contents of a file directly into your terminal screen.\n- `less big_log.txt`: Opens a massive file in a scrollable view (press `q` to quit).\n- `cp source.txt backup.txt`: **Copies** a file.\n- `mv old_name.txt new_name.txt`: **Moves** a file. (This is also the exact command used to *rename* a file.)\n\n---\n\n## 5️⃣ The Magic of Pipes (`|`) and Redirection (`>`)\n\nUnix was built on a brilliant philosophy: *Write small programs that do one thing well, and make it easy to chain them together.*\n\n### Redirection (`>`)\nInstead of printing output to the screen, you can redirect it into a file.\n```bash\necho \"DATABASE_URL=1234\" > .env\n```\nThis takes the text string and injects it into a `.env` file, creating the file if it didn't exist.\n\n### Piping (`|`)\nPiping takes the output of the first command and shoves it directly into the input of the second command.\n\n```bash\nls -la | grep \"package.json\"\n```\nHere, `ls -la` lists 1,000 files in a directory. Instead of returning them all to the screen, it pipes that list into `grep`. `grep` then searches that list specifically for the text \"package.json\" and only returns that single match to the screen.\n\n---\n\n## 6️⃣ Permissions: Who Owns What?\n\nLinux is highly secure by default. Every file has three types of permissions for three types of people.\n\n**The People:**\n1. **User (u)**: The owner of the file.\n2. **Group (g)**: Other users in the owner's group.\n3. **Others (o)**: Everyone else on the server.\n\n**The Permissions:**\n- **Read (r)**: Number `4`. Can view the file.\n- **Write (w)**: Number `2`. Can edit the file.\n- **Execute (x)**: Number `1`. Can run the file as a script/program.\n\nWhen you run `ls -l`, you might see: `-rwxr-xr--`.\nIf you ever encounter a \"Permission Denied\" error when running a shell script, you likely need to make it executable using `chmod`:\n\n```bash\nchmod +x deploy.sh\n```\n\n---\n\n## 7️⃣ Processes and System Resources\n\nIf a Node.js server crashes but the port stays open, you need to forcefully kill it.\n\n- `top` or `htop`: Opens a live dashboard of CPU, RAM, and all running processes.\n- `ps aux | grep node`: Searches all running background processes specifically for ones named \"node\".\n- `kill -9 12345`: The `12345` is the Process ID (PID). `-9` means `SIGKILL`—absolute, immediate forced termination.\n\n---\n\n## 💡 Summary\n\n| Command | Action | Real-World Use Case |\n|---|---|---|\n| `mkdir project && cd project` | Scaffold | Creating a workspace quickly. |\n| `touch .env` | Create File | Creating secrets files before initializing Git. |\n| `rm -rf node_modules` | Nuke Directory | Fixing corrupted npm installations. |\n| `cat package.json` | View File | Checking dependency versions without opening an IDE. |\n| `grep \"TODO\" src/*.js` | Search Text | Finding all string occurrences across files. |\n| `kill -9 <PID>` | Assassinate Process | Freeing up port 3000 when an Express server hangs. |\n",
+    "content": "# 💻 Mastering the Terminal (Windows, Mac, Linux)\n\nIn modern software engineering, the Command Line Interface (CLI)—or **the Terminal**—is the universal language. Whether you are using a Mac, a Linux server, or a Windows machine (via Git Bash or WSL), the commands you use to build and deploy applications are virtually identical.\n\nWhile the graphical user interface (GUI) is great for clicking and dragging, the Terminal is built for speed, precision, and automation. When you deploy a React app to a cloud server, there is no mouse; there is only a cursor.\n\n---\n\n## 1️⃣ One Language, Many Platforms\n\nWhen you open a terminal, you are interacting with a **Shell**. The shell takes your text commands and tells the Computer's \"brain\" (the kernel) what to do.\n\n- **Windows Users**: Standard Windows \"Command Prompt\" or \"PowerShell\" are different. However, tools like **Git Bash** or the **Windows Subsystem for Linux (WSL)** provide a POSIX-compliant environment where these standard developer commands work perfectly.\n- **Mac/Linux Users**: You use **Zsh** or **Bash** natively, which follow the same standard rules.\n\n### The Shell Prompt\nEvery line starts with a prompt, giving you context:\n`dev@machine:~/projects$`\n\n- `dev`: The current user.\n- `@machine`: The name of the computer.\n- `~`: Shortcut for your **Home Directory**.\n- `$`: Indicates you are a standard user.\n\n---\n\n## 2️⃣ Navigating the File System\n\nThe file system is like an upside-down tree. At the very top is the **Root** `/`. Everything exists inside it.\n\n### Essential Navigation Commands\n| Command | Description | Example |\n|---|---|---|\n| `pwd` | **Print Working Directory**: Shows exactly where you are. | `pwd` → `/users/dev/projects` |\n| `ls` | **List**: Shows all files and folders in your current spot. | `ls -la` (List all, including hidden files) |\n| `cd` | **Change Directory**: Moves you into another folder. | `cd academy` |\n| `cd ..` | **Go Up**: Moves you up one level to the parent folder. | `cd ..` |\n| `cd ~` | **Go Home**: Takes you back to your user's home base. | `cd ~` |\n\n> [!NOTE]\n> In the Terminal, files starting with a dot (like `.env`) are **hidden**. You must use `ls -a` to see them.\n\n---\n\n## 3️⃣ Creating and Managing Files\n\nYou will rarely use a mouse to create projects. The Terminal is faster.\n\n### Creating and Copying\n- `mkdir project-name`: Makes a new directory (folder).\n- `touch index.js`: Creates an empty file. You can create multiple at once: `touch index.html style.css`.\n- `cp source.txt backup.txt`: **Copies** a file.\n- `mv old.txt new.txt`: **Moves** or **Renames** a file.\n\n### Deleting Things\n**⚠️ WARNING: Deletions in the terminal are permanent. There is no \"Recycle Bin\".**\n\n- `rm file.txt`: Deletes a single file.\n- `rm -r folder`: Deletes a folder and everything inside it (Recursive).\n- `rm -rf node_modules`: Forcefully deletes massive directories without asking for confirmation.\n\n---\n\n## 4️⃣ Working with File Content\n\nYou can read or manipulate files without ever leaving the terminal:\n\n- `cat .env`: Dumps the file content to your screen.\n- `less logs.txt`: Opens a file in a scrollable view (press `q` to quit).\n- `echo \"hello\" > file.txt`: **Redirects** text into a file (overwrites).\n- `echo \"world\" >> file.txt`: **Appends** text to the end of a file.\n\n### Piping (`|`)\nPiping allows you to take the output of one command and use it as the input for another.\n```bash\n# List all files and search specifically for those named 'config'\nls -la | grep \"config\"\n```\n\n---\n\n## 5️⃣ Permissions and System Control\n\nSometimes you need extra \"Power\" to run certain commands.\n\n- `sudo`: (SuperUser DO). Runs a command with administrative privileges. \n- `chmod +x script.sh`: Makes a file \"Executable,\" meaning you can run it as a program.\n\n### Managing Processes\n- `top` or `htop`: A live dashboard showing what your computer is working on.\n- `kill -9 <PID>`: \"Assassinates\" a stuck process (like a crashed node server) using its Process ID.\n- **Ctrl + C**: The universal \"Stop\" command for a running terminal process.\n\n---\n\n## 💡 Summary\n\n| Scenario | Command |\n|---|---|\n| **Where am I?** | `pwd` |\n| **Show all files** | `ls -la` |\n| **Rename a file** | `mv old_name.txt new_name.txt` |\n| **Stop a stuck program** | `Ctrl + C` |\n| **Permission Denied?** | Try starting the command with `sudo` |\n",
     "questions": [
         {
-            "question_text": "Which command is used to see the path of the current directory you are in?",
+            "question_text": "Which command allows you to see the path of your current directory?",
             "options": [
                 "ls",
                 "cd",
                 "pwd",
-                "whoami"
+                "dir"
             ],
             "correct_answer": 2,
             "explanation": "pwd stands for 'Print Working Directory'."
         },
         {
-            "question_text": "How do you create a new directory named 'projects'?",
+            "question_text": "If you are on Windows, which tool provides a compatible environment for these standard Terminal commands?",
             "options": [
-                "touch projects",
-                "mkdir projects",
-                "new folder projects",
-                "cd projects"
+                "Notepad",
+                "Git Bash or WSL",
+                "Windows Media Player",
+                "File Explorer"
             ],
             "correct_answer": 1,
-            "explanation": "mkdir is the standard command to create directories in Linux."
+            "explanation": "Git Bash and WSL provide a POSIX-compliant shell environment on Windows."
         },
         {
-            "question_text": "What does the 'sudo' command allow you to do?",
+            "question_text": "What does the command 'cd ..' do?",
             "options": [
-                "Speed up the computer",
-                "Execute a command with administrative (root) privileges",
-                "Delete the entire hard drive",
-                "Restart the terminal"
+                "Deletes the folder",
+                "Moves you up one level to the parent directory",
+                "Renames the folder",
+                "Opens a text editor"
             ],
             "correct_answer": 1,
-            "explanation": "'sudo' stands for 'SuperUser DO'."
+            "explanation": "'..' represents the parent directory."
         },
         {
-            "question_text": "Which flag is used with 'ls' to see hidden files (files starting with a dot)?",
-            "options": [
-                "-h",
-                "-a",
-                "-l",
-                "-x"
-            ],
-            "correct_answer": 1,
-            "explanation": "'-a' stands for 'all', including hidden entries."
-        },
-        {
-            "question_text": "How do you delete a non-empty directory?",
-            "options": [
-                "rm folder",
-                "rmdir folder",
-                "rm -rf folder",
-                "delete folder"
-            ],
-            "correct_answer": 2,
-            "explanation": "'-r' is recursive and '-f' is force. Use with caution!"
-        },
-        {
-            "question_text": "Which shortcut stops a currently running process in the terminal?",
-            "options": [
-                "Ctrl + C",
-                "Ctrl + Z",
-                "Ctrl + X",
-                "Ctrl + S"
-            ],
-            "correct_answer": 0,
-            "explanation": "Ctrl + C sends a SIGINT signal to terminate the process."
-        },
-        {
-            "question_text": "What command reveals the manual/documentation for a specific command?",
-            "options": [
-                "help",
-                "info",
-                "man",
-                "docs"
-            ],
-            "correct_answer": 2,
-            "explanation": "'man' stands for manual."
-        },
-        {
-            "question_text": "How do you change file permissions in Linux?",
-            "options": [
-                "chown",
-                "chmod",
-                "chperm",
-                "chfile"
-            ],
-            "correct_answer": 1,
-            "explanation": "'chmod' (Change Mode) is used to set read/write/execute permissions."
-        },
-        {
-            "question_text": "Which character represents the 'Home' directory in a file path?",
+            "question_text": "Which character represents your 'Home' directory?",
             "options": [
                 "/",
                 ".",
                 "~",
-                ".."
+                "$"
             ],
             "correct_answer": 2,
-            "explanation": "The tilde (~) is a shortcut for /home/username."
+            "explanation": "The tilde (~) is the standard shortcut for the current user's home folder."
         },
         {
-            "question_text": "How do you search for a specific string within a file from the terminal?",
+            "question_text": "What is the consequence of running 'rm -rf' on a folder?",
+            "options": [
+                "It moves the folder to the Trash.",
+                "It creates a backup of the folder.",
+                "It permanently and recursively deletes the folder and all its content.",
+                "It renames the folder."
+            ],
+            "correct_answer": 2,
+            "explanation": "rm -rf is powerful and permanent; use it with extreme caution."
+        },
+        {
+            "question_text": "How do you stop a process that is currently running in your terminal?",
+            "options": [
+                "Ctrl + S",
+                "Ctrl + C",
+                "Ctrl + V",
+                "Ctrl + Z"
+            ],
+            "correct_answer": 1,
+            "explanation": "Ctrl + C sends an interrupt signal (SIGINT) to terminate the current process."
+        },
+        {
+            "question_text": "Which command is used to search for a specific word inside the output of another command?",
             "options": [
                 "find",
                 "search",
@@ -112,62 +79,29 @@
                 "look"
             ],
             "correct_answer": 2,
-            "explanation": "grep searches for patterns in text files."
+            "explanation": "grep is the standard utility for searching text using patterns."
         },
         {
-            "question_text": "What does the command 'cd ..' do?",
+            "question_text": "What does the 'sudo' command stand for?",
             "options": [
-                "Goes to the root directory",
-                "Goes up one level to the parent directory",
-                "Goes to the home directory",
-                "Deletes the current directory"
+                "System User DO",
+                "SuperUser DO",
+                "Super Delete Option",
+                "Standard User Operations"
             ],
             "correct_answer": 1,
-            "explanation": "'..' refers to the parent of the current directory."
+            "explanation": "sudo allows you to execute commands with the security privileges of the superuser (Root)."
         },
         {
-            "question_text": "Which command is used to create an empty file?",
+            "question_text": "How do you see hidden files (like .env) in a directory list?",
             "options": [
-                "create",
-                "new",
-                "touch",
-                "make"
-            ],
-            "correct_answer": 2,
-            "explanation": "touch creates a file if it doesn't exist or updates its timestamp."
-        },
-        {
-            "question_text": "How do you see the last 10 lines of a file?",
-            "options": [
-                "head",
-                "end",
-                "tail",
-                "bottom"
-            ],
-            "correct_answer": 2,
-            "explanation": "The 'tail' command shows the end of a file."
-        },
-        {
-            "question_text": "What is the purpose of the 'apt' or 'brew' commands?",
-            "options": [
-                "To play music",
-                "To manage and install software packages",
-                "To clear the screen",
-                "To check internet speed"
+                "ls -h",
+                "ls -a",
+                "ls -v",
+                "ls -l"
             ],
             "correct_answer": 1,
-            "explanation": "These are package managers for Linux and macOS."
-        },
-        {
-            "question_text": "Which command clears the terminal screen scrollback?",
-            "options": [
-                "clean",
-                "clear",
-                "reset",
-                "cls"
-            ],
-            "correct_answer": 1,
-            "explanation": "'clear' refreshes the view by pushing old content out of view."
+            "explanation": "The '-a' flag stands for 'all', which includes entries starting with a dot."
         }
     ]
 }

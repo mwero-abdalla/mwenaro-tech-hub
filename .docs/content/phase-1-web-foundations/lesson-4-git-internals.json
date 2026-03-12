@@ -2,117 +2,95 @@
     "title": "Git Internals: Mastering the Time Machine",
     "has_project": false,
     "video_url": "https://www.youtube.com/watch?v=lG908ixpqsw",
-    "content": "# 🌳 Git Internals: How Version Control Actually Works\n\n## 🎯 Lesson Objectives\n\nBy the end of this lesson, learners will be able to:\n*   Explain the difference between **Git** (local tool) and **GitHub** (cloud backup).\n*   Understand the **Three Trees** architecture (Working Directory, Staging, Repository).\n*   Master the fundamental lifecycle of a commit.\n*   Understand why and how to use `.gitignore` to protect sensitive data.\n\n---\n\n## 🕒 What is Git? (And what it is NOT)\n\n**Git** is a \"Distributed Version Control System.\" Think of it as a **Distributed Time Machine for Code**.\n\n- **Git**: The local software installed on your computer. It creates snapshots of your files.\n- **GitHub**: An external cloud service where you store copies of your Git repositories. You don't need GitHub to use Git, but you need it to collaborate.\n\n### Why use it?\nWithout Git, developers would save files as `index_v1.js`, `index_v2_final.js`, `index_v2_FINAL_FINAL.js`. With Git, you have one clean file and a complete history of every change ever made.\n\n---\n\n## 🏗️ The Three Trees (Git Architecture)\n\nThis is the most critical concept. A Git repository on your local machine is divided into three distinct \"states\".\n\n```mermaid\ngraph LR\n    A[Working Directory] -->|git add| B[Staging Area / Index]\n    B -->|git commit| C[Local Repository / History]\n    C -.->|checkout| A\n```\n\n1.  **Working Directory**: The actual files you see and edit in VS Code. Git watches these but doesn't track their history yet.\n2.  **Staging Area (The Index)**: A loading area. When you type `git add`, you are telling Git: \"I plan to save this specific change in my next snapshot.\"\n3.  **Local Repository (The .git folder)**: The database of permanent snapshots. When you type `git commit`, your staged changes are locked away safely in history.\n\n---\n\n## 🛡️ The `.gitignore` File\n\nSome things should **never** be in Git:\n- **Secrets**: API keys, passwords, database URLs (usually in `.env`).\n- **Bulk**: Giant folders of downloaded code like `node_modules/`.\n\nCreating a `.gitignore` file tells Git to ignore these files forever. **Never push a `.env` file to GitHub—it is a critical security breach.**\n\n---\n\n# 🔑 Essential Commands\n\n| Command | Description |\n|---|---|\n| `git init` | Starts a new, empty Git repository in the current folder. |\n| `git status` | Shows which files are modified, staged, or untracked. |\n| `git add <file>` | Moves changes from the **Working Directory** to **Staging**. |\n| `git commit -m \"msg\"` | Saves the staged changes as a permanent snapshot with a message. |\n| `git log --oneline` | Shows a clean, one-line-per-commit history of your project. |\n\n### 💡 The Perfect Commit Message\nA good message speaks for you: `feat: add login validation logic` is better than `changed some things`. Focus on *why* the change happened.\n\n---\n\n## 🧪 Practice Exercise\n\nLet's build a mini-project in the terminal to see Git in action:\n\n```bash\n# 1. Start the repo\nmkdir git-practice && cd git-practice\ngit init\n\n# 2. Create and track a file\necho \"Hello Git\" > readme.md\ngit status\ngit add readme.md\n\n# 3. Commit the change\ngit commit -m \"initial commit\"\n\n# 4. Make a change and view history\necho \"Adding more context\" >> readme.md\ngit add readme.md\ngit commit -m \"update readme\"\ngit log --oneline\n```\n\n---\n\n## 🖼️ Terminal Example\n\n![Git workflow](/images/git-workflow.png)\n\n--- \n\n## 🎥 Lesson Video\n\n<video controls width=\"100%\">\n  <source src=\"/videos/lesson-4-git-internals.mp4\" type=\"video/mp4\">\n  Your browser does not support the video tag.\n</video>\n\n---\n\n## 📝 Project Task: The Git Time Machine\n\nUsing only the terminal and Git:\n\n1.  Create a folder named `my-story` and initialize it with Git.\n2.  Create a file `part1.txt` with some text inside and commit it.\n3.  Create a `.gitignore` file and add `secrets.txt` to it.\n4.  Create `secrets.txt`, add some text, and run `git status`. (Verify Git is ignoring it!).\n5.  Modify `part1.txt`, stage it, and then **undo** the staging using `git restore --staged part1.txt`.\n6.  Make a final commit with both `part1.txt` and a new `part2.txt`.\n7.  Take a screenshot showing `git log --oneline` and submit it.\n",
+    "content": "# 🌳 Git Internals: How Version Control Actually Works\n\n## 🎯 Lesson Objectives\n\nBy the end of this lesson, learners will be able to:\n*   Explain the difference between **Git** (local tool) and **GitHub** (cloud backup).\n*   Understand the **Three Trees** architecture (Working Directory, Staging, Repository).\n*   Master the fundamental lifecycle of a commit using various command flags.\n*   Handle common development scenarios like fixing typos or selective staging.\n\n---\n\n## 🏗️ The Three Trees (Git Architecture)\n\nGit doesn't just save files; it manages them through three distinct \"trees\" or areas:\n\n1.  **Working Directory**: Your actual project folder. Changes here are \"Untracked\" or \"Modified\".\n2.  **Staging Area (The Index)**: A loading zone for your next snapshot.\n3.  **Local Repository (.git)**: The permanent database of completed snapshots (commits).\n\n---\n\n# 🔑 Deep Dive: Essential Commands & Scenarios\n\n### 1️⃣ `git add` — The Staging Master\nUsing `git add` isn't always about \"adding everything.\" Selective staging makes you a cleaner developer.\n\n*   **`git add <file>`**: Stage a specific file. Best for keeping commits focused.\n*   **`git add .`**: Stage everything in your **current directory** and subdirectories.\n*   **`git add -A`**: Stage every change in the **entire repository**, including file deletions.\n*   **`git add -p`**: **Patch Mode**. Git will show you small chunks (hunks) of your code and ask if you want to stage them. Perfect for splitting one day's work into three clean commits.\n\n### 2️⃣ `git commit` — Sealing the Snapshot\n*   **`git commit -m \"message\"`**: The standard way to save staged changes.\n*   **`git commit -am \"message\"`**: Stages all *tracked* modified files and commits them in one step. (Note: This will **not** include new, untracked files).\n*   **`git commit --amend`**: **The Oops Fixer**. If you just committed but realized you made a typo or forgot to add a file, use this. It re-opens the last commit so you can add more or change the message.\n\n### 3️⃣ `git log` — Reading History\n*   **`git log --oneline`**: A condensed view showing only the ID and message.\n*   **`git log --graph --all --oneline`**: Shows the \"family tree\" of branches, even those you aren't currently on.\n\n### 4️⃣ `git status` — The Health Check\n*   **`git status`**: The full, detailed bridge. Recommended for beginners.\n*   **`git status -s`**: **Short mode**. Shows a concise list (e.g., `M` for modified, `??` for untracked).\n\n---\n\n## 🛠️ Real-World Scenarios\n\n### Scenario: \"I made a typo in my last commit message!\"\n**Fix**: Type `git commit --amend -m \"The correct message\"`. Git replaces the old, broken commit with a new, fixed one.\n\n### Scenario: \"I have 500 lines of changes, but I only want to commit the login fix.\"\n**Fix**: Don't use `git add .`. Instead, use `git add src/auth/login.js` or `git add -p` to interactively pick only the relevant lines.\n\n---\n\n## 🧪 Practice Exercise\n\n```bash\n# 1. Setup\nmkdir scenario-practice && cd scenario-practice\ngit init\n\n# 2. Selective Staging\ntouch file1.txt file2.txt\ngit add file1.txt\ngit status -s   # Notice file1 is Green (staged), file2 is Red (untracked)\n\n# 3. The Amend Trick\ngit commit -m \"initial commit\"\necho \"oops\" >> file1.txt\ngit add .\ngit commit -m \"aditinal changes\" # Typo intentional!\ngit commit --amend -m \"additional changes\"\n\n# 4. Short Status\ntouch feature.js\ngit status -s\n```\n\n---\n\n## 🖼️ Terminal Example\n\n![Git workflow](/images/git-workflow.png)\n\n--- \n\n## 🎥 Lesson Video\n\n<video controls width=\"100%\">\n  <source src=\"/videos/lesson-4-git-internals.mp4\" type=\"video/mp4\">\n  Your browser does not support the video tag.\n</video>\n\n---\n\n## 📝 Project Task: Command Mastery\n\nPerform these steps using your terminal:\n\n1.  Initialize a repo and create `web.css` and `app.js`.\n2.  Use **selective staging** to only commit `web.css` first.\n3.  Commit `app.js` with a messy message like `fixed bug`.\n4.  Use `git commit --amend` to change that message to `feat: implement main application logic`.\n5.  Create a new file `temp.log`, then use `git status -s` to see the short-hand status.\n6.  Show your commit history using `git log --oneline --graph`.\n",
     "questions": [
         {
-            "question_text": "What is the primary difference between Git and GitHub?",
+            "question_text": "Which command stages all changes in the entire project, including file deletions?",
             "options": [
-                "Git is for Mac; GitHub is for Windows.",
-                "Git is the local version control tool; GitHub is a cloud hosting service.",
-                "GitHub is the tool; Git is the website.",
-                "There is no difference."
+                "git add .",
+                "git add -A",
+                "git add -file",
+                "git commit -a"
             ],
             "correct_answer": 1,
-            "explanation": "Git is the engine that tracks changes; GitHub is a place to store and share those changes."
+            "explanation": "'-A' stands for All, covering the whole repo and including deletions unlike 'git add .'."
         },
         {
-            "question_text": "Which of the 'Three Trees' represents the files as they appear on your hard drive?",
+            "question_text": "You just made a commit but realized you have a typo in the message. How do you fix it without creating a new commit?",
+            "options": [
+                "git undo",
+                "git reset",
+                "git commit --amend",
+                "git edit"
+            ],
+            "correct_answer": 2,
+            "explanation": "--amend re-opens the last commit snapshot for editing."
+        },
+        {
+            "question_text": "What does 'git status -s' provide?",
+            "options": [
+                "A detailed security report.",
+                "A short, concise summary of file states (e.g., M, ??).",
+                "A list of secret files.",
+                "The server status."
+            ],
+            "correct_answer": 1,
+            "explanation": "'-s' stands for short, giving you a quick scannable view of your work."
+        },
+        {
+            "question_text": "Which command allows you to interactively pick specific 'hunks' of code to stage?",
+            "options": [
+                "git add -A",
+                "git add -p",
+                "git add .",
+                "git select"
+            ],
+            "correct_answer": 1,
+            "explanation": "'-p' (Patch mode) is the most professional way to split large changes into clean commits."
+        },
+        {
+            "question_text": "What is a major limitation of 'git commit -am'?",
+            "options": [
+                "It is very slow.",
+                "It only works on Mac.",
+                "It does NOT include new, untracked files.",
+                "It deletes your history."
+            ],
+            "correct_answer": 2,
+            "explanation": "The '-a' only stages files Git already knows about; new files still need a manual 'git add'."
+        },
+        {
+            "question_text": "Which 'git log' flag shows a visual branch structure?",
+            "options": [
+                "--oneline",
+                "--graph",
+                "--visual",
+                "--tree"
+            ],
+            "correct_answer": 1,
+            "explanation": "--graph draws an ASCII representation of the branch and merge history."
+        },
+        {
+            "question_text": "Where are your files when you are editing them in VS Code but haven't run 'git add' yet?",
             "options": [
                 "The Staging Area",
                 "The Local Repository",
                 "The Working Directory",
-                "The Remote Tree"
+                "GitHub"
             ],
             "correct_answer": 2,
-            "explanation": "The Working Directory is the actual folder where you edit files in VS Code."
+            "explanation": "The Working Directory is your live project folder on your hard drive."
         },
         {
-            "question_text": "Which command moves a file from the Working Directory to the Staging Area?",
+            "question_text": "Why should you use 'git add <file>' instead of 'git add .'?",
             "options": [
-                "git commit",
-                "git move",
-                "git add",
-                "git push"
+                "It creates cleaner, more focused commits.",
+                "It is faster for the computer.",
+                "It is the only way to add files.",
+                "It encrypts the file."
             ],
-            "correct_answer": 2,
-            "explanation": "git add marks a file as ready to be included in the next commit."
-        },
-        {
-            "question_text": "What is the purpose of the '.gitignore' file?",
-            "options": [
-                "To speed up your computer.",
-                "To hide files from your teammates.",
-                "To list files that Git should never track (like passwords or large dependencies).",
-                "To delete files automatically."
-            ],
-            "correct_answer": 2,
-            "explanation": ".gitignore prevents sensitive or bulky files from being committed to history."
-        },
-        {
-            "question_text": "What happens when you run 'git commit -m \"message\"'?",
-            "options": [
-                "The files are uploaded to GitHub.",
-                "The staged changes are saved as a permanent snapshot in your local history.",
-                "The files are deleted.",
-                "The computer restarts."
-            ],
-            "correct_answer": 1,
-            "explanation": "A commit seals the staged changes into the local database (.git folder)."
-        },
-        {
-            "question_text": "Which command shows you a history of all commits in your repository?",
-            "options": [
-                "git history",
-                "git view",
-                "git log",
-                "git status"
-            ],
-            "correct_answer": 2,
-            "explanation": "git log displays a timeline of snapshots, authors, and messages."
-        },
-        {
-            "question_text": "Why is it dangerous to commit a '.env' file?",
-            "options": [
-                "It makes the repository too large.",
-                "It can contain sensitive API keys and passwords.",
-                "Git doesn't know how to read it.",
-                "It causes merge conflicts."
-            ],
-            "correct_answer": 1,
-            "explanation": ".env files store secrets; if committed, anyone with access to the repo can see them."
-        },
-        {
-            "question_text": "Which command tells you which files are currently modified or staged?",
-            "options": [
-                "git check",
-                "git status",
-                "git diff",
-                "git list"
-            ],
-            "correct_answer": 1,
-            "explanation": "git status is the most used command to check the state of the three trees."
-        },
-        {
-            "question_text": "If you stage a file by accident, which command 'unstages' it?",
-            "options": [
-                "git undo",
-                "git restore --staged <file>",
-                "git delete",
-                "git commit --amend"
-            ],
-            "correct_answer": 1,
-            "explanation": "git restore --staged pulls a file back from the staging area to the working directory."
-        },
-        {
-            "question_text": "What does 'git init' do?",
-            "options": [
-                "Deletes the project.",
-                "Initializes a new, empty Git repository.",
-                "Connects to GitHub.",
-                "Installs VS Code."
-            ],
-            "correct_answer": 1,
-            "explanation": "git init creates the hidden .git folder that starts tracking your project."
+            "correct_answer": 0,
+            "explanation": "Selective staging ensures your commit history is organized by feature, not by time."
         }
     ]
 }

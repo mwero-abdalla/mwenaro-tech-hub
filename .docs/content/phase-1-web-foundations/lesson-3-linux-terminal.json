@@ -2,7 +2,7 @@
     "title": "The Terminal: Cross-Platform CLI Mastery",
     "has_project": false,
     "video_url": "https://www.youtube.com/watch?v=J3mC0t_G7qQ",
-    "content": "# 💻 Mastering the Terminal (Windows, Mac, Linux)\n\nIn modern software engineering, the Command Line Interface (CLI)—or **the Terminal**—is the universal language. Whether you are using a Mac, a Linux server, or a Windows machine (via Git Bash or WSL), the commands you use to build and deploy applications are virtually identical.\n\nWhile the graphical user interface (GUI) is great for clicking and dragging, the Terminal is built for speed, precision, and automation. When you deploy a React app to a cloud server, there is no mouse; there is only a cursor.\n\n---\n\n## 1️⃣ One Language, Many Platforms\n\nWhen you open a terminal, you are interacting with a **Shell**. The shell takes your text commands and tells the Computer's \"brain\" (the kernel) what to do.\n\n- **Mac Users**: You are in luck. macOS is built on a Unix foundation, so your native Terminal already understands these commands natively.\n- **Linux Users**: This is your natural environment.\n- **Windows Users**: **This is critical.** Standard Windows tools like \"Command Prompt\" (CMD) or \"PowerShell\" are different and do not support these commands by default. To run these standard Linux commands on Windows, you **must** use a compatibility tool like **Git Bash** or the **Windows Subsystem for Linux (WSL)**. \n\nWithout one of these tools, the commands in this module will not work on your Windows machine.\n\n### The Shell Prompt\nEvery line starts with a prompt, giving you context:\n`dev@machine:~/projects$`\n\n- `dev`: The current user.\n- `@machine`: The name of the computer.\n- `~`: Shortcut for your **Home Directory**.\n- `$`: Indicates you are a standard user.\n\n---\n\n## 2️⃣ Navigating the File System\n\nThe file system is like an upside-down tree. At the very top is the **Root** `/`. Everything exists inside it.\n\n### Essential Navigation Commands\n| Command | Description | Example |\n|---|---|---|\n| `pwd` | **Print Working Directory**: Shows exactly where you are. | `pwd` → `/users/dev/projects` |\n| `ls` | **List**: Shows all files and folders in your current spot. | `ls -la` (List all, including hidden files) |\n| `cd` | **Change Directory**: Moves you into another folder. | `cd academy` |\n| `cd ..` | **Go Up**: Moves you up one level to the parent folder. | `cd ..` |\n| `cd ~` | **Go Home**: Takes you back to your user's home base. | `cd ~` |\n\n> [!NOTE]\n> In the Terminal, files starting with a dot (like `.env`) are **hidden**. You must use `ls -a` to see them.\n\n---\n\n## 3️⃣ Creating and Managing Files\n\nYou will rarely use a mouse to create projects. The Terminal is faster.\n\n### Creating and Copying\n- `mkdir project-name`: Makes a new directory (folder).\n- `touch index.js`: Creates an empty file. You can create multiple at once: `touch index.html style.css`.\n- `cp source.txt backup.txt`: **Copies** a file.\n- `mv old.txt new.txt`: **Moves** or **Renames** a file.\n\n### Deleting Things\n**⚠️ WARNING: Deletions in the terminal are permanent. There is no \"Recycle Bin\".**\n\n- `rm file.txt`: Deletes a single file.\n- `rm -r folder`: Deletes a folder and everything inside it (Recursive).\n- `rm -rf node_modules`: Forcefully deletes massive directories without asking for confirmation.\n\n---\n\n## 4️⃣ Working with File Content\n\nYou can read or manipulate files without ever leaving the terminal:\n\n- `cat .env`: Dumps the file content to your screen.\n- `less logs.txt`: Opens a file in a scrollable view (press `q` to quit).\n- `echo \"hello\" > file.txt`: **Redirects** text into a file (overwrites).\n- `echo \"world\" >> file.txt`: **Appends** text to the end of a file.\n\n### Piping (`|`)\nPiping allows you to take the output of one command and use it as the input for another.\n```bash\n# List all files and search specifically for those named 'config'\nls -la | grep \"config\"\n```\n\n---\n\n## 5️⃣ Permissions and System Control\n\nSometimes you need extra \"Power\" to run certain commands.\n\n- `sudo`: (SuperUser DO). Runs a command with administrative privileges. \n- `chmod +x script.sh`: Makes a file \"Executable,\" meaning you can run it as a program.\n\n### Managing Processes\n- `top` or `htop`: A live dashboard showing what your computer is working on.\n- `kill -9 <PID>`: \"Assassinates\" a stuck process (like a crashed node server) using its Process ID.\n- **Ctrl + C**: The universal \"Stop\" command for a running terminal process.\n\n---\n\n## 💡 Summary\n\n| Scenario | Command |\n|---|---|\n| **Where am I?** | `pwd` |\n| **Show all files** | `ls -la` |\n| **Rename a file** | `mv old_name.txt new_name.txt` |\n| **Stop a stuck program** | `Ctrl + C` |\n| **Permission Denied?** | Try starting the command with `sudo` |\n",
+    "content": "# 💻 Mastering the Terminal (Windows, Mac, Linux)\n\n## 🎯 Lesson Objectives\n\nBy the end of this lesson, learners will be able to:\n\n* Understand what the terminal is and how it differs across platforms.\n* Navigate directories using standard commands.\n* Create, view, copy, move, rename, and delete files and folders using the CLI.\n\n---\n\n## ⌨️ What is the Terminal?\n\nThe **terminal** (also called the command line) allows you to interact with your computer using text commands instead of a mouse.\n\nDevelopers use the terminal to:\n* Manage files and folders efficiently.\n* Run programs and automated scripts.\n* Use version control (Git).\n* Control development servers and tools.\n\n### 🛡️ One Language, Many Platforms\nIn modern software engineering, the Terminal is the universal language. However, how you access it depends on your operating system:\n\n- **Mac Users**: macOS is built on a Unix foundation; your native **Terminal** app supports these commands natively.\n- **Linux Users**: This is your natural environment.\n- **Windows Users**: **This is critical.** Standard Windows tools like \"Command Prompt\" or \"PowerShell\" follow different rules. To run these standard developer commands on Windows, you **must** use a compatibility tool like **Git Bash** or the **Windows Subsystem for Linux (WSL)**. \n\n---\n\n## 📂 Understanding Directories\n\nA **directory** is simply another name for a **folder**. The terminal lets you move between directories and manage what’s inside them.\n\n### The Shell Prompt\nEvery line starts with a prompt, giving you context:\n`dev@machine:~/projects$`\n- `dev`: The current user.\n- `~`: Shortcut for your **Home Directory**.\n- `$`: Indicates you are a standard user.\n\n---\n\n# 🔑 Essential Commands\n\n## 📍 `pwd` — Print Working Directory\nShows the folder you are currently inside.\n```bash\npwd\n```\n\n--- \n\n## 📄 `ls` — List Files and Folders\nShows the contents of the current directory.\n```bash\nls\n```\n### Useful Flags\n- `ls -a`: Shows hidden files (files starting with a `.`).\n- `ls -l`: Shows a detailed list (size, date, permissions).\n- `ls -la`: Combines both—shows hidden files in a detailed view.\n\n--- \n\n## 📁 `cd` — Change Directory\n- Move into a folder: `cd projects` \n- Move back one level: `cd ..` \n- Go to home directory: `cd ~` \n\n--- \n\n## 🧹 `clear` — Clear the Screen\nRemoves previous commands from view (start with a fresh slate).\n```bash\nclear\n```\n\n--- \n\n## 🆕 `mkdir` & `touch` — Create Things\n- `mkdir website`: Creates a new folder. \n- `touch index.html`: Creates an empty file.\n\n--- \n\n## 🗣️ `echo` — Print and Write Content\n\n### 1️⃣ Print Text\n`echo Hello World` \n\n### 2️⃣ Create or Overwrite (`>`)\nUsing `>` writes text into a file. If the file exists, it **replaces** everything inside.\n`echo \"My first webpage\" > index.html` \n\n### 3️⃣ Append Content (`>>`)\nUsing `>>` adds text to the end of a file without deleting what is already inside.\n`echo \"This line was added later\" >> index.html` \n\n| Command | What It Does |\n|---|---|\n| `echo \"text\" > file.txt` | Creates or **overwrites** existing content |\n| `echo \"text\" >> file.txt` | **Appends** text to the end of the file |\n\n--- \n\n## 📖 `cat` — View and Create Content\n\n- **View**: `cat index.html` (Displays what is inside).\n- **Create/Overwrite**: `cat > notes.txt` (Type content, then press **CTRL+D** to save).\n- **Append**: `cat >> notes.txt` (Add content, press **CTRL+D** to save).\n\n--- \n\n## 📋 `cp` & `mv` — Copy and Move\n- **Copy File**: `cp index.html about.html` \n- **Copy Folder**: `cp -r website backup-website` (The `-r` is required for folders).\n- **Rename/Move**: `mv index.html home.html` \n\n--- \n\n## ❌ `rm` & `rmdir` — Delete\n- **Delete Empty Folder**: `rmdir old-folder` \n- **Delete File**: `rm file.txt` \n- **Delete Folder & Content**: `rm -r website` \n\n**⚠️ CAUTION: Deletions are instantaneous and permanent. There is no Recycle Bin.**\n\n---\n\n## 🧪 Practice Exercise\n\nTry the following commands step by step:\n\n```bash\nmkdir web-practice\ncd web-practice\ntouch index.html\necho \"Hello Web\" > index.html\necho \"Learning terminal commands\" >> index.html\ncat index.html\nmkdir assets\ncp index.html assets/\nls -l\n```\n\n---\n\n## 🖼️ Terminal Example\n\n![Terminal example](/images/terminal-example.png)\n\n--- \n\n## 🎥 Lesson Video\n\n<video controls width=\"100%\">\n  <source src=\"/videos/lesson-3-terminal-basics.mp4\" type=\"video/mp4\">\n  Your browser does not support the video tag.\n</video>\n\n---\n\n## 📝 Project Task: Terminal Mastery\n\nUsing only the terminal:\n\n1. Create a folder named `my-first-website`\n2. Inside it, create `index.html` and `about.html`.\n3. Add the text **\"Welcome to my website\"** inside `index.html` using `echo`.\n4. Append another line to `index.html` using `echo >>`.\n5. Create a file called `notes.txt` using `cat` and write two lines inside.\n6. Append a third line to `notes.txt` using `cat >>`.\n7. Copy `index.html` into a new folder called `backup`.\n8. Rename `about.html` to `about-me.html`.\n9. Verify your folder structure using `ls -l`.\n",
     "questions": [
         {
             "question_text": "Which command allows you to see the path of your current directory?",
@@ -27,15 +27,26 @@
             "explanation": "Git Bash and WSL provide a POSIX-compliant shell environment on Windows."
         },
         {
-            "question_text": "What does the command 'cd ..' do?",
+            "question_text": "What is the key difference between > and >> when using echo?",
             "options": [
-                "Deletes the folder",
-                "Moves you up one level to the parent directory",
-                "Renames the folder",
-                "Opens a text editor"
+                "> appends content; >> overwrites content.",
+                "> overwrites content; >> appends content to the end.",
+                "There is no difference.",
+                "> is for files; >> is for folders."
             ],
             "correct_answer": 1,
-            "explanation": "'..' represents the parent directory."
+            "explanation": "Single bracket (>) replaces everything; double (>>) adds to the end."
+        },
+        {
+            "question_text": "How do you copy an entire folder and its contents?",
+            "options": [
+                "cp folder new-folder",
+                "cp -r folder new-folder",
+                "mv folder new-folder",
+                "copy folder new-folder"
+            ],
+            "correct_answer": 1,
+            "explanation": "The -r (recursive) flag is required to copy directories."
         },
         {
             "question_text": "Which character represents your 'Home' directory?",
@@ -49,59 +60,26 @@
             "explanation": "The tilde (~) is the standard shortcut for the current user's home folder."
         },
         {
-            "question_text": "What is the consequence of running 'rm -rf' on a folder?",
+            "question_text": "How do you save and exit when creating a file using 'cat > file.txt'?",
             "options": [
-                "It moves the folder to the Trash.",
-                "It creates a backup of the folder.",
-                "It permanently and recursively deletes the folder and all its content.",
-                "It renames the folder."
+                "Enter + Esc",
+                "CTRL + C",
+                "CTRL + D",
+                "q"
             ],
             "correct_answer": 2,
-            "explanation": "rm -rf is powerful and permanent; use it with extreme caution."
+            "explanation": "CTRL + D sends the EOF (End Of File) signal to the terminal."
         },
         {
-            "question_text": "How do you stop a process that is currently running in your terminal?",
+            "question_text": "Which flag is used with 'ls' to see hidden files (starting with a dot)?",
             "options": [
-                "Ctrl + S",
-                "Ctrl + C",
-                "Ctrl + V",
-                "Ctrl + Z"
+                "-h",
+                "-a",
+                "-l",
+                "-x"
             ],
             "correct_answer": 1,
-            "explanation": "Ctrl + C sends an interrupt signal (SIGINT) to terminate the current process."
-        },
-        {
-            "question_text": "Which command is used to search for a specific word inside the output of another command?",
-            "options": [
-                "find",
-                "search",
-                "grep",
-                "look"
-            ],
-            "correct_answer": 2,
-            "explanation": "grep is the standard utility for searching text using patterns."
-        },
-        {
-            "question_text": "What does the 'sudo' command stand for?",
-            "options": [
-                "System User DO",
-                "SuperUser DO",
-                "Super Delete Option",
-                "Standard User Operations"
-            ],
-            "correct_answer": 1,
-            "explanation": "sudo allows you to execute commands with the security privileges of the superuser (Root)."
-        },
-        {
-            "question_text": "How do you see hidden files (like .env) in a directory list?",
-            "options": [
-                "ls -h",
-                "ls -a",
-                "ls -v",
-                "ls -l"
-            ],
-            "correct_answer": 1,
-            "explanation": "The '-a' flag stands for 'all', which includes entries starting with a dot."
+            "explanation": "'-a' stands for 'all', which includes hidden entries."
         }
     ]
 }

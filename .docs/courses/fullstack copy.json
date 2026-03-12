@@ -1,0 +1,344 @@
+{
+    "course_id": "85cacb86-1a4c-45ea-8b62-a17789bf6562",
+    "slug": "fullstack",
+    "title": "MERN Full-Stack Engineering Bootcamp",
+    "description": "The ultimate 37-module curriculum taking you from zero to deployed fullstack engineer, covering everything from DNS to Next.js caching.",
+    "difficulty": "Comprehensive",
+    "price": 149.99,
+    "total_modules": 37,
+    "modules": [
+        {
+            "module_id": "e98fdc5a-4bb3-4121-af5f-7e5839d6b735",
+            "order": 1,
+            "title": "How the Web Works",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-1-how-the-web-works",
+            "source_file": "phase-1-web-foundations/lesson-1-how-the-web-works.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "9a7b3c5c-de71-4fce-9072-a9ca7f22c1e2",
+            "order": 2,
+            "title": "Environment Setup",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-2-environment-setup",
+            "source_file": "phase-1-web-foundations/lesson-2-environment-setup.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "8974df5e-3139-4c56-ba7f-75a046551c19",
+            "order": 3,
+            "title": "Linux & Terminal",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-3-linux-terminal",
+            "source_file": "phase-1-web-foundations/lesson-3-linux-terminal.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "f57f1dff-b5ae-4dc8-a703-7c57beb027ad",
+            "order": 4,
+            "title": "Git Internals",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-4-git-internals",
+            "source_file": "phase-1-web-foundations/lesson-4-git-internals.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "a1348045-b39f-47a3-a0dc-d9889bb1fef2",
+            "order": 5,
+            "title": "Collaborative Git & GitHub",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-5-collaborative-git",
+            "source_file": "phase-1-web-foundations/lesson-5-collaborative-git.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "0d094640-b83e-4b0b-9960-2de5cd3360d6",
+            "order": 6,
+            "title": "CSS Foundations",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-7-css-foundations",
+            "source_file": "phase-1-web-foundations/lesson-7-css-foundations.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "f06645ce-bc0a-4cba-812a-a97ef0f7176f",
+            "order": 7,
+            "title": "Modern Layouts: Flexbox & Grid",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-8-modern-layouts",
+            "source_file": "phase-1-web-foundations/lesson-8-modern-layouts.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "50aa8811-7448-47ca-9877-ab222e03f533",
+            "order": 8,
+            "title": "Responsive Design",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-9-responsive-design",
+            "source_file": "phase-1-web-foundations/lesson-9-responsive-design.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "5a7999f8-b5d7-47ec-82c2-4c495cb13f87",
+            "order": 9,
+            "title": "Tailwind CSS",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-10-tailwind-css",
+            "source_file": "phase-1-web-foundations/lesson-10-tailwind-css.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "e4a96780-c98b-4f0c-87ff-c2e0f748be69",
+            "order": 10,
+            "title": "JavaScript Fundamentals",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-11-js-fundamentals",
+            "source_file": "phase-1-web-foundations/lesson-11-js-fundamentals.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "9259fa02-9fa6-4275-a6d1-33acd225fcc0",
+            "order": 11,
+            "title": "DOM Manipulation",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-12-dom-manipulation",
+            "source_file": "phase-1-web-foundations/lesson-12-dom-manipulation.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "24007309-02c0-4ad6-b874-4a5ca363e126",
+            "order": 12,
+            "title": "Modern JS (ES6-ES11)",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-13-modern-js",
+            "source_file": "phase-1-web-foundations/lesson-13-modern-js.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "7b29c3e8-8c6b-4530-8c9b-12fed8e170f3",
+            "order": 13,
+            "title": "Asynchronous JS & APIs",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-14-async-js",
+            "source_file": "phase-1-web-foundations/lesson-14-async-js.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "8616e059-44b8-4d59-a47b-399d43470865",
+            "order": 14,
+            "title": "HTML5 Mastery",
+            "phase": "1 Web Foundations",
+            "slug": "lesson-6-html5-mastery",
+            "source_file": "phase-1-web-foundations/lesson-6-html5-mastery.json",
+            "quiz_count": 35
+        },
+        {
+            "module_id": "1bfe0293-f7b0-4ae0-87d4-7006eec61157",
+            "order": 15,
+            "title": "Component Architecture",
+            "phase": "2 React Frontend",
+            "slug": "lesson-1-component-architecture",
+            "source_file": "phase-2-react-frontend/lesson-1-component-architecture.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "adbc0490-97ac-49b7-8f5c-4973e25c8153",
+            "order": 16,
+            "title": "State Management (Basic)",
+            "phase": "2 React Frontend",
+            "slug": "lesson-2-state-management-basic",
+            "source_file": "phase-2-react-frontend/lesson-2-state-management-basic.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "b470af17-4640-4ee6-a1a5-b8f40ac21b55",
+            "order": 17,
+            "title": "The Effect Lifecycle",
+            "phase": "2 React Frontend",
+            "slug": "lesson-3-effect-lifecycle",
+            "source_file": "phase-2-react-frontend/lesson-3-effect-lifecycle.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "56d01540-5eda-40b6-96eb-adb6040a5066",
+            "order": 18,
+            "title": "Advanced Hooks",
+            "phase": "2 React Frontend",
+            "slug": "lesson-4-advanced-hooks",
+            "source_file": "phase-2-react-frontend/lesson-4-advanced-hooks.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "4d67827f-348d-4241-80f9-68441dd65e28",
+            "order": 19,
+            "title": "Routing Architecture",
+            "phase": "2 React Frontend",
+            "slug": "lesson-5-routing-architecture",
+            "source_file": "phase-2-react-frontend/lesson-5-routing-architecture.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "6babba90-c72b-4cce-a168-fcce90a3b1db",
+            "order": 20,
+            "title": "Forms & Validation",
+            "phase": "2 React Frontend",
+            "slug": "lesson-6-forms-validation",
+            "source_file": "phase-2-react-frontend/lesson-6-forms-validation.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "8b0c4aaa-4f2b-4848-926f-d5e7bb7396d4",
+            "order": 21,
+            "title": "TypeScript Fundamentals",
+            "phase": "2 React Frontend",
+            "slug": "lesson-7-typescript-fundamentals",
+            "source_file": "phase-2-react-frontend/lesson-7-typescript-fundamentals.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "af2ac581-81c4-4f04-8d77-db1502f4379c",
+            "order": 22,
+            "title": "Advanced TypeScript: Interfaces & Generics",
+            "phase": "2 React Frontend",
+            "slug": "lesson-8-advanced-typescript",
+            "source_file": "phase-2-react-frontend/lesson-8-advanced-typescript.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "4218074f-bb7f-49d6-afa0-b472736c4f31",
+            "order": 23,
+            "title": "React with TypeScript",
+            "phase": "2 React Frontend",
+            "slug": "lesson-9-react-typescript",
+            "source_file": "phase-2-react-frontend/lesson-9-react-typescript.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "2c7b8ac8-95e5-4711-9c8c-d9bdf06f30dd",
+            "order": 24,
+            "title": "Performance & Deployment",
+            "phase": "2 React Frontend",
+            "slug": "lesson-10-performance-deployment",
+            "source_file": "phase-2-react-frontend/lesson-10-performance-deployment.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "0c27bd73-f0da-42f8-9801-3d90f24ed027",
+            "order": 25,
+            "title": "Node.js Internals",
+            "phase": "3 Backend Api",
+            "slug": "lesson-1-node-internals",
+            "source_file": "phase-3-backend-api/lesson-1-node-internals.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "d1833224-063e-4d39-9530-00660f930abd",
+            "order": 26,
+            "title": "Express Architecture",
+            "phase": "3 Backend Api",
+            "slug": "lesson-2-express-architecture",
+            "source_file": "phase-3-backend-api/lesson-2-express-architecture.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "bc30835e-4f9d-482d-bc68-ca8923511964",
+            "order": 27,
+            "title": "Database Design (MongoDB)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-3-database-design",
+            "source_file": "phase-3-backend-api/lesson-3-database-design.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "314859a8-f066-445a-9965-5103229c7636",
+            "order": 28,
+            "title": "Authentication (Base)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-4-authentication-base",
+            "source_file": "phase-3-backend-api/lesson-4-authentication-base.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "ee8fa17f-7a73-4909-ac4f-6343d8587dab",
+            "order": 29,
+            "title": "JWT Strategy & Token Rotation",
+            "phase": "3 Backend Api",
+            "slug": "lesson-5-jwt-strategy",
+            "source_file": "phase-3-backend-api/lesson-5-jwt-strategy.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "7936e904-5d34-4b7b-b98b-1ed89df73356",
+            "order": 30,
+            "title": "Authorization (RBAC)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-6-authorization-rbac",
+            "source_file": "phase-3-backend-api/lesson-6-authorization-rbac.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "c757ad0d-4f6f-4781-978b-5059d54349cc",
+            "order": 31,
+            "title": "Clean Architecture",
+            "phase": "3 Backend Api",
+            "slug": "lesson-7-clean-architecture",
+            "source_file": "phase-3-backend-api/lesson-7-clean-architecture.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "6525a117-5e92-40e3-bbe2-a33a5d447dfc",
+            "order": 32,
+            "title": "API Integration & Axios Interceptors",
+            "phase": "4 Fullstack Synergy",
+            "slug": "lesson-1-api-integration",
+            "source_file": "phase-4-fullstack-synergy/lesson-1-api-integration.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "9e492c27-13f9-4253-87c5-c387d1c6cffd",
+            "order": 33,
+            "title": "Auth Sync & Silent Re-auth",
+            "phase": "4 Fullstack Synergy",
+            "slug": "lesson-2-auth-sync",
+            "source_file": "phase-4-fullstack-synergy/lesson-2-auth-sync.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "855a2e1a-3023-43d0-b198-3fe349a63a33",
+            "order": 34,
+            "title": "Optimistic UI Patterns",
+            "phase": "4 Fullstack Synergy",
+            "slug": "lesson-3-optimistic-ui",
+            "source_file": "phase-4-fullstack-synergy/lesson-3-optimistic-ui.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "21eb0a77-f3f3-4434-ba76-2e5f3f221d48",
+            "order": 35,
+            "title": "Cloud Assets & File Handling",
+            "phase": "4 Fullstack Synergy",
+            "slug": "lesson-4-cloud-assets",
+            "source_file": "phase-4-fullstack-synergy/lesson-4-cloud-assets.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "7d59fc16-ecff-4e2b-861c-79205ce39905",
+            "order": 36,
+            "title": "Next.js Architecture",
+            "phase": "5 Advanced Production",
+            "slug": "lesson-1-nextjs-architecture",
+            "source_file": "phase-5-advanced-production/lesson-1-nextjs-architecture.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "d6e3560b-5858-40f4-a706-bc18db1e91e2",
+            "order": 37,
+            "title": "Caching & Performance Tuning",
+            "phase": "5 Advanced Production",
+            "slug": "lesson-2-caching-performance",
+            "source_file": "phase-5-advanced-production/lesson-2-caching-performance.json",
+            "quiz_count": 16
+        }
+    ]
+}

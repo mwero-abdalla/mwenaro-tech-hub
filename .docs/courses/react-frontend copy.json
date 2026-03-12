@@ -1,0 +1,101 @@
+{
+    "course_id": "abec7c5f-1f50-412b-9af6-e001beef2e7a",
+    "slug": "react-frontend",
+    "title": "React Frontend Engineering",
+    "description": "Build type-safe, performant Single Page Applications (SPAs) using React, TypeScript, and modern state management architectures.",
+    "difficulty": "Intermediate",
+    "price": 79.99,
+    "total_modules": 10,
+    "modules": [
+        {
+            "module_id": "97673f42-79a7-4bb2-b483-d0b462348b74",
+            "order": 1,
+            "title": "Component Architecture",
+            "phase": "2 React Frontend",
+            "slug": "lesson-1-component-architecture",
+            "source_file": "phase-2-react-frontend/lesson-1-component-architecture.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "61d0fbf3-26bb-4137-b7d8-81bae399ef6a",
+            "order": 2,
+            "title": "State Management (Basic)",
+            "phase": "2 React Frontend",
+            "slug": "lesson-2-state-management-basic",
+            "source_file": "phase-2-react-frontend/lesson-2-state-management-basic.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "c351a8f8-04d2-4637-b7ff-23d14b303f16",
+            "order": 3,
+            "title": "The Effect Lifecycle",
+            "phase": "2 React Frontend",
+            "slug": "lesson-3-effect-lifecycle",
+            "source_file": "phase-2-react-frontend/lesson-3-effect-lifecycle.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "25b475d3-46a7-4115-adbe-bde1dfd53d03",
+            "order": 4,
+            "title": "Advanced Hooks",
+            "phase": "2 React Frontend",
+            "slug": "lesson-4-advanced-hooks",
+            "source_file": "phase-2-react-frontend/lesson-4-advanced-hooks.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "f79fed33-883a-4059-90f5-7e2bf41ac534",
+            "order": 5,
+            "title": "Routing Architecture",
+            "phase": "2 React Frontend",
+            "slug": "lesson-5-routing-architecture",
+            "source_file": "phase-2-react-frontend/lesson-5-routing-architecture.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "3947ce8a-ae8f-4fd3-815b-6f79fd06bcb7",
+            "order": 6,
+            "title": "Forms & Validation",
+            "phase": "2 React Frontend",
+            "slug": "lesson-6-forms-validation",
+            "source_file": "phase-2-react-frontend/lesson-6-forms-validation.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "42f61e8d-8425-420e-acb6-7fb99524ca3a",
+            "order": 7,
+            "title": "TypeScript Fundamentals",
+            "phase": "2 React Frontend",
+            "slug": "lesson-7-typescript-fundamentals",
+            "source_file": "phase-2-react-frontend/lesson-7-typescript-fundamentals.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "c77c6ed1-2168-4192-aa98-f325e17cb7cd",
+            "order": 8,
+            "title": "Advanced TypeScript: Interfaces & Generics",
+            "phase": "2 React Frontend",
+            "slug": "lesson-8-advanced-typescript",
+            "source_file": "phase-2-react-frontend/lesson-8-advanced-typescript.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "eeefbddf-8a0b-418e-ba4d-1ff57c37a4ad",
+            "order": 9,
+            "title": "React with TypeScript",
+            "phase": "2 React Frontend",
+            "slug": "lesson-9-react-typescript",
+            "source_file": "phase-2-react-frontend/lesson-9-react-typescript.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "bb85c15c-8c76-47e7-881c-42cde5bf78d2",
+            "order": 10,
+            "title": "Performance & Deployment",
+            "phase": "2 React Frontend",
+            "slug": "lesson-10-performance-deployment",
+            "source_file": "phase-2-react-frontend/lesson-10-performance-deployment.json",
+            "quiz_count": 16
+        }
+    ]
+}

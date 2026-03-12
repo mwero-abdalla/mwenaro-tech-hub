@@ -1,0 +1,74 @@
+{
+    "course_id": "1c68ddfe-bf93-4b8d-908a-67ccaf60695e",
+    "slug": "backend-api",
+    "title": "Backend API Engineering",
+    "description": "Architect production-grade Node.js systems, design resilient PostgreSQL databases, and master JWT Authentication and Clean Architecture.",
+    "difficulty": "Advanced",
+    "price": 89.99,
+    "total_modules": 7,
+    "modules": [
+        {
+            "module_id": "902be0f4-e293-424c-9d0e-3814f40d134f",
+            "order": 1,
+            "title": "Node.js Internals",
+            "phase": "3 Backend Api",
+            "slug": "lesson-1-node-internals",
+            "source_file": "phase-3-backend-api/lesson-1-node-internals.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "17ea19d7-0a48-44a0-933e-0bf13d372786",
+            "order": 2,
+            "title": "Express Architecture",
+            "phase": "3 Backend Api",
+            "slug": "lesson-2-express-architecture",
+            "source_file": "phase-3-backend-api/lesson-2-express-architecture.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "499b5c17-0728-4e85-a0b1-f99e67d296d9",
+            "order": 3,
+            "title": "Database Design (MongoDB)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-3-database-design",
+            "source_file": "phase-3-backend-api/lesson-3-database-design.json",
+            "quiz_count": 15
+        },
+        {
+            "module_id": "263a4ce5-2d21-4292-880a-8381fc0d1b7b",
+            "order": 4,
+            "title": "Authentication (Base)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-4-authentication-base",
+            "source_file": "phase-3-backend-api/lesson-4-authentication-base.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "0236d018-30e6-4a8e-b312-85c2cb7d6ab7",
+            "order": 5,
+            "title": "JWT Strategy & Token Rotation",
+            "phase": "3 Backend Api",
+            "slug": "lesson-5-jwt-strategy",
+            "source_file": "phase-3-backend-api/lesson-5-jwt-strategy.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "dca06f64-b18a-4ded-a704-e88630eb07c6",
+            "order": 6,
+            "title": "Authorization (RBAC)",
+            "phase": "3 Backend Api",
+            "slug": "lesson-6-authorization-rbac",
+            "source_file": "phase-3-backend-api/lesson-6-authorization-rbac.json",
+            "quiz_count": 16
+        },
+        {
+            "module_id": "a1ff5366-4d4e-4fd8-9ec4-803d501b1ef0",
+            "order": 7,
+            "title": "Clean Architecture",
+            "phase": "3 Backend Api",
+            "slug": "lesson-7-clean-architecture",
+            "source_file": "phase-3-backend-api/lesson-7-clean-architecture.json",
+            "quiz_count": 16
+        }
+    ]
+}

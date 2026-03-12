@@ -13,6 +13,10 @@ export interface Course {
     is_published?: boolean
     level?: string
     category?: string
+    course_overview?: string
+    course_outline?: string
+    duration?: number
+    slug?: string
     created_at: string
 }
 
@@ -41,17 +45,28 @@ export async function getCourses(): Promise<Course[]> {
     return data as Course[]
 }
 
-export async function getCourse(id: string): Promise<Course | null> {
+export async function getCourse(idOrSlug: string): Promise<Course | null> {
     const supabase = await createClient()
-    const { data, error } = await supabase
+    // Try by ID first
+    let { data, error } = await supabase
         .from('courses')
         .select('*')
-        .eq('id', id)
+        .eq('id', idOrSlug)
         .single()
 
-    if (error) {
-        console.error(`Error fetching course ${id}:`, error)
-        return null
+    // If not found or error, try by Slug
+    if (error || !data) {
+        const { data: slugData, error: slugError } = await supabase
+            .from('courses')
+            .select('*')
+            .eq('slug', idOrSlug)
+            .single()
+        
+        if (slugError) {
+            console.error(`Error fetching course by id/slug ${idOrSlug}:`, slugError)
+            return null
+        }
+        data = slugData
     }
 
     return data as Course

@@ -32,7 +32,7 @@ const courses = [
     {
         title: "Backend API Engineering",
         slug: "backend-api",
-        description: "Architect production-grade Node.js systems, design resilient PostgreSQL databases, and master JWT Authentication.",
+        description: "Architect production-grade Node.js systems, design resilient MongoDB databases, and master JWT Authentication and Clean Architecture.",
         icon: Database,
         color: "text-green-500",
         bg: "bg-green-500/10",

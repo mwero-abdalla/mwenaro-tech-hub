@@ -23,6 +23,7 @@ interface LessonQuizProps {
 
 export function LessonQuiz({ questions, nextLessonHref, lessonId, onSuccess, userRole }: LessonQuizProps) {
     const router = useRouter()
+    const [isStarted, setIsStarted] = useState(false)
     const [userAnswers, setUserAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
     const [submitted, setSubmitted] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -70,8 +71,33 @@ export function LessonQuiz({ questions, nextLessonHref, lessonId, onSuccess, use
     }
 
     const handleRetry = () => {
+        setUserAnswers(new Array(questions.length).fill(-1))
         setSubmitted(false)
-        // Optionally keep answers or reset them. Let's keep them so they can just fix the wrong ones.
+        setError(null)
+    }
+
+    if (!isStarted) {
+        return (
+            <div className="pt-12 border-t border-zinc-200 dark:border-zinc-800">
+                <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-3xl p-10 border border-zinc-200/50 dark:border-zinc-800/50 text-center space-y-6">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
+                        <HelpCircle className="w-8 h-8 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-black tracking-tight mb-2">Knowledge Check</h2>
+                        <p className="text-zinc-500 font-bold max-w-sm mx-auto">
+                            Complete this quick quiz to verify your understanding and unlock the next module.
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => setIsStarted(true)}
+                        className="px-10 py-4 bg-primary text-white font-black text-lg rounded-2xl hover:bg-primary/90 transition-all hover:-translate-y-1 shadow-2xl shadow-primary/30"
+                    >
+                        Take Module Quiz
+                    </button>
+                </div>
+            </div>
+        )
     }
 
     return (
